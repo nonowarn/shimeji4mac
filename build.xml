@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="Windows-31J" ?>
+<project name="Shimeji" basedir="." default="zip">
+
+	<property name="version" value="2_2_0" />
+
+	<target name="clean">
+		<delete dir="target" />
+		<mkdir dir="target"/>
+	</target>
+
+	<target name="compile" depends="clean">
+		<mkdir dir="target/classes" />
+		<javac destdir="target/classes" target="6" debug="yes" optimize="yes" encoding="Windows-31J">
+			<src path="src"/>
+			<src path="src_win"/>
+			<src path="src_generic"/>
+			<classpath>
+				<fileset dir="lib" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile">
+		<jar destfile="target/Shimeji.jar" basedir="target/classes" manifest="MANIFEST.MF" />
+	</target>
+
+	<target name="zip" depends="jar">
+		<zip destfile="target/src.zip">
+			<fileset dir=".">
+				<include name="**/*" />
+				<exclude name="target/**/*" />
+				<exclude name="target" />
+			</fileset>
+		</zip>
+
+		<ant target="zip_package">
+			<property name="edition" value="Personal" />
+		</ant>
+		<ant target="zip_package">
+			<property name="edition" value="Professional" />
+		</ant>
+		<ant target="zip_package">
+			<property name="edition" value="Ultimate" />
+		</ant>
+	</target>
+
+	<target name="zip_package">
+
+		<mkdir dir="target/${edition}/conf" />
+		<copy tofile="target/${edition}/conf/行動.xml"
+			file="conf/${edition}行動.xml" />
+
+		<zip destfile="target/Shimeji_${version}_${edition}.zip" encoding="Windows-31J">
+			<fileset dir="target">
+				<include name="Shimeji.jar" />
+				<include name="src.zip" />
+			</fileset>
+			<fileset dir="target/${edition}">
+				<include name="conf/**/*" />
+			</fileset>
+			<fileset dir=".">
+				<include name="Shimeji.exe"/>
+				<include name="しめじ ホームページ.url"/>
+				<include name="ライセンス.txt"/>
+				<include name="読んでね.txt"/>
+				<include name="img/**/*" />
+				<include name="conf/**/*" />
+				<exclude name="conf/*行動.xml" />
+				<include name="lib/*" />
+			</fileset>
+		</zip>
+	</target>
+
+	<target name="jar_package">
+
+		<mkdir dir="target/${edition}/conf" />
+		<copy tofile="target/${edition}/conf/行動.xml"
+			file="conf/${edition}行動.xml" />
+
+		<jar destfile="target/Shimeji_${version}_${edition}.jar">
+			<fileset dir="target">
+				<include name="Shimeji.jar" />
+				<include name="src.zip" />
+			</fileset>
+			<fileset dir="target/${edition}">
+				<include name="conf/**/*" />
+			</fileset>
+			<fileset dir=".">
+				<include name="Shimeji.exe"/>
+				<include name="しめじ ホームページ.url"/>
+				<include name="ライセンス.txt"/>
+				<include name="読んでね.txt"/>
+				<include name="img/**/*" />
+				<include name="conf/**/*" />
+				<exclude name="conf/*行動.xml" />
+				<include name="lib/*" />
+			</fileset>
+		</jar>
+	</target>
+</project>
