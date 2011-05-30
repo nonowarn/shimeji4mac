@@ -2,6 +2,8 @@ package com.group_finity.mascot.mac;
 
 import java.awt.image.BufferedImage;
 
+import javax.swing.JRootPane;
+
 import com.group_finity.mascot.NativeFactory;
 import com.group_finity.mascot.environment.Environment;
 import com.group_finity.mascot.image.NativeImage;
@@ -28,11 +30,13 @@ public class NativeFactoryImpl extends NativeFactory {
 	public TranslucentWindow newTransparentWindow() {
 		TranslucentWindow transcluentWindow = delegate.newTransparentWindow();
 
+    JRootPane rootPane = transcluentWindow.asJWindow().getRootPane();
+
     // Don't draw shadow
-    transcluentWindow.
-      asJWindow().
-      getRootPane().
-      putClientProperty("Window.shadow", Boolean.FALSE);
+    rootPane.putClientProperty("Window.shadow", Boolean.FALSE);
+
+    // Suppress warning
+    rootPane.putClientProperty("apple.awt.draggableWindowBackground", Boolean.TRUE);
 
     return transcluentWindow;
 	}
