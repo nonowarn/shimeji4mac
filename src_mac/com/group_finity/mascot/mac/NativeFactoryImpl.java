@@ -16,12 +16,22 @@ public class NativeFactoryImpl extends NativeFactory {
 	public Environment getEnvironment() {
 		return delegate.getEnvironment();
 	}
+
 	@Override
 	public NativeImage newNativeImage(final BufferedImage src) {
 		return delegate.newNativeImage(src);
 	}
+
 	@Override
 	public TranslucentWindow newTransparentWindow() {
-		return delegate.newTransparentWindow();
+		TranslucentWindow transcluentWindow = delegate.newTransparentWindow();
+
+    // Don't draw shadow
+    transcluentWindow.
+      asJWindow().
+      getRootPane().
+      putClientProperty("Window.shadow", Boolean.FALSE);
+
+    return transcluentWindow;
 	}
 }
