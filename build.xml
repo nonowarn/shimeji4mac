@@ -45,9 +45,12 @@
 		</ant>
 	</target>
 
-        <target name="app" depends="compile">
+        <target name="app" depends="compile,jar">
           <copy file="target/classes/com/group_finity/mascot/mac/Main.class"
                 tofile="Shimeji.app/Contents/Resources/Java/com/group_finity/mascot/mac/Main.class"
+                overwrite="true" />
+          <copy file="target/Shimeji.jar"
+                tofile="Shimeji.jar"
                 overwrite="true" />
         </target>
 
