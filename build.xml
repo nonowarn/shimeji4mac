@@ -45,6 +45,12 @@
 		</ant>
 	</target>
 
+        <target name="app" depends="compile">
+          <copy file="target/classes/com/group_finity/mascot/mac/Main.class"
+                tofile="Shimeji.app/Contents/Resources/Java/com/group_finity/mascot/mac/Main.class"
+                overwrite="true" />
+        </target>
+
 	<target name="zip_package">
 
 		<mkdir dir="target/${edition}/conf" />
