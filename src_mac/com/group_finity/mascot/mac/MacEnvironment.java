@@ -16,8 +16,16 @@ import com.group_finity.mascot.environment.Environment;
  */
 class MacEnvironment extends Environment {
 
+  /**
+    In mac environment, I think getting the frontmost window is easier
+    than specific applications' window (such as Chrome).
+
+    So, In this class, I implement getting the frontmost window, and I
+    use "frontmostApp" for alias of "activeIE".
+   */
 	private static Area activeIE = new Area();
   private static Area frontmostApp = activeIE;
+
   private static ScriptEngine engine = new ScriptEngineManager().getEngineByName("AppleScript");
 
   private static Rectangle getFrontmostAppRect() {
