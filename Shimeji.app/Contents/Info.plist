@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleExecutable</key>
+	<string>JavaApplicationStub</string>
+	<key>CFBundleName</key>
+	<string>Shimeji</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.2.2</string>
+	<key>CFBundleSignature</key>
+	<string>warZ</string>
+	<key>CFBundleVersion</key>
+	<string>2.2.2</string>
+	<key>Java</key>
+	<dict>
+		<key>ClassPath</key>
+		<array>
+			<string>$JAVAROOT</string>
+		</array>
+		<key>JVMVersion</key>
+		<string>1.6</string>
+		<key>MainClass</key>
+		<string>com.group_finity.mascot.mac.Main</string>
+		<key>Properties</key>
+		<dict>
+			<key>apple.laf.useScreenMenuBar</key>
+			<string>true</string>
+		</dict>
+		<key>WorkingDirectory</key>
+		<string>$APP_PACKAGE</string>
+	</dict>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright (c) 2009-2011 Yuki Yamada</string>
+        <key>LSUIElement</key>
+        <true />
+</dict>
+</plist>
