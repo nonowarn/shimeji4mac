@@ -15,6 +15,8 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import com.sun.jna.Platform;
+
 import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -179,15 +181,19 @@ public class Main {
 		try {
 			// トレイアイコンを作成
 			final TrayIcon icon = new TrayIcon(ImageIO.read(Main.class.getResource("/icon.png")), "しめじ", trayPopup);
-			icon.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(final MouseEvent e) {
-					// アイコンがダブルクリックされたときも「増える」
-					if (SwingUtilities.isLeftMouseButton(e)) {
-						createMascot();
-					}
-				}
-			});
+
+      // アイコンがダブルクリックされたときも「増える」
+      // ただし、Mac 上では PopupMenu の挙動が異なるため増やさない
+      if (!Platform.isMac()) {
+        icon.addMouseListener(new MouseAdapter() {
+          @Override
+          public void mouseClicked(final MouseEvent e) {
+            if (SwingUtilities.isLeftMouseButton(e) && !Platform.isMac()) {
+              createMascot();
+            }
+          }
+        });
+      }
 
 			// トレイアイコンを表示
 			SystemTray.getSystemTray().add(icon);
