@@ -21,10 +21,10 @@ class MacEnvironment extends Environment {
     than specific applications' window (such as Chrome).
 
     So, In this class, I implement getting the frontmost window, and I
-    use "frontmostApp" for alias of "activeIE".
+    use "frontmostWindow" for alias of "activeIE".
    */
 	private static Area activeIE = new Area();
-  private static Area frontmostApp = activeIE;
+  private static Area frontmostWindow = activeIE;
 
   private static ScriptEngine engine = new ScriptEngineManager().getEngineByName("AppleScript");
 
@@ -60,16 +60,20 @@ class MacEnvironment extends Environment {
       rightBottomY - leftTopY);
   }
 
+  private void updateFrontmostWindow() {
+    final Rectangle frontmostWindowRect = getFrontmostAppRect();
+
+    frontmostWindow.setVisible(
+      (frontmostWindowRect != null)
+      && frontmostWindowRect.intersects(getScreen().toRectangle()));
+    frontmostWindow.set(
+      frontmostWindowRect == null ? new Rectangle(-1, -1, 0, 0) : frontmostWindowRect);
+  }
+
 	@Override
 	public void tick() {
 		super.tick();
-    final Rectangle frontmostAppRect = getFrontmostAppRect();
-
-    frontmostApp.setVisible(
-      (frontmostAppRect != null)
-      && frontmostAppRect.intersects(getScreen().toRectangle()));
-    frontmostApp.set(
-      frontmostAppRect == null ? new Rectangle(-1, -1, 0, 0) : frontmostAppRect);
+    this.updateFrontmostWindow();
 	}
 
 	@Override
