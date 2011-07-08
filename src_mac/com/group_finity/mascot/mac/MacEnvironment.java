@@ -2,6 +2,7 @@ package com.group_finity.mascot.mac;
 
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import javax.script.ScriptEngine;
@@ -25,6 +26,11 @@ class MacEnvironment extends Environment {
    */
 	private static Area activeIE = new Area();
   private static Area frontmostWindow = activeIE;
+
+	private static final long screenWidth =
+		Math.round(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
+	private static final long screenHeight =
+		Math.round(Toolkit.getDefaultToolkit().getScreenSize().getHeight());
 
   private static ScriptEngine engine = new ScriptEngineManager().getEngineByName("AppleScript");
 
@@ -72,8 +78,17 @@ class MacEnvironment extends Environment {
 	}
 
 	private static String getWindowVisibleBoundsScript() {
+		/**
+			スクリーンの大きさの取得に Finder を使う方法もあるが、
+			短時間に繰り返し呼び出すと Finder の CPU 使用率が上がって、
+			そのまま下がらなくなるので、
+			Java レベルで取得した情報を使う
+		 */
 		return
-			"tell application \"Finder\" to set {x1, y1, x2, y2} to bounds of window of Desktop\n" +
+			"set x1 to 0\n" +
+			"set y1 to 0\n" +
+			"set x2 to " + Long.toString(getScreenWidth()) + "\n" +
+			"set y2 to " + Long.toString(getScreenHeight()) + "\n" +
 			"tell application \"System Events\"\n" +
 			"  tell process \"Dock\"\n" +
 			"    set {dw, dh} to size in list 1\n" +
@@ -102,6 +117,14 @@ class MacEnvironment extends Environment {
       rightBottomX - leftTopX,
       rightBottomY - leftTopY);
   }
+
+	private static long getScreenWidth() {
+		return screenWidth;
+	}
+
+	private static long getScreenHeight() {
+		return screenHeight;
+	}
 
 	/**
 		画面内でウィンドウを移動しても押し返されない範囲を Rectangle で返す。
