@@ -54,10 +54,6 @@ class MacEnvironment extends Environment {
 		} catch (ScriptException e) {}
 	}
 
-	private static ArrayList<Long> getWindowVisibleBounds() {
-		return null;
-	}
-
   private static String getFrontmostAppRectScript() {
     return "tell application \"System Events\"\n" +
            "  set appName to name of first item of (processes whose frontmost is true)\n" +
