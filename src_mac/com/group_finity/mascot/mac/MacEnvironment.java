@@ -54,6 +54,12 @@ class MacEnvironment extends Environment {
 		} catch (ScriptException e) {}
 	}
 
+	private static void restoreWindowsNotIn(final Rectangle rect) {
+		try {
+			engine.eval(restoreWindowsNotInScript(rect));
+		} catch (ScriptException e) {}
+	}
+
   private static String getFrontmostAppRectScript() {
     return "tell application \"System Events\"\n" +
            "  set appName to name of first item of (processes whose frontmost is true)\n" +
@@ -101,6 +107,33 @@ class MacEnvironment extends Environment {
 			"  set x1 to x1 + dw\n" +
 			"end if\n" +
 			"{x1+1, y1+22, x2-1, y2-22}";
+	}
+
+	private static String restoreWindowsNotInScript(final Rectangle rect) {
+		return
+			"tell application \"System Events\" to set procs to every processes whose visible is true\n" +
+			"set {dx1, dy1, dx2, dy2} to { " +
+			  Double.toString(rect.getMinX()) + "," +
+			  Double.toString(rect.getMinY()) + "," +
+			  Double.toString(rect.getMaxX()) + "," +
+			  Double.toString(rect.getMaxY()) +
+			"}\n" +
+			"repeat with proc in procs\n" +
+			"  tell application (name of proc)\n" +
+			"    try\n" +
+			"    set allWindows to (every window whose visible is true)\n" +
+			"    repeat with myWindow in allWindows\n" +
+			"      set {x1, y1, x2, y2} to bounds of myWindow\n" +
+			"      set w to x2-x1\n" +
+			"      set h to y2-y1\n" +
+			"      if x2 <= dx1 or x1 >= dx2 or y2 <= dy1 or y1 >= dy2 then\n" +
+			"        set bounds of myWindow to {dx1, dy1, dx1+w, dy1+h}\n" +
+			"      end if\n" +
+			"    end repeat\n" +
+			"    on error msg\n" +
+			"    end try\n" +
+			"  end\n" +
+			"end";
 	}
 
   private static Rectangle rectangleFromBounds(ArrayList<Long> bounds) {
@@ -198,6 +231,8 @@ class MacEnvironment extends Environment {
 
 	@Override
 	public void restoreIE() {
+		final Rectangle visibleRect = getWindowVisibleArea();
+		restoreWindowsNotIn(visibleRect);
 	}
 
 	@Override
