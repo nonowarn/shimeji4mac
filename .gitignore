@@ -1,2 +1,3 @@
 *.class
 *.jar
+.DS_Store
