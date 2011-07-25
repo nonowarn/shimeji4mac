@@ -183,18 +183,18 @@ public class Main {
 			// トレイアイコンを作成
 			final TrayIcon icon = new TrayIcon(ImageIO.read(Main.class.getResource("/icon.png")), "しめじ", trayPopup);
 
-      // アイコンがダブルクリックされたときも「増える」
-      // ただし、Mac 上では PopupMenu の挙動が異なるため増やさない
-      if (!Platform.isMac()) {
-        icon.addMouseListener(new MouseAdapter() {
-          @Override
-          public void mouseClicked(final MouseEvent e) {
-            if (SwingUtilities.isLeftMouseButton(e) && !Platform.isMac()) {
-              createMascot();
-            }
-          }
-        });
-      }
+      // アイコンが左クリックされたときも「増える」
+			// ただし Mac では左クリックでメニューが開いてしまうため、
+			// 右クリックで増殖させる
+			icon.addMouseListener(new MouseAdapter() {
+        @Override
+				public void mouseClicked(final MouseEvent e) {
+					if (!Platform.isMac() && SwingUtilities.isLeftMouseButton(e)
+							|| Platform.isMac() && SwingUtilities.isRightMouseButton(e)) {
+						createMascot();
+					}
+				}
+			});
 
 			// トレイアイコンを表示
 			SystemTray.getSystemTray().add(icon);
