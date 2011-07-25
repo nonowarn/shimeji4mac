@@ -156,6 +156,16 @@ class MacEnvironment extends Environment {
 	}
 
 	/**
+		 min < max のとき、
+		 min <= x <= max ならば x を返す
+		 x < min ならば min を返す
+		 x > max ならば max を返す
+	 */
+	private static double betweenOrLimit(double x, double min, double max) {
+		return Math.min(Math.max(x, min), max);
+	}
+
+	/**
 		画面内でウィンドウを移動しても押し返されない範囲を Rectangle で返す。
 		Mac では、ウィンドウを完全に画面外に移動させようとすると、
 		ウィンドウが画面内に押し返されてしまう。
@@ -212,18 +222,10 @@ class MacEnvironment extends Environment {
 			pY   = point.getY();
 
 		// X方向の折り返し
-		if (pX < minX) {
-			pX = minX;
-		} else if (pX > maxX) {
-			pX = maxX;
-		}
+		pX = betweenOrLimit(pX, minX, maxX);
 
 		// Y方向の折り返し
-		if (pY < minY) {
-			pY = minY;
-		} else if (pY > maxY) {
-			pY = maxY;
-		}
+		pY = betweenOrLimit(pY, minY, maxY);
 
 		point.setLocation(pX, pY);
 		moveFrontmostWindow(point);
