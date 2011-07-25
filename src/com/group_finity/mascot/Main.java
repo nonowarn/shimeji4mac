@@ -154,7 +154,8 @@ public class Main {
 		});
 
 		// 「IEを元に戻す」メニューアイテム
-		final MenuItem restoreMenu = new MenuItem("IEを元に戻す");
+		final MenuItem restoreMenu =
+			new MenuItem(Platform.isMac() ? "ウィンドウを元に戻す" : "IEを元に戻す");
 		restoreMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent event) {
 				restoreIE();
