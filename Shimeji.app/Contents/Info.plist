@@ -36,5 +36,7 @@
 	<string>Copyright (c) 2009-2011 Yuki Yamada</string>
         <key>LSUIElement</key>
         <true />
+        <key>CFBundleIconFile</key>
+        <string>icon.icns</string>
 </dict>
 </plist>
