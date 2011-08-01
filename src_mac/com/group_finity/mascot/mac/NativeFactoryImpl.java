@@ -3,6 +3,7 @@ package com.group_finity.mascot.mac;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JRootPane;
+import javax.swing.JWindow;
 
 import com.group_finity.mascot.NativeFactory;
 import com.group_finity.mascot.environment.Environment;
@@ -28,7 +29,7 @@ public class NativeFactoryImpl extends NativeFactory {
 
 	@Override
 	public TranslucentWindow newTransparentWindow() {
-		TranslucentWindow transcluentWindow = delegate.newTransparentWindow();
+		final TranslucentWindow transcluentWindow = delegate.newTransparentWindow();
 
     JRootPane rootPane = transcluentWindow.asJWindow().getRootPane();
 
@@ -38,6 +39,28 @@ public class NativeFactoryImpl extends NativeFactory {
     // Suppress warning
     rootPane.putClientProperty("apple.awt.draggableWindowBackground", Boolean.TRUE);
 
-    return transcluentWindow;
+    return new TranslucentWindow() {
+			private boolean imageChanged = false;
+			private NativeImage oldImage = null;
+
+			@Override
+			public JWindow asJWindow() {
+				return transcluentWindow.asJWindow();
+			}
+
+			@Override
+			public void setImage(NativeImage image) {
+				this.imageChanged = (this.oldImage != null && image != oldImage);
+				this.oldImage = image;
+				transcluentWindow.setImage(image);
+			}
+
+			@Override
+			public void updateImage() {
+				if (this.imageChanged) {
+					transcluentWindow.updateImage();
+				}
+			}
+		};
 	}
 }
