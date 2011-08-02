@@ -33,13 +33,17 @@ public class NativeFactoryImpl extends NativeFactory {
 
     JRootPane rootPane = transcluentWindow.asJWindow().getRootPane();
 
-    // Don't draw shadow
+    // ウィンドウの影がずれるので、影を描画しないようにする
     rootPane.putClientProperty("Window.shadow", Boolean.FALSE);
 
-    // Suppress warning
+    // 実行時の warning を消す
     rootPane.putClientProperty("apple.awt.draggableWindowBackground", Boolean.TRUE);
 
     return new TranslucentWindow() {
+			// パフォーマンスのためにラップしたクラスを使う
+			// updateImage() がボトルネックになっていたので、
+			// image が変わった時だけ呼ぶようにする
+
 			private boolean imageChanged = false;
 			private NativeImage oldImage = null;
 

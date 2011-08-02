@@ -32,11 +32,10 @@ import com.group_finity.mascot.mac.jna.CFArrayRef;
 class MacEnvironment extends Environment {
 
   /**
-    In mac environment, I think getting the frontmost window is easier
-    than specific applications' window (such as Chrome).
+		Mac では、アクティブなウィンドウを取れるので、
+		それにしめじが反応するようにする。
 
-    So, In this class, I implement getting the frontmost window, and I
-    use "frontmostWindow" for alias of "activeIE".
+		なので、このクラス内では、activeIE に frontmostWindow という別名をつける
    */
 	private static Area activeIE = new Area();
   private static Area frontmostWindow = activeIE;
