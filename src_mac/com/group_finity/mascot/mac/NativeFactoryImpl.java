@@ -59,6 +59,7 @@ public class NativeFactoryImpl extends NativeFactory {
 			public void updateImage() {
 				if (this.imageChanged) {
 					transcluentWindow.updateImage();
+					this.imageChanged = false;
 				}
 			}
 		};
