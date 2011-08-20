@@ -9,6 +9,9 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import com.sun.jna.Pointer;
+import com.sun.jna.Memory;
+import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.LongByReference;
 import com.sun.jna.ptr.PointerByReference;
 
@@ -18,9 +21,11 @@ import com.group_finity.mascot.mac.jna.Carbon;
 import com.group_finity.mascot.mac.jna.ProcessSerialNumber;
 import com.group_finity.mascot.mac.jna.AXValueRef;
 import com.group_finity.mascot.mac.jna.AXUIElementRef;
+import com.group_finity.mascot.mac.jna.CFTypeRef;
 import com.group_finity.mascot.mac.jna.CGPoint;
 import com.group_finity.mascot.mac.jna.CGSize;
 import com.group_finity.mascot.mac.jna.CFStringRef;
+import com.group_finity.mascot.mac.jna.CFNumberRef;
 
 /**
  * Java では取得が難しい環境情報をAppleScriptを使用して取得する.
@@ -37,10 +42,10 @@ class MacEnvironment extends Environment {
 	private static Area activeIE = new Area();
   private static Area frontmostWindow = activeIE;
 
-	private static final long screenWidth =
-		Math.round(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
-	private static final long screenHeight =
-		Math.round(Toolkit.getDefaultToolkit().getScreenSize().getHeight());
+	private static final int screenWidth =
+		(int) Math.round(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
+	private static final int screenHeight =
+		(int) Math.round(Toolkit.getDefaultToolkit().getScreenSize().getHeight());
 
   private static ScriptEngine engine = new ScriptEngineManager().getEngineByName("AppleScript");
 
@@ -49,7 +54,10 @@ class MacEnvironment extends Environment {
 	static final CFStringRef
   	kAXPosition = createCFString("AXPosition"),
 		kAXSize = createCFString("AXSize"),
-		kAXFocusedWindow = createCFString("AXFocusedWindow");
+		kAXFocusedWindow = createCFString("AXFocusedWindow"),
+		kDock = createCFString("com.apple.Dock"),
+		kTileSize = createCFString("tilesize"),
+		kOrientation = createCFString("orientation");
 
   private static Rectangle getFrontmostAppRect() {
 		Rectangle ret;
@@ -139,35 +147,6 @@ class MacEnvironment extends Environment {
 			"set bounds of w to {x, y, x+(x2-x1), y+(y2-y1)}";
 	}
 
-	private static String getWindowVisibleBoundsScript() {
-		/**
-			スクリーンの大きさの取得に Finder を使う方法もあるが、
-			短時間に繰り返し呼び出すと Finder の CPU 使用率が上がって、
-			そのまま下がらなくなるので、
-			Java レベルで取得した情報を使う
-		 */
-		return
-			"set x1 to 0\n" +
-			"set y1 to 0\n" +
-			"set x2 to " + Long.toString(getScreenWidth()) + "\n" +
-			"set y2 to " + Long.toString(getScreenHeight()) + "\n" +
-			"tell application \"System Events\"\n" +
-			"  tell process \"Dock\"\n" +
-			"    set {dw, dh} to size in list 1\n" +
-			"  end tell\n" +
-			"  tell dock preferences\n" +
-			"    set edge to screen edge as string\n" +
-			"  end tell\n" +
-			"end tell\n" +
-			"if edge = \"bottom\" then\n" +
-			"  set y2 to y2 - dh\n" +
-			"else if edge = \"right\" then\n" +
-			"  set x2 to x2 - dw\n" +
-			"else if edge = \"left\" then\n" +
-			"  set x1 to x1 + dw\n" +
-			"end if\n" +
-			"{x1+1, y1+22, x2-1, y2-22}";
-	}
 
 	private static String restoreWindowsNotInScript(final Rectangle rect) {
 		return
@@ -213,11 +192,11 @@ class MacEnvironment extends Environment {
 			.CFStringCreateWithCharacters(null, s.toCharArray(), s.length());
 	}
 
-	private static long getScreenWidth() {
+	private static int getScreenWidth() {
 		return screenWidth;
 	}
 
-	private static long getScreenHeight() {
+	private static int getScreenHeight() {
 		return screenHeight;
 	}
 
@@ -237,17 +216,49 @@ class MacEnvironment extends Environment {
 		ウィンドウが画面内に押し返されてしまう。
 	 */
 	private static Rectangle getWindowVisibleArea() {
-		ArrayList<Long> bounds = null;
+		final int menuBarHeight = 22;
+		int x = 1, y = menuBarHeight,
+			width = getScreenWidth() - 1, height = getScreenHeight() - menuBarHeight;
 
-		try {
-			bounds = (ArrayList<Long>) engine.eval(getWindowVisibleBoundsScript());
-		} catch (ScriptException e) {}
+		refreshDockState();
+		final String orientation = getDockOrientation();
+		final int tilesize = getDockTileSize();
 
-		if (bounds != null && bounds.size() == 4) {
-			return rectangleFromBounds(bounds);
-		} else {
-			return null;
+		if ("bottom".equals(orientation)) {
+			height -= tilesize;
+		} else if ("right".equals(orientation)) {
+			width -= tilesize;
+		}	else /* if ("left".equals(orientation)) */ {
+			x += tilesize;
 		}
+
+		Rectangle r = new Rectangle(x, y, width, height);
+		return r;
+	}
+
+	private static String getDockOrientation() {
+		CFTypeRef orientationRef =
+			carbon.CFPreferencesCopyValue(kOrientation, kDock, carbon.kCurrentUser, carbon.kAnyHost);
+		final int bufsize = 64;
+		Memory buf = new Memory(64);
+		carbon.CFStringGetCString(orientationRef, buf, bufsize, carbon.CFStringGetSystemEncoding());
+		carbon.CFRelease(orientationRef);
+		String ret = buf.getString(0, false);
+		buf.clear();
+		return ret;
+	}
+
+	private static int getDockTileSize() {
+		CFTypeRef tilesizeRef =
+			carbon.CFPreferencesCopyValue(kTileSize, kDock, carbon.kCurrentUser, carbon.kAnyHost);
+		IntByReference intRef = new IntByReference();
+		carbon.CFNumberGetValue(tilesizeRef, carbon.kCFNumberInt32Type, intRef);
+		carbon.CFRelease(tilesizeRef);
+		return intRef.getValue();
+	}
+
+	private static void refreshDockState() {
+		carbon.CFPreferencesAppSynchronize(kDock);
 	}
 
   private void updateFrontmostWindow() {
