@@ -9,8 +9,18 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import com.sun.jna.ptr.LongByReference;
+import com.sun.jna.ptr.PointerByReference;
+
 import com.group_finity.mascot.environment.Area;
 import com.group_finity.mascot.environment.Environment;
+import com.group_finity.mascot.mac.jna.Carbon;
+import com.group_finity.mascot.mac.jna.ProcessSerialNumber;
+import com.group_finity.mascot.mac.jna.AXValueRef;
+import com.group_finity.mascot.mac.jna.AXUIElementRef;
+import com.group_finity.mascot.mac.jna.CGPoint;
+import com.group_finity.mascot.mac.jna.CGSize;
+import com.group_finity.mascot.mac.jna.CFStringRef;
 
 /**
  * Java では取得が難しい環境情報をAppleScriptを使用して取得する.
@@ -34,19 +44,76 @@ class MacEnvironment extends Environment {
 
   private static ScriptEngine engine = new ScriptEngineManager().getEngineByName("AppleScript");
 
+	private static Carbon carbon = Carbon.INSTANCE;
+
+	static final CFStringRef
+  	kAXPosition = createCFString("AXPosition"),
+		kAXSize = createCFString("AXSize"),
+		kAXFocusedWindow = createCFString("AXFocusedWindow");
+
   private static Rectangle getFrontmostAppRect() {
-    ArrayList<Long> bounds = null;
+		Rectangle ret;
+		long pid = getFrontmostAppsPID();
 
-    try {
-      bounds = (ArrayList<Long>) engine.eval(getFrontmostAppRectScript());
-    } catch (ScriptException e) {}
+		AXUIElementRef application =
+			carbon.AXUIElementCreateApplication(pid);
 
-    if (bounds != null && bounds.size() == 4) {
-      return rectangleFromBounds(bounds);
-    } else {
-      return null;
-    }
+		PointerByReference windowp = new PointerByReference();
+
+		// XXX: ここ以外でもエラーチェックは必要?
+		if (carbon.AXUIElementCopyAttributeValue(
+					application, kAXFocusedWindow, windowp) == carbon.kAXErrorSuccess) {
+			AXUIElementRef window = new AXUIElementRef();
+			window.setPointer(windowp.getValue());
+
+			CGPoint position = getPositionOfWindow(window);
+			CGSize size = getSizeOfWindow(window);
+
+			ret = new Rectangle(
+				position.getX(), position.getY(), size.getWidth(), size.getHeight());
+		} else {
+			ret = null;
+		}
+
+		carbon.CFRelease(application);
+		return ret;
   }
+
+	private static long getFrontmostAppsPID() {
+		ProcessSerialNumber front_process_psn = new ProcessSerialNumber();
+		LongByReference front_process_pidp = new LongByReference();
+
+		carbon.GetFrontProcess(front_process_psn);
+		carbon.GetProcessPID(front_process_psn, front_process_pidp);
+
+		return front_process_pidp.getValue();
+	}
+
+	private static CGPoint getPositionOfWindow(AXUIElementRef window) {
+		CGPoint position = new CGPoint();
+		AXValueRef axvalue = new AXValueRef();
+		PointerByReference valuep = new PointerByReference();
+
+		carbon.AXUIElementCopyAttributeValue(window, kAXPosition, valuep);
+		axvalue.setPointer(valuep.getValue());
+		carbon.AXValueGetValue(axvalue, carbon.kAXValueCGPointType, position.getPointer());
+		position.read();
+
+		return position;
+	}
+
+	private static CGSize getSizeOfWindow(AXUIElementRef window) {
+		CGSize size = new CGSize();
+		AXValueRef axvalue = new AXValueRef();
+		PointerByReference valuep = new PointerByReference();
+
+		carbon.AXUIElementCopyAttributeValue(window, kAXSize, valuep);
+		axvalue.setPointer(valuep.getValue());
+		carbon.AXValueGetValue(axvalue, carbon.kAXValueCGSizeType, size.getPointer());
+		size.read();
+
+		return size;
+	}
 
 	private static void moveFrontmostWindow(final Point point) {
 		try {
@@ -59,13 +126,6 @@ class MacEnvironment extends Environment {
 			engine.eval(restoreWindowsNotInScript(rect));
 		} catch (ScriptException e) {}
 	}
-
-  private static String getFrontmostAppRectScript() {
-    return "tell application \"System Events\"\n" +
-           "  set appName to name of first item of (processes whose frontmost is true)\n" +
-           "end tell\n" +
-           "return bounds of first window of application appName";
-  }
 
 	private static String moveFrontmostWindowScript(final Point point) {
     return
@@ -146,6 +206,12 @@ class MacEnvironment extends Environment {
       rightBottomX - leftTopX,
       rightBottomY - leftTopY);
   }
+
+	private static CFStringRef createCFString(String s) {
+		return Carbon
+			.INSTANCE
+			.CFStringCreateWithCharacters(null, s.toCharArray(), s.length());
+	}
 
 	private static long getScreenWidth() {
 		return screenWidth;
