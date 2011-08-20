@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.lang.management.ManagementFactory;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -51,6 +52,13 @@ class MacEnvironment extends Environment {
 
 	private static Carbon carbon = Carbon.INSTANCE;
 
+	// Mac Ç≈ÇÕÅAManagementFactory.getRuntimeMXBean().getName()Ç≈
+	// PID@É}ÉVÉìñº ÇÃï∂éöóÒÇ™ï‘Ç¡ÇƒÇ≠ÇÈ
+	private static long myPID =
+		Long.parseLong(ManagementFactory.getRuntimeMXBean().getName().split("@")[0]);
+
+	private static long currentPID = myPID;
+
 	static final CFStringRef
   	kAXPosition = createCFString("AXPosition"),
 		kAXSize = createCFString("AXSize"),
@@ -94,7 +102,13 @@ class MacEnvironment extends Environment {
 		carbon.GetFrontProcess(front_process_psn);
 		carbon.GetProcessPID(front_process_psn, front_process_pidp);
 
-		return front_process_pidp.getValue();
+		long newPID = front_process_pidp.getValue();
+
+		if (newPID != myPID) {
+			currentPID = newPID;
+		}
+
+		return currentPID;
 	}
 
 	private static CGPoint getPositionOfWindow(AXUIElementRef window) {
