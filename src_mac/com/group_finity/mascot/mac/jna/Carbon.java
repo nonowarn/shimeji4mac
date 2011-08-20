@@ -22,8 +22,11 @@ public interface Carbon extends Library {
 
 	long AXUIElementCopyAttributeValue(
 		AXUIElementRef element, CFStringRef attr, PointerByReference value);
+	int AXUIElementSetAttributeValue(
+		AXUIElementRef element, CFStringRef attr, CFTypeRef value);
 	AXUIElementRef AXUIElementCreateApplication(long pid);
 	boolean AXValueGetValue(AXValueRef value, long type, Pointer valuep);
+	AXValueRef AXValueCreate(long type, Pointer valuep);
 
 	CFTypeRef CFPreferencesCopyValue(
 		CFStringRef key, CFStringRef app, Pointer user, Pointer host);

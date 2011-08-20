@@ -138,9 +138,24 @@ class MacEnvironment extends Environment {
 	}
 
 	private static void moveFrontmostWindow(final Point point) {
-		try {
-			engine.eval(moveFrontmostWindowScript(point));
-		} catch (ScriptException e) {}
+		AXUIElementRef application =
+			carbon.AXUIElementCreateApplication(currentPID);
+
+		PointerByReference windowp = new PointerByReference();
+
+		if (carbon.AXUIElementCopyAttributeValue(
+					application, kAXFocusedWindow, windowp) == carbon.kAXErrorSuccess) {
+			AXUIElementRef window = new AXUIElementRef();
+			window.setPointer(windowp.getValue());
+
+			CGPoint position = new CGPoint((double) point.x, (double) point.y);
+			position.write();
+			AXValueRef axvalue = carbon.AXValueCreate(carbon.kAXValueCGPointType, position.getPointer());
+			carbon.AXUIElementSetAttributeValue(
+				window, kAXPosition, axvalue);
+		}
+
+		carbon.CFRelease(application);
 	}
 
 	private static void restoreWindowsNotIn(final Rectangle rect) {
@@ -148,19 +163,6 @@ class MacEnvironment extends Environment {
 			engine.eval(restoreWindowsNotInScript(rect));
 		} catch (ScriptException e) {}
 	}
-
-	private static String moveFrontmostWindowScript(final Point point) {
-    return
-			"tell application \"System Events\"\n" +
-			"  set appName to name of first item of (processes whose frontmost is true)\n" +
-			"end tell\n" +
-			"set w to first window of application appName\n" +
-			"set x to " + Double.toString(point.getX()) + "\n" +
-			"set y to " + Double.toString(point.getY()) + "\n" +
-			"set {x1, y1, x2, y2} to bounds of w\n" +
-			"set bounds of w to {x, y, x+(x2-x1), y+(y2-y1)}";
-	}
-
 
 	private static String restoreWindowsNotInScript(final Rectangle rect) {
 		return
@@ -232,7 +234,8 @@ class MacEnvironment extends Environment {
 	private static Rectangle getWindowVisibleArea() {
 		final int menuBarHeight = 22;
 		int x = 1, y = menuBarHeight,
-			width = getScreenWidth() - 1, height = getScreenHeight() - menuBarHeight;
+			width = getScreenWidth() - 2, // 0-origin ‚È‚Ì‚Å
+			height = getScreenHeight() - menuBarHeight;
 
 		refreshDockState();
 		final String orientation = getDockOrientation();
