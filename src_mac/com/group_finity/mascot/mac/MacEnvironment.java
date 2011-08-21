@@ -142,7 +142,7 @@ class MacEnvironment extends Environment {
 
 	private static void restoreWindowsNotIn(final Rectangle rect) {
 		Rectangle visibleArea = getWindowVisibleArea();
-		for (long pid : touchedProcesses) {
+		for (long pid : getTouchedProcesses()) {
 			AXUIElementRef application =
 				carbon.AXUIElementCreateApplication(pid);
 
@@ -278,8 +278,12 @@ class MacEnvironment extends Environment {
 	private static void setCurrentPID(long newPID) {
 		if (newPID != myPID) {
 			currentPID = newPID;
-			touchedProcesses.add(newPID);
+			getTouchedProcesses().add(newPID);
 		}
+	}
+
+	private static HashSet<Long> getTouchedProcesses() {
+		return touchedProcesses;
 	}
 
   private void updateFrontmostWindow() {
