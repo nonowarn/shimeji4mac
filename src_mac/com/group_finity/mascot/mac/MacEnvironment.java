@@ -89,13 +89,13 @@ class MacEnvironment extends Environment {
   }
 
 	private static long getFrontmostAppsPID() {
-		ProcessSerialNumber front_process_psn = new ProcessSerialNumber();
-		LongByReference front_process_pidp = new LongByReference();
+		ProcessSerialNumber frontProcessPsn = new ProcessSerialNumber();
+		LongByReference frontProcessPidp = new LongByReference();
 
-		carbon.GetFrontProcess(front_process_psn);
-		carbon.GetProcessPID(front_process_psn, front_process_pidp);
+		carbon.GetFrontProcess(frontProcessPsn);
+		carbon.GetProcessPID(frontProcessPsn, frontProcessPidp);
 
-		return front_process_pidp.getValue();
+		return frontProcessPidp.getValue();
 	}
 
 	private static CGPoint getPositionOfWindow(AXUIElementRef window) {
@@ -191,15 +191,13 @@ class MacEnvironment extends Environment {
 	private static void moveWindow(AXUIElementRef window, int x, int y) {
 		CGPoint position = new CGPoint((double) x, (double) y);
 		position.write();
-		AXValueRef axvalue = carbon.AXValueCreate(carbon.kAXValueCGPointType, position.getPointer());
-		carbon.AXUIElementSetAttributeValue(
-			window, kAXPosition, axvalue);
+		AXValueRef axvalue = carbon.AXValueCreate(
+			carbon.kAXValueCGPointType, position.getPointer());
+		carbon.AXUIElementSetAttributeValue(window, kAXPosition, axvalue);
 	}
 
 	private static CFStringRef createCFString(String s) {
-		return Carbon
-			.INSTANCE
-			.CFStringCreateWithCharacters(null, s.toCharArray(), s.length());
+		return carbon.CFStringCreateWithCharacters(null, s.toCharArray(), s.length());
 	}
 
 	private static int getScreenWidth() {
@@ -249,10 +247,12 @@ class MacEnvironment extends Environment {
 
 	private static String getDockOrientation() {
 		CFTypeRef orientationRef =
-			carbon.CFPreferencesCopyValue(kOrientation, kDock, carbon.kCurrentUser, carbon.kAnyHost);
+			carbon.CFPreferencesCopyValue(
+				kOrientation, kDock, carbon.kCurrentUser, carbon.kAnyHost);
 		final int bufsize = 64;
 		Memory buf = new Memory(64);
-		carbon.CFStringGetCString(orientationRef, buf, bufsize, carbon.CFStringGetSystemEncoding());
+		carbon.CFStringGetCString(
+			orientationRef, buf, bufsize, carbon.CFStringGetSystemEncoding());
 		carbon.CFRelease(orientationRef);
 		String ret = buf.getString(0, false);
 		buf.clear();
@@ -261,7 +261,8 @@ class MacEnvironment extends Environment {
 
 	private static int getDockTileSize() {
 		CFTypeRef tilesizeRef =
-			carbon.CFPreferencesCopyValue(kTileSize, kDock, carbon.kCurrentUser, carbon.kAnyHost);
+			carbon.CFPreferencesCopyValue(
+				kTileSize, kDock, carbon.kCurrentUser, carbon.kAnyHost);
 		IntByReference intRef = new IntByReference();
 		carbon.CFNumberGetValue(tilesizeRef, carbon.kCFNumberInt32Type, intRef);
 		carbon.CFRelease(tilesizeRef);
@@ -327,7 +328,8 @@ class MacEnvironment extends Environment {
 			minX = visibleRect.getMinX() - windowRect.getWidth(), // 左方向の折り返し座標
 			maxX = visibleRect.getMaxX(),													// 右方向の折り返し座標
 			minY = visibleRect.getMinY(),													// 上方向の折り返し座標
-																														// (メニューバーより上へは移動できない)
+																														// (メニューバーより
+																														//  上へは移動できない)
 			maxY = visibleRect.getMaxY();													// 下方向の折り返し座標
 
 		double
