@@ -283,11 +283,15 @@ class MacEnvironment extends Environment {
 	}
 
   private void updateFrontmostWindow() {
-    final Rectangle frontmostWindowRect = getFrontmostAppRect();
+    final Rectangle
+			frontmostWindowRect = getFrontmostAppRect(),
+			windowVisibleArea = getWindowVisibleArea();
 
     frontmostWindow.setVisible(
       (frontmostWindowRect != null)
-      && frontmostWindowRect.intersects(getWindowVisibleArea()));
+      && frontmostWindowRect.intersects(windowVisibleArea)
+			&& !frontmostWindowRect.contains(windowVisibleArea) // デスクトップを除外
+			);
     frontmostWindow.set(
       frontmostWindowRect == null ? new Rectangle(-1, -1, 0, 0) : frontmostWindowRect);
   }
