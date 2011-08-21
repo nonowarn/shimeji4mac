@@ -37,6 +37,9 @@ public interface Carbon extends Library {
 		CFTypeRef strRef, Pointer buffer, long length, int encoding);
 	int CFStringGetSystemEncoding();
 
+	long CFArrayGetCount(CFArrayRef array);
+	Pointer CFArrayGetValueAtIndex(CFArrayRef array, long i);
+
 	void CFRelease(CFTypeRef any);
 
 	NativeLibrary nl = NativeLibrary.getProcess();

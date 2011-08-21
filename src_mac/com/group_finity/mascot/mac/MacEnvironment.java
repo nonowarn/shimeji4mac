@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.lang.management.ManagementFactory;
 
 import javax.script.ScriptEngine;
@@ -27,6 +28,7 @@ import com.group_finity.mascot.mac.jna.CGPoint;
 import com.group_finity.mascot.mac.jna.CGSize;
 import com.group_finity.mascot.mac.jna.CFStringRef;
 import com.group_finity.mascot.mac.jna.CFNumberRef;
+import com.group_finity.mascot.mac.jna.CFArrayRef;
 
 /**
  * Java Ç≈ÇÕéÊìæÇ™ìÔÇµÇ¢ä¬ã´èÓïÒÇAppleScriptÇégópÇµÇƒéÊìæÇ∑ÇÈ.
@@ -59,13 +61,16 @@ class MacEnvironment extends Environment {
 
 	private static long currentPID = myPID;
 
+	private static HashSet<Long> touchedProcesses = new HashSet<Long>();
+
 	static final CFStringRef
   	kAXPosition = createCFString("AXPosition"),
 		kAXSize = createCFString("AXSize"),
 		kAXFocusedWindow = createCFString("AXFocusedWindow"),
 		kDock = createCFString("com.apple.Dock"),
 		kTileSize = createCFString("tilesize"),
-		kOrientation = createCFString("orientation");
+		kOrientation = createCFString("orientation"),
+		kAXChildren = createCFString("AXChildren");
 
   private static Rectangle getFrontmostAppRect() {
 		Rectangle ret;
@@ -106,6 +111,7 @@ class MacEnvironment extends Environment {
 
 		if (newPID != myPID) {
 			currentPID = newPID;
+			touchedProcesses.add(newPID);
 		}
 
 		return currentPID;
@@ -159,36 +165,58 @@ class MacEnvironment extends Environment {
 	}
 
 	private static void restoreWindowsNotIn(final Rectangle rect) {
-		try {
-			engine.eval(restoreWindowsNotInScript(rect));
-		} catch (ScriptException e) {}
+		Rectangle visibleArea = getWindowVisibleArea();
+		for (long pid : touchedProcesses) {
+			AXUIElementRef application =
+				carbon.AXUIElementCreateApplication(pid);
+
+			for (AXUIElementRef window : getWindowsOf(application)) {
+				Rectangle windowRect = getWindowRect(window);
+				if (!visibleArea.intersects(windowRect)) {
+					moveWindow(window, 0, 0);
+				}
+			}
+
+			carbon.CFRelease(application);
+		}
 	}
 
-	private static String restoreWindowsNotInScript(final Rectangle rect) {
-		return
-			"tell application \"System Events\" to set procs to every processes whose visible is true\n" +
-			"set {dx1, dy1, dx2, dy2} to { " +
-			  Double.toString(rect.getMinX()) + "," +
-			  Double.toString(rect.getMinY()) + "," +
-			  Double.toString(rect.getMaxX()) + "," +
-			  Double.toString(rect.getMaxY()) +
-			"}\n" +
-			"repeat with proc in procs\n" +
-			"  tell application (name of proc)\n" +
-			"    try\n" +
-			"    set allWindows to (every window whose visible is true)\n" +
-			"    repeat with myWindow in allWindows\n" +
-			"      set {x1, y1, x2, y2} to bounds of myWindow\n" +
-			"      set w to x2-x1\n" +
-			"      set h to y2-y1\n" +
-			"      if x2 <= dx1 or x1 >= dx2 or y2 <= dy1 or y1 >= dy2 then\n" +
-			"        set bounds of myWindow to {dx1, dy1, dx1+w, dy1+h}\n" +
-			"      end if\n" +
-			"    end repeat\n" +
-			"    on error msg\n" +
-			"    end try\n" +
-			"  end\n" +
-			"end";
+	private static ArrayList<AXUIElementRef> getWindowsOf(AXUIElementRef application) {
+		PointerByReference axWindowsp = new PointerByReference();
+		ArrayList<AXUIElementRef> ret = new ArrayList<AXUIElementRef>();
+
+		carbon.AXUIElementCopyAttributeValue(application, kAXChildren, axWindowsp);
+
+		if (axWindowsp.getValue() == Pointer.NULL) {
+			return ret;
+		}
+
+		CFArrayRef cfWindows = new CFArrayRef();
+		cfWindows.setPointer(axWindowsp.getValue());
+
+		for (long i = 0, l = carbon.CFArrayGetCount(cfWindows); i < l; ++i) {
+			Pointer p = carbon.CFArrayGetValueAtIndex(cfWindows, i);
+			AXUIElementRef el = new AXUIElementRef();
+			el.setPointer(p);
+			ret.add(el);
+		}
+
+		return ret;
+	}
+
+	private static Rectangle getWindowRect(AXUIElementRef window) {
+		CGPoint pos = getPositionOfWindow(window);
+		CGSize size = getSizeOfWindow(window);
+		int x = pos.getX(), y = pos.getY();
+		return new Rectangle(x, y, x + size.getWidth(), y + size.getHeight());
+	}
+
+	private static void moveWindow(AXUIElementRef window, int x, int y) {
+		CGPoint position = new CGPoint((double) x, (double) y);
+		position.write();
+		AXValueRef axvalue = carbon.AXValueCreate(carbon.kAXValueCGPointType, position.getPointer());
+		carbon.AXUIElementSetAttributeValue(
+			window, kAXPosition, axvalue);
 	}
 
   private static Rectangle rectangleFromBounds(ArrayList<Long> bounds) {
