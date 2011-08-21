@@ -207,17 +207,6 @@ class MacEnvironment extends Environment {
 			window, kAXPosition, axvalue);
 	}
 
-  private static Rectangle rectangleFromBounds(ArrayList<Long> bounds) {
-    int
-      leftTopX     = bounds.get(0).intValue(), leftTopY     = bounds.get(1).intValue(),
-      rightBottomX = bounds.get(2).intValue(), rightBottomY = bounds.get(3).intValue();
-    return new Rectangle(
-      leftTopX,
-      leftTopY,
-      rightBottomX - leftTopX,
-      rightBottomY - leftTopY);
-  }
-
 	private static CFStringRef createCFString(String s) {
 		return Carbon
 			.INSTANCE
