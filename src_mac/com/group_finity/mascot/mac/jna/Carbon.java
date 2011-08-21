@@ -40,6 +40,7 @@ public interface Carbon extends Library {
 	long CFArrayGetCount(CFArrayRef array);
 	Pointer CFArrayGetValueAtIndex(CFArrayRef array, long i);
 
+	void CFRetain(CFTypeRef any);
 	void CFRelease(CFTypeRef any);
 
 	NativeLibrary nl = NativeLibrary.getProcess();

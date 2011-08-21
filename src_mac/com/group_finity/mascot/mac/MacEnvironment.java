@@ -147,10 +147,12 @@ class MacEnvironment extends Environment {
 				carbon.AXUIElementCreateApplication(pid);
 
 			for (AXUIElementRef window : getWindowsOf(application)) {
+				carbon.CFRetain(window);
 				Rectangle windowRect = getRectOfWindow(window);
 				if (!visibleArea.intersects(windowRect)) {
 					moveWindow(window, 0, 0);
 				}
+				carbon.CFRelease(window);
 			}
 
 			carbon.CFRelease(application);
