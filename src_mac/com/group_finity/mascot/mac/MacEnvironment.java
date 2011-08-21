@@ -7,10 +7,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.lang.management.ManagementFactory;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-
 import com.sun.jna.Pointer;
 import com.sun.jna.Memory;
 import com.sun.jna.ptr.IntByReference;
@@ -49,8 +45,6 @@ class MacEnvironment extends Environment {
 		(int) Math.round(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
 	private static final int screenHeight =
 		(int) Math.round(Toolkit.getDefaultToolkit().getScreenSize().getHeight());
-
-  private static ScriptEngine engine = new ScriptEngineManager().getEngineByName("AppleScript");
 
 	private static Carbon carbon = Carbon.INSTANCE;
 
