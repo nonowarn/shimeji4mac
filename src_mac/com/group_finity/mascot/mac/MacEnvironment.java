@@ -67,7 +67,7 @@ class MacEnvironment extends Environment {
 
   private static Rectangle getFrontmostAppRect() {
 		Rectangle ret;
-		long pid = getFrontmostAppsPID();
+		long pid = getCurrentPID();
 
 		AXUIElementRef application =
 			carbon.AXUIElementCreateApplication(pid);
@@ -95,14 +95,7 @@ class MacEnvironment extends Environment {
 		carbon.GetFrontProcess(front_process_psn);
 		carbon.GetProcessPID(front_process_psn, front_process_pidp);
 
-		long newPID = front_process_pidp.getValue();
-
-		if (newPID != myPID) {
-			currentPID = newPID;
-			touchedProcesses.add(newPID);
-		}
-
-		return currentPID;
+		return front_process_pidp.getValue();
 	}
 
 	private static CGPoint getPositionOfWindow(AXUIElementRef window) {
@@ -278,6 +271,17 @@ class MacEnvironment extends Environment {
 		carbon.CFPreferencesAppSynchronize(kDock);
 	}
 
+	private static long getCurrentPID() {
+		return currentPID;
+	}
+
+	private static void setCurrentPID(long newPID) {
+		if (newPID != myPID) {
+			currentPID = newPID;
+			touchedProcesses.add(newPID);
+		}
+	}
+
   private void updateFrontmostWindow() {
     final Rectangle frontmostWindowRect = getFrontmostAppRect();
 
@@ -288,9 +292,15 @@ class MacEnvironment extends Environment {
       frontmostWindowRect == null ? new Rectangle(-1, -1, 0, 0) : frontmostWindowRect);
   }
 
+	private static void updateFrontmostApp() {
+		long newPID = getFrontmostAppsPID();
+		setCurrentPID(newPID);
+	}
+
 	@Override
 	public void tick() {
 		super.tick();
+		this.updateFrontmostApp();
     this.updateFrontmostWindow();
 	}
 
