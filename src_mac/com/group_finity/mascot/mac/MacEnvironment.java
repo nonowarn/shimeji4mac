@@ -347,6 +347,7 @@ class MacEnvironment extends Environment {
 	public void restoreIE() {
 		final Rectangle visibleRect = getWindowVisibleArea();
 		restoreWindowsNotIn(visibleRect);
+		getTouchedProcesses().clear();
 	}
 
 	@Override
