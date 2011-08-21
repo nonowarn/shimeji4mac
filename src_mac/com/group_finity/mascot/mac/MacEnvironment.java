@@ -185,8 +185,7 @@ class MacEnvironment extends Environment {
 	private static Rectangle getRectOfWindow(AXUIElementRef window) {
 		CGPoint pos = getPositionOfWindow(window);
 		CGSize size = getSizeOfWindow(window);
-		int x = pos.getX(), y = pos.getY();
-		return new Rectangle(x, y, size.getWidth(), size.getHeight());
+		return new Rectangle(pos.getX(), pos.getY(), size.getWidth(), size.getHeight());
 	}
 
 	private static void moveWindow(AXUIElementRef window, int x, int y) {
