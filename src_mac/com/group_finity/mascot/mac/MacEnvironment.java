@@ -147,12 +147,7 @@ class MacEnvironment extends Environment {
 					application, kAXFocusedWindow, windowp) == carbon.kAXErrorSuccess) {
 			AXUIElementRef window = new AXUIElementRef();
 			window.setPointer(windowp.getValue());
-
-			CGPoint position = new CGPoint((double) point.x, (double) point.y);
-			position.write();
-			AXValueRef axvalue = carbon.AXValueCreate(carbon.kAXValueCGPointType, position.getPointer());
-			carbon.AXUIElementSetAttributeValue(
-				window, kAXPosition, axvalue);
+			moveWindow(window, (int) point.x, (int) point.y);
 		}
 
 		carbon.CFRelease(application);
