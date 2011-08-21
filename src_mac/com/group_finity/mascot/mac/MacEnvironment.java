@@ -79,12 +79,7 @@ class MacEnvironment extends Environment {
 					application, kAXFocusedWindow, windowp) == carbon.kAXErrorSuccess) {
 			AXUIElementRef window = new AXUIElementRef();
 			window.setPointer(windowp.getValue());
-
-			CGPoint position = getPositionOfWindow(window);
-			CGSize size = getSizeOfWindow(window);
-
-			ret = new Rectangle(
-				position.getX(), position.getY(), size.getWidth(), size.getHeight());
+			ret = getRectOfWindow(window);
 		} else {
 			ret = null;
 		}
@@ -159,7 +154,7 @@ class MacEnvironment extends Environment {
 				carbon.AXUIElementCreateApplication(pid);
 
 			for (AXUIElementRef window : getWindowsOf(application)) {
-				Rectangle windowRect = getWindowRect(window);
+				Rectangle windowRect = getRectOfWindow(window);
 				if (!visibleArea.intersects(windowRect)) {
 					moveWindow(window, 0, 0);
 				}
@@ -192,11 +187,11 @@ class MacEnvironment extends Environment {
 		return ret;
 	}
 
-	private static Rectangle getWindowRect(AXUIElementRef window) {
+	private static Rectangle getRectOfWindow(AXUIElementRef window) {
 		CGPoint pos = getPositionOfWindow(window);
 		CGSize size = getSizeOfWindow(window);
 		int x = pos.getX(), y = pos.getY();
-		return new Rectangle(x, y, x + size.getWidth(), y + size.getHeight());
+		return new Rectangle(x, y, size.getWidth(), size.getHeight());
 	}
 
 	private static void moveWindow(AXUIElementRef window, int x, int y) {
