@@ -239,6 +239,7 @@ class MacEnvironment extends Environment {
 			width -= tilesize;
 		}	else /* if ("left".equals(orientation)) */ {
 			x += tilesize;
+			width -= tilesize;
 		}
 
 		Rectangle r = new Rectangle(x, y, width, height);
