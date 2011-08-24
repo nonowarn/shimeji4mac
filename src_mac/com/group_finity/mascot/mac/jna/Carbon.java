@@ -42,6 +42,7 @@ public interface Carbon extends Library {
 
 	void CFRetain(CFTypeRef any);
 	void CFRelease(CFTypeRef any);
+	void CFShow(CFTypeRef any);
 
 	NativeLibrary nl = NativeLibrary.getProcess();
 	Pointer kCurrentUser = nl.getGlobalVariableAddress("kCFPreferencesCurrentUser").getPointer(0);

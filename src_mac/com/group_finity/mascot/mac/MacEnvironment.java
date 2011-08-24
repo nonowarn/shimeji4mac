@@ -237,9 +237,13 @@ class MacEnvironment extends Environment {
 			height -= tilesize;
 		} else if ("right".equals(orientation)) {
 			width -= tilesize;
-		}	else /* if ("left".equals(orientation)) */ {
+		}	else if ("left".equals(orientation)) {
 			x += tilesize;
 			width -= tilesize;
+		}	else /* if ("null".equals(orientation)) */ {
+			// Dock ‚Ì•ûŒü‚ª‚í‚©‚ç‚È‚¢‚Ì‚ÅA‚Ç‚¿‚ç‚É‚ ‚Á‚Ä‚à‚¢‚¢‚æ‚¤‚É‚·‚é
+			x += tilesize;
+			width -= 2 * tilesize;
 		}
 
 		Rectangle r = new Rectangle(x, y, width, height);
@@ -250,6 +254,12 @@ class MacEnvironment extends Environment {
 		CFTypeRef orientationRef =
 			carbon.CFPreferencesCopyValue(
 				kOrientation, kDock, carbon.kCurrentUser, carbon.kAnyHost);
+
+		// CFPreferencesCopyValue ‚ª null ‚ğ•Ô‚·ŠÂ‹«‚ª‚ ‚é
+		if (orientationRef == null) {
+			return "null";
+		}
+
 		final int bufsize = 64;
 		Memory buf = new Memory(64);
 		carbon.CFStringGetCString(
