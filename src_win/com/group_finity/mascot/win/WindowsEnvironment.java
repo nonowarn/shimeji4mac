@@ -20,14 +20,14 @@ import com.sun.jna.Pointer;
 import com.sun.jna.ptr.PointerByReference;
 
 /**
- * Java ‚Å‚Íæ“¾‚ª“ï‚µ‚¢ŠÂ‹«î•ñ‚ğJNI‚ğg—p‚µ‚Äæ“¾‚·‚é.
+ * Java ã§ã¯å–å¾—ãŒé›£ã—ã„ç’°å¢ƒæƒ…å ±ã‚’JNIã‚’ä½¿ç”¨ã—ã¦å–å¾—ã™ã‚‹.
  */
 class WindowsEnvironment extends Environment {
 
 	/**
-	 * ì‹Æ—Ìˆæ‚ğæ“¾‚·‚é. ‚±‚Ì—Ìˆæ‚ÍƒfƒBƒXƒvƒŒƒC—Ìˆæ‚©‚çƒ^ƒXƒNƒo[‚ğ‚Ì‚¼‚¢‚½‚à‚Ì‚É‚È‚é.
+	 * ä½œæ¥­é ˜åŸŸã‚’å–å¾—ã™ã‚‹. ã“ã®é ˜åŸŸã¯ãƒ‡ã‚£ã‚¹ãƒ—ãƒ¬ã‚¤é ˜åŸŸã‹ã‚‰ã‚¿ã‚¹ã‚¯ãƒãƒ¼ã‚’ã®ãã„ãŸã‚‚ã®ã«ãªã‚‹.
 	 *
-	 * @return ì‹Æ—Ìˆæ.
+	 * @return ä½œæ¥­é ˜åŸŸ.
 	 */
 	private static Rectangle getWorkAreaRect() {
 		final RECT rect = new RECT();
@@ -44,7 +44,7 @@ class WindowsEnvironment extends Environment {
 			return cache;
 		}
 
-		// ƒEƒBƒ“ƒhƒEƒ^ƒCƒgƒ‹‚Å IE ‚©‚Ç‚¤‚©”»’f‚·‚é
+		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¿ã‚¤ãƒˆãƒ«ã§ IE ã‹ã©ã†ã‹åˆ¤æ–­ã™ã‚‹
 		final char[] title = new char[1024];
 
 		final int titleLength = User32.INSTANCE.GetWindowTextW(ie, title, 1024);
@@ -65,7 +65,7 @@ class WindowsEnvironment extends Environment {
 		}
 
 
-		// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒEƒX‚Å MSNƒƒbƒZƒ“ƒWƒƒ‚©”»’f‚·‚é
+		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¦ã‚¹ã§ MSNãƒ¡ãƒƒã‚»ãƒ³ã‚¸ãƒ£ã‹åˆ¤æ–­ã™ã‚‹
 		final char[] className = new char[1024];
 
 		final int classNameLength = User32.INSTANCE.GetClassNameW(ie, className, 1024);
@@ -97,12 +97,12 @@ class WindowsEnvironment extends Environment {
 
 			if ( User32.INSTANCE.IsWindowVisible(ie)!=0) {
 				if ((User32.INSTANCE.GetWindowLongW(ie, User32.GWL_STYLE) & User32.WS_MAXIMIZE) != 0) {
-					// Å‘å‰»‚³‚ê‚Ä‚¢‚éƒEƒBƒ“ƒhƒE‚ªŒ©‚Â‚©‚Á‚½‚Ì‚Å’†~
+					// æœ€å¤§åŒ–ã•ã‚Œã¦ã„ã‚‹ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒè¦‹ã¤ã‹ã£ãŸã®ã§ä¸­æ­¢
 					return null;
 				}
 
 				if (isIE(ie) && (User32.INSTANCE.IsIconic(ie) == 0)) {
-					// IE ‚ªŒ©‚Â‚©‚Á‚½
+					// IE ãŒè¦‹ã¤ã‹ã£ãŸ
 					break;
 				}
 			}
@@ -112,7 +112,7 @@ class WindowsEnvironment extends Environment {
 		}
 
 		if (User32.INSTANCE.IsWindow(ie) == 0) {
-			// Œ©‚Â‚©‚ç‚È‚©‚Á‚½
+			// è¦‹ã¤ã‹ã‚‰ãªã‹ã£ãŸ
 			return null;
 		}
 
@@ -120,15 +120,15 @@ class WindowsEnvironment extends Environment {
 	}
 
 	/**
-	 * ƒAƒNƒeƒBƒu‚ÈIE‚Ì—Ìˆæ‚ğæ“¾‚·‚é.
+	 * ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªIEã®é ˜åŸŸã‚’å–å¾—ã™ã‚‹.
 	 *
-	 * @return ƒAƒNƒeƒBƒu‚ÈIE‚Ì—Ìˆæ. Œ©‚Â‚¯‚ç‚ê‚È‚©‚Á‚½‚Æ‚«‚Í null.
+	 * @return ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªIEã®é ˜åŸŸ. è¦‹ã¤ã‘ã‚‰ã‚Œãªã‹ã£ãŸã¨ãã¯ null.
 	 */
 	private static Rectangle getActiveIERect() {
 
 		final Pointer ie = findActiveIE();
 
-		// IE ‚Ì‹éŒ`‚ğæ“¾
+		// IE ã®çŸ©å½¢ã‚’å–å¾—
 		final RECT out = new RECT();
 		User32.INSTANCE.GetWindowRect(ie, out);
 		final RECT in = new RECT();
@@ -139,7 +139,7 @@ class WindowsEnvironment extends Environment {
 			in.bottom = out.bottom - out.top;
 		}
 
-		// Rectangle ƒIƒuƒWƒFƒNƒg‚ğì‚Á‚Ä•Ô‚·
+		// Rectangle ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œã£ã¦è¿”ã™
 		return new Rectangle(out.left + in.left, out.top + in.top, in.Width(), in.Height());
 	}
 
@@ -163,7 +163,7 @@ class WindowsEnvironment extends Environment {
 			return false;
 		}
 
-		// IE ‚Ì‹éŒ`‚ğæ“¾
+		// IE ã®çŸ©å½¢ã‚’å–å¾—
 		final RECT out = new RECT();
 		User32.INSTANCE.GetWindowRect(ie, out);
 		final RECT in = new RECT();
@@ -182,7 +182,7 @@ class WindowsEnvironment extends Environment {
 
 	private static void restoreAllIEs() {
 
-		// ƒ[ƒNƒGƒŠƒA‚Ì‹éŒ`‚ğæ“¾
+		// ãƒ¯ãƒ¼ã‚¯ã‚¨ãƒªã‚¢ã®çŸ©å½¢ã‚’å–å¾—
 		final RECT workArea = new RECT();
 		User32.INSTANCE.SystemParametersInfoW(User32.SPI_GETWORKAREA, 0, workArea, 0);
 
@@ -190,14 +190,14 @@ class WindowsEnvironment extends Environment {
 
 		while (User32.INSTANCE.IsWindow(ie) != 0) {
 			if (isIE(ie)) {
-				// IE ‚ªŒ©‚Â‚©‚Á‚½
+				// IE ãŒè¦‹ã¤ã‹ã£ãŸ
 
-				// IE ‚Ì‹éŒ`‚ğæ“¾
+				// IE ã®çŸ©å½¢ã‚’å–å¾—
 				final RECT rect = new RECT();
 				User32.INSTANCE.GetWindowRect(ie, rect);
 				if ((rect.right <= workArea.left + 100) || (rect.bottom <= workArea.top + 100)
 						|| (rect.left >= workArea.right - 100) || (rect.top >= workArea.bottom - 100)) {
-					// ˆÊ’u‚ª‚¨‚©‚µ‚¢‚æ‚¤‚È‹C‚ª‚·‚é
+					// ä½ç½®ãŒãŠã‹ã—ã„ã‚ˆã†ãªæ°—ãŒã™ã‚‹
 
 					rect.OffsetRect(workArea.left + 100 - rect.left, workArea.top + 100 - rect.top);
 					User32.INSTANCE.MoveWindow(ie, rect.left, rect.top, rect.Width(), rect.Height(), 1);

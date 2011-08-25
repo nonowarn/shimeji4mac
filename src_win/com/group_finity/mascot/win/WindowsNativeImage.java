@@ -13,19 +13,19 @@ import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 
 /**
- * {@link WindowsTranslucentWindow} ‚Ég—p‰Â”\‚Èƒ¿’l‚Â‚«‰æ‘œ.
+ * {@link WindowsTranslucentWindow} ã«ä½¿ç”¨å¯èƒ½ãªÎ±å€¤ã¤ãç”»åƒ.
  * 
- * {@link WindowsTranslucentWindow} ‚Ég—p‚Å‚«‚é‚Ì‚Í Windows ƒrƒbƒgƒ}ƒbƒv‚¾‚¯‚È‚Ì‚ÅA
- * Šù‘¶‚Ì {@link BufferedImage} ‚©‚ç Windows ƒrƒbƒgƒ}ƒbƒv‚ÉƒsƒNƒZƒ‹‚ğƒRƒs[‚·‚é.
+ * {@link WindowsTranslucentWindow} ã«ä½¿ç”¨ã§ãã‚‹ã®ã¯ Windows ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã ã‘ãªã®ã§ã€
+ * æ—¢å­˜ã® {@link BufferedImage} ã‹ã‚‰ Windows ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã«ãƒ”ã‚¯ã‚»ãƒ«ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹.
  * 
  */
 class WindowsNativeImage implements NativeImage {
 
 	/**
-	 * Windows ƒrƒbƒgƒ}ƒbƒv‚ğì¬‚·‚é.
-	 * @param width ƒrƒbƒgƒ}ƒbƒv‚Ì‰¡•.
-	 * @param height ƒrƒbƒgƒ}ƒbƒv‚Ì‚‚³.
-	 * @return ì¬‚µ‚½ƒrƒbƒgƒ}ƒbƒv‚Ìƒnƒ“ƒhƒ‹.
+	 * Windows ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã‚’ä½œæˆã™ã‚‹.
+	 * @param width ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã®æ¨ªå¹….
+	 * @param height ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã®é«˜ã•.
+	 * @return ä½œæˆã—ãŸãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã®ãƒãƒ³ãƒ‰ãƒ«.
 	 */
 	private static Pointer createNative(final int width, final int height) {
 
@@ -43,16 +43,16 @@ class WindowsNativeImage implements NativeImage {
 	}
 
 	/**
-	 * {@link BufferedImage} ‚Ì“à—e‚ğƒrƒbƒgƒ}ƒbƒv‚É”½‰f‚³‚¹‚é.
-	 * @param nativeHandle ƒrƒbƒgƒ}ƒbƒv‚Ìƒnƒ“ƒhƒ‹.
-	 * @param rgb ‰æ‘œ‚ÌARGB’l.
+	 * {@link BufferedImage} ã®å†…å®¹ã‚’ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã«åæ˜ ã•ã›ã‚‹.
+	 * @param nativeHandle ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã®ãƒãƒ³ãƒ‰ãƒ«.
+	 * @param rgb ç”»åƒã®ARGBå€¤.
 	 */
 	private static void flushNative(final Pointer nativeHandle, final int[] rgb) {
 
 		final BITMAP bmp = new BITMAP();
 		Gdi32.INSTANCE.GetObjectW(nativeHandle, 20+Native.POINTER_SIZE, bmp);
 
-		// ƒsƒNƒZƒ‹ƒŒƒxƒ‹‚ÅƒRƒs[‚·‚é.
+		// ãƒ”ã‚¯ã‚»ãƒ«ãƒ¬ãƒ™ãƒ«ã§ã‚³ãƒ”ãƒ¼ã™ã‚‹.
 		final int width = bmp.bmWidth;
 		final int height = bmp.bmHeight;
 		final int destPitch = ((bmp.bmWidth*bmp.bmBitsPixel)+31)/32*4;
@@ -62,9 +62,9 @@ class WindowsNativeImage implements NativeImage {
 		{
 			for( int x = 0; x<width; ++x )
 			{
-				// UpdateLayeredWindow ‚Æ Photoshop ‚Í‘Š«‚ªˆ«‚¢‚ç‚µ‚¢
-				// UpdateLayeredWindow ‚ÍRGB’l‚ª FFFFFF ‚¾‚Æƒ¿’l‚ğ–³‹‚µ‚Ä‚µ‚Ü‚¤ƒoƒO‚ª‚ ‚èA
-				// Photoshop ‚Íƒ¿’l‚ª0‚È‚Æ‚±‚ë‚ÍRGB’l‚ğ 0 ‚É‚·‚é“Á«‚ª‚ ‚é.
+				// UpdateLayeredWindow ã¨ Photoshop ã¯ç›¸æ€§ãŒæ‚ªã„ã‚‰ã—ã„
+				// UpdateLayeredWindow ã¯RGBå€¤ãŒ FFFFFF ã ã¨Î±å€¤ã‚’ç„¡è¦–ã—ã¦ã—ã¾ã†ãƒã‚°ãŒã‚ã‚Šã€
+				// Photoshop ã¯Î±å€¤ãŒ0ãªã¨ã“ã‚ã¯RGBå€¤ã‚’ 0 ã«ã™ã‚‹ç‰¹æ€§ãŒã‚ã‚‹.
 
 				bmp.bmBits.setInt(destIndex + x*4,
 					(rgb[srcIndex]&0xFF000000)==0 ? 0 : rgb[srcIndex] );
@@ -78,25 +78,25 @@ class WindowsNativeImage implements NativeImage {
 	}
 
 	/**
-	 * Windows ƒrƒbƒgƒ}ƒbƒv‚ğŠJ•ú‚·‚é.
-	 * @param nativeHandle ƒrƒbƒgƒ}ƒbƒv‚Ìƒnƒ“ƒhƒ‹.
+	 * Windows ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã‚’é–‹æ”¾ã™ã‚‹.
+	 * @param nativeHandle ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã®ãƒãƒ³ãƒ‰ãƒ«.
 	 */
 	private static void freeNative(final Pointer nativeHandle) {
 		Gdi32.INSTANCE.DeleteObject(nativeHandle);
 	}
 
 	/**
-	 * Java ƒCƒ[ƒWƒIƒuƒWƒFƒNƒg.
+	 * Java ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ.
 	 */
 	private final BufferedImage managedImage;
 
 	/**
-	 * Windows ƒrƒbƒgƒ}ƒbƒvƒnƒ“ƒhƒ‹.
+	 * Windows ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ãƒãƒ³ãƒ‰ãƒ«.
 	 */
 	private final Pointer nativeHandle;
 
 	/**
-	 * ARGB’l‚Ì“]‘—‚Ég—p‚·‚éƒoƒbƒtƒ@.
+	 * ARGBå€¤ã®è»¢é€ã«ä½¿ç”¨ã™ã‚‹ãƒãƒƒãƒ•ã‚¡.
 	 */
 	private final int[] rgb;
 
@@ -114,7 +114,7 @@ class WindowsNativeImage implements NativeImage {
 	}
 
 	/**
-	 * ‰æ‘œ‚Ö‚Ì•ÏX‚ğ Windows ƒrƒbƒgƒ}ƒbƒv‚É”½‰f‚³‚¹‚é.
+	 * ç”»åƒã¸ã®å¤‰æ›´ã‚’ Windows ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã«åæ˜ ã•ã›ã‚‹.
 	 */
 	public void update() {
 

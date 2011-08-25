@@ -9,23 +9,23 @@ import javax.imageio.ImageIO;
 
 
 /**
- *@‰æ‘œƒyƒA‚ğ“Ç‚İ‚Ş.
+ *ã€€ç”»åƒãƒšã‚¢ã‚’èª­ã¿è¾¼ã‚€.
  */
 public class ImagePairLoader {
 
 	/**
-	 * ‰æ‘œƒyƒA‚ğ“Ç‚İ‚Ş.
+	 * ç”»åƒãƒšã‚¢ã‚’èª­ã¿è¾¼ã‚€.
 	 *
-	 * ¶Œü‚«‰æ‘œ‚ğ“Ç‚İ‚ñ‚ÅA‰EŒü‚«‰æ‘œ‚ğ©“®¶¬‚·‚é.
+	 * å·¦å‘ãç”»åƒã‚’èª­ã¿è¾¼ã‚“ã§ã€å³å‘ãç”»åƒã‚’è‡ªå‹•ç”Ÿæˆã™ã‚‹.
 	 *
-	 * @param name “Ç‚İ‚İ‚½‚¢¶Œü‚«‰æ‘œ.
-	 * @param center ‰æ‘œ‚Ì’†‰›À•W.
-	 * @return “Ç‚İ‚ñ‚¾‰æ‘œƒyƒA.
+	 * @param name èª­ã¿è¾¼ã¿ãŸã„å·¦å‘ãç”»åƒ.
+	 * @param center ç”»åƒã®ä¸­å¤®åº§æ¨™.
+	 * @return èª­ã¿è¾¼ã‚“ã ç”»åƒãƒšã‚¢.
 	 */
 	public static ImagePair load(final String name, final Point center) throws IOException {
 
-		// flip ‚Å‚Í”¼“§–¾‚É‚È‚ç‚È‚¢‰æ‘œ‚ª‚ ‚é‚ç‚µ‚¢‚Ì‚Å
-		// shime1.png ‚É‘Î‚µ‚Ä shime1-r.png ‚ğ”½“]‰æ‘œ‚Æ‚µ‚Äg—p‚·‚é‚æ‚¤‚É‚µ‚Ä‰ñ”ğB
+		// flip ã§ã¯åŠé€æ˜ã«ãªã‚‰ãªã„ç”»åƒãŒã‚ã‚‹ã‚‰ã—ã„ã®ã§
+		// shime1.png ã«å¯¾ã—ã¦ shime1-r.png ã‚’åè»¢ç”»åƒã¨ã—ã¦ä½¿ç”¨ã™ã‚‹ã‚ˆã†ã«ã—ã¦å›é¿ã€‚
 		String rightName = name.replaceAll("\\.[a-zA-Z]+$", "-r$0");
 
 		final BufferedImage leftImage = ImageIO.read(ImagePairLoader.class.getResource(name));
@@ -44,9 +44,9 @@ public class ImagePairLoader {
 	}
 
 	/**
-	 * ‰æ‘œ‚ğ¶‰E”½“]‚³‚¹‚é.
-	 * @param src ¶‰E”½“]‚µ‚½‚¢‰æ‘œ
-	 * @return@¶‰E”½“]‚µ‚½
+	 * ç”»åƒã‚’å·¦å³åè»¢ã•ã›ã‚‹.
+	 * @param src å·¦å³åè»¢ã—ãŸã„ç”»åƒ
+	 * @returnã€€å·¦å³åè»¢ã—ãŸ
 	 */
 	private static BufferedImage flip(final BufferedImage src) {
 

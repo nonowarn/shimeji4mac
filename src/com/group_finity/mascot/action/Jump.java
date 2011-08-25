@@ -11,21 +11,21 @@ import com.group_finity.mascot.script.VariableMap;
 
 
 /**
- * ジャンプするアクション.
+ * 繧ｸ繝｣繝ｳ繝励☆繧九い繧ｯ繧ｷ繝ｧ繝ｳ.
  */
 public class Jump extends ActionBase {
 
 	private static final Logger log = Logger.getLogger(Jump.class.getName());
 
-	public static final String PARAMETER_TARGETX = "目的地X";
+	public static final String PARAMETER_TARGETX = "逶ｮ逧�蝨ｰX";
 	
 	private static final int DEFAULT_PARAMETERX = 0;
 	
-	public static final String PARAMETER_TARGETY = "目的地Y";
+	public static final String PARAMETER_TARGETY = "逶ｮ逧�蝨ｰY";
 	
 	private static final int DEFAULT_PARAMETERY = 0;
 
-	public static final String PARAMETER_VELOCITY = "速度";
+	public static final String PARAMETER_VELOCITY = "騾溷ｺｦ";
 
 	private static final double DEFAULT_VELOCITY = 20.0;
 

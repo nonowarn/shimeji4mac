@@ -13,18 +13,18 @@ import com.group_finity.mascot.script.Variable;
 import com.group_finity.mascot.script.VariableMap;
 
 /**
- * ƒAƒNƒVƒ‡ƒ“‚Ì‹¤’Ê‹@”\‚ğÀ‘•‚·‚é’ŠÛƒNƒ‰ƒX.
+ * ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã®å…±é€šæ©Ÿèƒ½ã‚’å®Ÿè£…ã™ã‚‹æŠ½è±¡ã‚¯ãƒ©ã‚¹.
  * @author Yuki Yamada
  */
 public abstract class ActionBase implements Action {
 
 	private static final Logger log = Logger.getLogger(ActionBase.class.getName());
 
-	public static final String PARAMETER_DURATION = "’·‚³";
+	public static final String PARAMETER_DURATION = "é•·ã•";
 
 	private static final boolean DEFAULT_CONDITION = true;
 
-	public static final String PARAMETER_CONDITION = "ğŒ";
+	public static final String PARAMETER_CONDITION = "æ¡ä»¶";
 
 	private static final int DEFAULT_DURATION = Integer.MAX_VALUE;
 
@@ -44,9 +44,9 @@ public abstract class ActionBase implements Action {
 	@Override
 	public String toString() {
 		try {
-			return "“®ì(" + getClass().getSimpleName() + "," + getName() + ")";
+			return "å‹•ä½œ(" + getClass().getSimpleName() + "," + getName() + ")";
 		} catch (final VariableException e) {
-			return "“®ì(" + getClass().getSimpleName() + "," + null + ")";
+			return "å‹•ä½œ(" + getClass().getSimpleName() + "," + null + ")";
 		}
 	}
 
@@ -55,16 +55,16 @@ public abstract class ActionBase implements Action {
 		this.setMascot(mascot);
 		this.setTime(0);
 
-		log.log(Level.INFO, "“®ìŠJn({0},{1})", new Object[] { getMascot(), this });
+		log.log(Level.INFO, "å‹•ä½œé–‹å§‹({0},{1})", new Object[] { getMascot(), this });
 
-		// ƒXƒNƒŠƒvƒg‚Åg—p‚Å‚«‚é‚æ‚¤‚Émascot‚Æaction‚ğ•Ï”ƒ}ƒbƒv‚É’Ç‰Á‚µ‚Ä‚¨‚­
+		// ã‚¹ã‚¯ãƒªãƒ—ãƒˆã§ä½¿ç”¨ã§ãã‚‹ã‚ˆã†ã«mascotã¨actionã‚’å¤‰æ•°ãƒãƒƒãƒ—ã«è¿½åŠ ã—ã¦ãŠã
 		this.getVariables().put("mascot", mascot);
 		this.getVariables().put("action", this);
 
-		// •Ï”‚Ì’l‚ğ‰Šú‰»
+		// å¤‰æ•°ã®å€¤ã‚’åˆæœŸåŒ–
 		getVariables().init();
 
-		// ƒAƒjƒ[ƒVƒ‡ƒ“‚ğ‰Šú‰»
+		// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’åˆæœŸåŒ–
 		for (final Animation animation : this.animations) {
 			animation.init();
 		}
@@ -78,10 +78,10 @@ public abstract class ActionBase implements Action {
 
 	private void initFrame() {
 
-		// •Ï”‚Ì’l(ƒtƒŒ[ƒ€‚²‚Æ)‚ğ‰Šú‰»
+		// å¤‰æ•°ã®å€¤(ãƒ•ãƒ¬ãƒ¼ãƒ ã”ã¨)ã‚’åˆæœŸåŒ–
 		getVariables().initFrame();
 
-		// ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌƒtƒŒ[ƒ€‚ğ‰Šú‰»
+		// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã‚’åˆæœŸåŒ–
 		for (final Animation animation : getAnimations()) {
 			animation.initFrame();
 		}
@@ -127,7 +127,7 @@ public abstract class ActionBase implements Action {
 	}
 
 	private String getName() throws VariableException {
-		return this.eval("–¼‘O", String.class, null);
+		return this.eval("åå‰", String.class, null);
 	}
 
 	protected Animation getAnimation() throws VariableException {
@@ -137,7 +137,7 @@ public abstract class ActionBase implements Action {
 			}
 		}
 
-		log.log(Level.SEVERE, "—LŒø‚ÈƒAƒjƒ[ƒVƒ‡ƒ“‚ªŒ©‚Â‚¯‚ç‚ê‚Ü‚¹‚ñ‚Å‚µ‚½({0},{1})", new Object[] { getMascot(), this });
+		log.log(Level.SEVERE, "æœ‰åŠ¹ãªã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒè¦‹ã¤ã‘ã‚‰ã‚Œã¾ã›ã‚“ã§ã—ãŸ({0},{1})", new Object[] { getMascot(), this });
 		return null;
 	}
 

@@ -18,14 +18,14 @@ public class MascotEnvironment {
 	}
 
 	/**
-	 * ƒ}ƒXƒRƒbƒg‚ğŠÜ‚ŞƒXƒNƒŠ[ƒ“‚ğæ“¾‚·‚é
+	 * ãƒã‚¹ã‚³ãƒƒãƒˆã‚’å«ã‚€ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã‚’å–å¾—ã™ã‚‹
 	 * @return
 	 */
 	public Area getWorkArea() {
 
 		if ( currentWorkArea!=null ) {
-			// NOTE Windows ƒ}ƒ‹ƒ`ƒ‚ƒjƒ^‘Î‰ Windows‚Ìƒ[ƒNƒGƒŠƒA‚ÍƒƒCƒ“‚ÌƒXƒNƒŠ[ƒ“‚æ‚è¬‚³‚¢B
-			// Œ»İ‚ÌƒXƒNƒŠ[ƒ“‚ªƒ[ƒNƒGƒŠƒA‚ğŠÜ‚ñ‚Å‚¨‚èA‚©‚Âƒ}ƒXƒRƒbƒg‚ªƒ[ƒNƒGƒŠƒA‚ÉŠÜ‚Ü‚ê‚Ä‚¢‚é‚È‚ç‚Îƒ[ƒNƒGƒŠƒA‚ğ—Dæ‚·‚éB
+			// NOTE Windows ãƒãƒ«ãƒãƒ¢ãƒ‹ã‚¿å¯¾å¿œ Windowsã®ãƒ¯ãƒ¼ã‚¯ã‚¨ãƒªã‚¢ã¯ãƒ¡ã‚¤ãƒ³ã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã‚ˆã‚Šå°ã•ã„ã€‚
+			// ç¾åœ¨ã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ãŒãƒ¯ãƒ¼ã‚¯ã‚¨ãƒªã‚¢ã‚’å«ã‚“ã§ãŠã‚Šã€ã‹ã¤ãƒã‚¹ã‚³ãƒƒãƒˆãŒãƒ¯ãƒ¼ã‚¯ã‚¨ãƒªã‚¢ã«å«ã¾ã‚Œã¦ã„ã‚‹ãªã‚‰ã°ãƒ¯ãƒ¼ã‚¯ã‚¨ãƒªã‚¢ã‚’å„ªå…ˆã™ã‚‹ã€‚
 			if ( currentWorkArea!=impl.getWorkArea() && currentWorkArea.toRectangle().contains(impl.getWorkArea().toRectangle()) ) {
 				if (impl.getWorkArea().contains(mascot.getAnchor().x, mascot.getAnchor().y)) {
 					currentWorkArea = impl.getWorkArea();
@@ -33,20 +33,20 @@ public class MascotEnvironment {
 				}
 			}
 
-			// NOTE ƒ}ƒ‹ƒ`ƒ‚ƒjƒ^‘Î‰ ƒ}ƒXƒRƒbƒg‚ª•¡”‚Ìƒ‚ƒjƒ^‚É“¯‚ÉŠÜ‚Ü‚ê‚éê‡‚ª‚ ‚é‚ªA
-			// ‚»‚Ìê‡‚ÍŒ»İ‚Ìƒ‚ƒjƒ^‚ğ—Dæ‚·‚é
+			// NOTE ãƒãƒ«ãƒãƒ¢ãƒ‹ã‚¿å¯¾å¿œ ãƒã‚¹ã‚³ãƒƒãƒˆãŒè¤‡æ•°ã®ãƒ¢ãƒ‹ã‚¿ã«åŒæ™‚ã«å«ã¾ã‚Œã‚‹å ´åˆãŒã‚ã‚‹ãŒã€
+			// ãã®å ´åˆã¯ç¾åœ¨ã®ãƒ¢ãƒ‹ã‚¿ã‚’å„ªå…ˆã™ã‚‹
 			if ( currentWorkArea.contains(mascot.getAnchor().x, mascot.getAnchor().y) ) {
 				return currentWorkArea;
 			}
 		}
 
-		// ‚Ü‚¸ƒ[ƒNƒGƒŠƒA‚ÉŠÜ‚Ü‚ê‚Ä‚¢‚é‚©’²‚×‚é
+		// ã¾ãšãƒ¯ãƒ¼ã‚¯ã‚¨ãƒªã‚¢ã«å«ã¾ã‚Œã¦ã„ã‚‹ã‹èª¿ã¹ã‚‹
 		if (impl.getWorkArea().contains(mascot.getAnchor().x, mascot.getAnchor().y)) {
 			currentWorkArea = impl.getWorkArea();
 			return currentWorkArea;
 		}
 
-		// Šeƒ‚ƒjƒ^‚ÉŠÜ‚Ü‚ê‚Ä‚¢‚é‚©’²‚×‚é
+		// å„ãƒ¢ãƒ‹ã‚¿ã«å«ã¾ã‚Œã¦ã„ã‚‹ã‹èª¿ã¹ã‚‹
 		for( Area area: impl.getScreens() ) {
 			if ( area.contains(mascot.getAnchor().x, mascot.getAnchor().y) ) {
 				currentWorkArea = area;

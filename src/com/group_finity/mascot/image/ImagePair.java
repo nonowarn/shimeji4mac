@@ -2,26 +2,26 @@ package com.group_finity.mascot.image;
 
 
 /**
- * �}�X�R�b�g�摜�̍��E�����̃y�A.
+ * マスコット画像の左右向きのペア.
  * 
- * �}�X�R�b�g�̉摜�͍��E�����ɊǗ��ł���Ɠs�����ǂ�.
+ * マスコットの画像は左右同時に管理できると都合が良い.
  */
 public class ImagePair {
 
 	/**
-	 * ���������Ă���摜.
+	 * 左を向いている画像.
 	 */
 	private MascotImage leftImage;
 
 	/**
-	 * �E�������Ă���摜.
+	 * 右を向いている画像.
 	 */
 	private MascotImage rightImage;
 
 	/**
-	 * �����̓�̉摜����摜�y�A���쐬����.
-	 * @param leftImage�@���������Ă���摜.
-	 * @param rightImage �E�������Ă���摜.
+	 * 既存の二つの画像から画像ペアを作成する.
+	 * @param leftImage　左を向いている画像.
+	 * @param rightImage 右を向いている画像.
 	 */
 	public ImagePair(
 			final MascotImage leftImage, final MascotImage rightImage) {
@@ -30,9 +30,9 @@ public class ImagePair {
 	}
 
 	/**
-	 * �w�肵���������������摜���擾����.
-	 * @param lookRight �E�����̉摜���擾���邩�ǂ���.
-	 * @return �w�肵�������������Ă���摜.
+	 * 指定した向きを向いた画像を取得する.
+	 * @param lookRight 右向きの画像を取得するかどうか.
+	 * @return 指定した向きを向いている画像.
 	 */
 	public MascotImage getImage(final boolean lookRight) {
 		return lookRight ? this.getRightImage() : this.getLeftImage();

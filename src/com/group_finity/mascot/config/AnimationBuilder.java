@@ -24,24 +24,24 @@ public class AnimationBuilder {
 	private final List<Pose> poses = new ArrayList<Pose>();
 
 	public AnimationBuilder(final Entry animationNode) throws IOException {
-		this.condition = animationNode.getAttribute("ğŒ") == null ? "true" : animationNode.getAttribute("ğŒ");
+		this.condition = animationNode.getAttribute("æ¡ä»¶") == null ? "true" : animationNode.getAttribute("æ¡ä»¶");
 
-		log.log(Level.INFO, "ƒAƒjƒ[ƒVƒ‡ƒ““Ç‚İ‚İŠJn");
+		log.log(Level.INFO, "ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³èª­ã¿è¾¼ã¿é–‹å§‹");
 
 		for (final Entry frameNode : animationNode.getChildren()) {
 
 			this.getPoses().add(loadPose(frameNode));
 		}
 
-		log.log(Level.INFO, "ƒAƒjƒ[ƒVƒ‡ƒ““Ç‚İ‚İŠ®—¹");
+		log.log(Level.INFO, "ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³èª­ã¿è¾¼ã¿å®Œäº†");
 	}
 
 	private Pose loadPose(final Entry frameNode) throws IOException {
 
-		final String imageText = frameNode.getAttribute("‰æ‘œ");
-		final String anchorText = frameNode.getAttribute("Šî€À•W");
-		final String moveText = frameNode.getAttribute("ˆÚ“®‘¬“x");
-		final String durationText = frameNode.getAttribute("’·‚³");
+		final String imageText = frameNode.getAttribute("ç”»åƒ");
+		final String anchorText = frameNode.getAttribute("åŸºæº–åº§æ¨™");
+		final String moveText = frameNode.getAttribute("ç§»å‹•é€Ÿåº¦");
+		final String durationText = frameNode.getAttribute("é•·ã•");
 
 		final String[] anchorCoordinates = anchorText.split(",");
 		final Point anchor = new Point(Integer.parseInt(anchorCoordinates[0]), Integer.parseInt(anchorCoordinates[1]));
@@ -55,7 +55,7 @@ public class AnimationBuilder {
 
 		final Pose pose = new Pose(image, move.x, move.y, duration);
 
-		log.log(Level.INFO, "p¨“Ç‚İ‚İ({0})", pose);
+		log.log(Level.INFO, "å§¿å‹¢èª­ã¿è¾¼ã¿({0})", pose);
 
 		return pose;
 
@@ -65,7 +65,7 @@ public class AnimationBuilder {
 		try {
 			return new Animation(Variable.parse(this.getCondition()), this.getPoses().toArray(new Pose[0]));
 		} catch (final VariableException e) {
-			throw new AnimationInstantiationException("ğŒ‚Ì•]‰¿‚É¸”s‚µ‚Ü‚µ‚½", e);
+			throw new AnimationInstantiationException("æ¡ä»¶ã®è©•ä¾¡ã«å¤±æ•—ã—ã¾ã—ãŸ", e);
 		}
 	}
 

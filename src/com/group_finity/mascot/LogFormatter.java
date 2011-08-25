@@ -8,7 +8,7 @@ import java.util.logging.LogRecord;
 import java.util.logging.SimpleFormatter;
 
 /**
- * ログをフォーマットするクラス.
+ * 繝ｭ繧ｰ繧偵ヵ繧ｩ繝ｼ繝槭ャ繝医☆繧九け繝ｩ繧ｹ.
  * @author Yuki
  */
 public class LogFormatter extends SimpleFormatter {

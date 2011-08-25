@@ -12,22 +12,22 @@ import com.group_finity.mascot.exception.VariableException;
 import com.group_finity.mascot.script.VariableMap;
 
 /**
- * ˜g‚É‚­‚Á‚Â‚¢‚Ä“®‚­ƒAƒNƒVƒ‡ƒ“‚ÌŠî’êƒNƒ‰ƒX.
+ * æ ã«ãã£ã¤ã„ã¦å‹•ãã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã®åŸºåº•ã‚¯ãƒ©ã‚¹.
  * @author Yuki Yamada
  */
 public abstract class BorderedAction extends ActionBase {
 
 	private static final Logger log = Logger.getLogger(BorderedAction.class.getName());
 
-	private static final String PARAMETER_BORDERTYPE = "˜g";
+	private static final String PARAMETER_BORDERTYPE = "æ ";
 
 	public static final String DEFAULT_BORDERTYPE = null;
 
-	public static final String BORDERTYPE_CEILING = "“Vˆä";
+	public static final String BORDERTYPE_CEILING = "å¤©äº•";
 
-	public static final String BORDERTYPE_WALL = "•Ç";
+	public static final String BORDERTYPE_WALL = "å£";
 
-	public static final String BORDERTYPE_FLOOR = "’n–Ê";
+	public static final String BORDERTYPE_FLOOR = "åœ°é¢";
 
 	private Border border;
 
@@ -56,7 +56,7 @@ public abstract class BorderedAction extends ActionBase {
 	protected void tick() throws LostGroundException, VariableException {
 
 		if (getBorder() != null) {
-			// ˜g‚ª“®‚¢‚Ä‚¢‚é‚©‚à
+			// æ ãŒå‹•ã„ã¦ã„ã‚‹ã‹ã‚‚
 			getMascot().setAnchor(getBorder().move(getMascot().getAnchor()));
 		}
 	}

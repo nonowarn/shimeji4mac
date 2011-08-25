@@ -6,7 +6,7 @@ import com.group_finity.mascot.environment.Area;
 import com.group_finity.mascot.environment.Environment;
 
 /**
- * Java ‚Å‚Íæ“¾‚ª“ï‚µ‚¢ŠÂ‹«î•ñ‚ğJNI‚ğg—p‚µ‚Äæ“¾‚·‚é.
+ * Java ã§ã¯å–å¾—ãŒé›£ã—ã„ç’°å¢ƒæƒ…å ±ã‚’JNIã‚’ä½¿ç”¨ã—ã¦å–å¾—ã™ã‚‹.
  */
 class GenericEnvironment extends Environment {
 

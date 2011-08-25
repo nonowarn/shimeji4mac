@@ -15,7 +15,7 @@ import com.group_finity.mascot.exception.VariableException;
 import com.group_finity.mascot.script.VariableMap;
 
 /**
- * ‘B‚·‚éƒAƒNƒVƒ‡ƒ“.
+ * å¢—æ®–ã™ã‚‹ã‚¢ã‚¯ã‚·ãƒ§ãƒ³.
  * 
  * @author Yuki Yamada
  */
@@ -23,15 +23,15 @@ public class Breed extends Animate {
 
 	private static final Logger log = Logger.getLogger(Breed.class.getName());
 
-	public static final String PARAMETER_BORNX = "¶‚Ü‚ê‚éêŠX";
+	public static final String PARAMETER_BORNX = "ç”Ÿã¾ã‚Œã‚‹å ´æ‰€X";
 
 	private static final int DEFAULT_BORNX = 0;
 
-	public static final String PARAMETER_BORNY = "¶‚Ü‚ê‚éêŠY";
+	public static final String PARAMETER_BORNY = "ç”Ÿã¾ã‚Œã‚‹å ´æ‰€Y";
 
 	private static final int DEFAULT_BORNY = 0;
 
-	public static final String PARAMETER_BORNBEHAVIOR = "¶‚Ü‚ê‚½‚Ìs“®";
+	public static final String PARAMETER_BORNBEHAVIOR = "ç”Ÿã¾ã‚ŒãŸæ™‚ã®è¡Œå‹•";
 
 	private static final String DEFAULT_BORNBEHAVIOR = "";
 
@@ -45,19 +45,19 @@ public class Breed extends Animate {
 		super.tick();
 
 		if (getTime() == getAnimation().getDuration() - 1) {
-			// ‘‚¦‚é
+			// å¢—ãˆã‚‹
 			breed();
 		}
 	}
 
 	private void breed() throws VariableException {
 
-		// ƒ}ƒXƒRƒbƒg‚ğ1ŒÂì¬
+		// ãƒã‚¹ã‚³ãƒƒãƒˆã‚’1å€‹ä½œæˆ
 		final Mascot mascot = new Mascot();
 
-		log.log(Level.INFO, "‘B({0},{1},{2})", new Object[] { getMascot(), this, mascot });
+		log.log(Level.INFO, "å¢—æ®–({0},{1},{2})", new Object[] { getMascot(), this, mascot });
 
-		// ”ÍˆÍŠO‚©‚çŠJn
+		// ç¯„å›²å¤–ã‹ã‚‰é–‹å§‹
 		if (getMascot().isLookRight()) {
 			mascot.setAnchor(new Point(getMascot().getAnchor().x - getBornX(), getMascot().getAnchor().y
 					+ getBornY().intValue()));
@@ -73,10 +73,10 @@ public class Breed extends Animate {
 			getMascot().getManager().add(mascot);
 		
 		} catch (final BehaviorInstantiationException e) {
-			log.log(Level.SEVERE, "¶‚Ü‚ê‚½‚Ìs“®‚Ì‰Šú‰»‚É¸”s‚µ‚Ü‚µ‚½", e);
+			log.log(Level.SEVERE, "ç”Ÿã¾ã‚ŒãŸæ™‚ã®è¡Œå‹•ã®åˆæœŸåŒ–ã«å¤±æ•—ã—ã¾ã—ãŸ", e);
 			mascot.dispose();
 		} catch (final CantBeAliveException e) {
-			log.log(Level.SEVERE, "¶‚«‘±‚¯‚é‚±‚Æ‚ªo—ˆ‚È‚¢ó‹µ", e);
+			log.log(Level.SEVERE, "ç”Ÿãç¶šã‘ã‚‹ã“ã¨ãŒå‡ºæ¥ãªã„çŠ¶æ³", e);
 			mascot.dispose();
 		}
 	}

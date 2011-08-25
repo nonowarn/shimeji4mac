@@ -5,27 +5,27 @@ import com.group_finity.mascot.exception.LostGroundException;
 import com.group_finity.mascot.exception.VariableException;
 
 /**
- * ƒ}ƒXƒRƒbƒg‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ğ‚ ‚ç‚í‚·ƒIƒuƒWƒFƒNƒg.
+ * ãƒã‚¹ã‚³ãƒƒãƒˆã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ã‚ã‚‰ã‚ã™ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ.
  * 
- * ˆê’èŠÔ’u‚«‚É {@link #next(Mascot)} ‚ªŒÄ‚Ño‚³‚ê‚é
+ * ä¸€å®šæ™‚é–“ç½®ãã« {@link #next(Mascot)} ãŒå‘¼ã³å‡ºã•ã‚Œã‚‹
  */
 public interface Action {
 
 	/**
-	 * ƒAƒNƒVƒ‡ƒ“‚ğŠJn‚·‚é‚ÉŒÄ‚Ño‚·.
-	 * @param mascot ŠÖ˜A•t‚¯‚éƒ}ƒXƒRƒbƒg.
+	 * ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚’é–‹å§‹ã™ã‚‹æ™‚ã«å‘¼ã³å‡ºã™.
+	 * @param mascot é–¢é€£ä»˜ã‘ã‚‹ãƒã‚¹ã‚³ãƒƒãƒˆ.
 	 */
 	public void init(Mascot mascot) throws VariableException;
 
 	/**
-	 * Ÿ‚ÌƒtƒŒ[ƒ€‚ª‚ ‚é‚©‚Ç‚¤‚©’²‚×‚é.
-	 * @return Ÿ‚ÌƒtƒŒ[ƒ€‚ª‚ ‚é‚©‚Ç‚¤‚©.
+	 * æ¬¡ã®ãƒ•ãƒ¬ãƒ¼ãƒ ãŒã‚ã‚‹ã‹ã©ã†ã‹èª¿ã¹ã‚‹.
+	 * @return æ¬¡ã®ãƒ•ãƒ¬ãƒ¼ãƒ ãŒã‚ã‚‹ã‹ã©ã†ã‹.
 	 */
 	public boolean hasNext() throws VariableException;
 	
 	/**
-	 * ƒ}ƒXƒRƒbƒg‚ğŸ‚ÌƒRƒ}‚Éi‚ß‚é.
-	 * @throws LostGroundException ’n–Ê‚ª‚È‚¢.
+	 * ãƒã‚¹ã‚³ãƒƒãƒˆã‚’æ¬¡ã®ã‚³ãƒã«é€²ã‚ã‚‹.
+	 * @throws LostGroundException åœ°é¢ãŒãªã„.
 	 */
 	public void next() throws LostGroundException, VariableException;
 	

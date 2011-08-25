@@ -19,7 +19,7 @@ class GenericTranslucentWindow extends JWindow implements TranslucentWindow {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * •\¦‚·‚é‰æ‘œ.
+	 * è¡¨ç¤ºã™ã‚‹ç”»åƒ.
 	 */
 	private GenericNativeImage image;
 

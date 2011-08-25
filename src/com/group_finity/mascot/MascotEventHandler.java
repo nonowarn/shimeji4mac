@@ -21,8 +21,8 @@ public class MascotEventHandler implements MouseListener {
 	private static final Logger log = Logger.getLogger(MascotEventHandler.class.getName());
 
 	/**
-	 * ƒgƒŒƒCƒAƒCƒRƒ“‚Ì•ª‚Ìƒƒjƒ…[‚à•\¦‚·‚é‚©‚Ç‚¤‚©.
-	 * ƒgƒŒƒCƒAƒCƒRƒ“‚Ìì¬‚É¸”s‚µ‚½‚Í‚±‚±‚ÅƒgƒŒƒCƒAƒCƒRƒ“‚Ì•ª‚Ìƒƒjƒ…[‚à•\¦‚·‚é•K—v‚ª‚ ‚é.
+	 * ãƒˆãƒ¬ã‚¤ã‚¢ã‚¤ã‚³ãƒ³ã®åˆ†ã®ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚‚è¡¨ç¤ºã™ã‚‹ã‹ã©ã†ã‹.
+	 * ãƒˆãƒ¬ã‚¤ã‚¢ã‚¤ã‚³ãƒ³ã®ä½œæˆã«å¤±æ•—ã—ãŸæ™‚ã¯ã“ã“ã§ãƒˆãƒ¬ã‚¤ã‚¢ã‚¤ã‚³ãƒ³ã®åˆ†ã®ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚‚è¡¨ç¤ºã™ã‚‹å¿…è¦ãŒã‚ã‚‹.
 	 */
 	private static boolean showSystemTrayMenu = false;
 
@@ -42,12 +42,12 @@ public class MascotEventHandler implements MouseListener {
 
 	public void mousePressed(final MouseEvent event) {
 
-		// ƒ}ƒEƒX‚ª‰Ÿ‚³‚ê‚½‚çƒhƒ‰ƒbƒOƒAƒjƒ[ƒVƒ‡ƒ“‚ÉØ‚è‘Ö‚¦‚é
+		// ãƒã‚¦ã‚¹ãŒæŠ¼ã•ã‚ŒãŸã‚‰ãƒ‰ãƒ©ãƒƒã‚°ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã«åˆ‡ã‚Šæ›¿ãˆã‚‹
 		if (getMascot().getBehavior() != null) {
 			try {
 				getMascot().getBehavior().mousePressed(event);
 			} catch (final CantBeAliveException e) {
-				log.log(Level.SEVERE, "¶‚«‘±‚¯‚é‚±‚Æ‚ªo—ˆ‚È‚¢ó‹µ", e);
+				log.log(Level.SEVERE, "ç”Ÿãç¶šã‘ã‚‹ã“ã¨ãŒå‡ºæ¥ãªã„çŠ¶æ³", e);
 				getMascot().dispose();
 			}
 		}
@@ -68,7 +68,7 @@ public class MascotEventHandler implements MouseListener {
 				try {
 					getMascot().getBehavior().mouseReleased(event);
 				} catch (final CantBeAliveException e) {
-					log.log(Level.SEVERE, "¶‚«‘±‚¯‚é‚±‚Æ‚ªo—ˆ‚È‚¢ó‹µ", e);
+					log.log(Level.SEVERE, "ç”Ÿãç¶šã‘ã‚‹ã“ã¨ãŒå‡ºæ¥ãªã„çŠ¶æ³", e);
 					getMascot().dispose();
 				}
 			}
@@ -95,7 +95,7 @@ public class MascotEventHandler implements MouseListener {
 			}
 		});
 
-		final JMenuItem disposeMenu = new JMenuItem("‚Î‚¢‚Î‚¢");
+		final JMenuItem disposeMenu = new JMenuItem("ã°ã„ã°ã„");
 		disposeMenu.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
@@ -109,40 +109,40 @@ public class MascotEventHandler implements MouseListener {
 
 			popup.add(new JSeparator());
 
-			// u‘‚â‚·vƒƒjƒ…[ƒAƒCƒeƒ€
-			final JMenuItem increaseMenu = new JMenuItem("‘‚â‚·");
+			// ã€Œå¢—ã‚„ã™ã€ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚¢ã‚¤ãƒ†ãƒ 
+			final JMenuItem increaseMenu = new JMenuItem("å¢—ã‚„ã™");
 			increaseMenu.addActionListener(new ActionListener() {
 				public void actionPerformed(final ActionEvent event) {
 					Main.getInstance().createMascot();
 				}
 			});
 
-			// u‚ ‚Â‚Ü‚êIvƒƒjƒ…[ƒAƒCƒeƒ€
-			final JMenuItem gatherMenu = new JMenuItem("‚ ‚Â‚Ü‚êI");
+			// ã€Œã‚ã¤ã¾ã‚Œï¼ã€ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚¢ã‚¤ãƒ†ãƒ 
+			final JMenuItem gatherMenu = new JMenuItem("ã‚ã¤ã¾ã‚Œï¼");
 			gatherMenu.addActionListener(new ActionListener() {
 				public void actionPerformed(final ActionEvent event) {
 					getMascot().getManager().setBehaviorAll(Main.getInstance().getConfiguration(), Main.BEHAVIOR_GATHER);
 				}
 			});
 
-			// uˆê•C‚¾‚¯c‚·vƒƒjƒ…[ƒAƒCƒeƒ€
-			final JMenuItem oneMenu = new JMenuItem("ˆê•C‚¾‚¯c‚·");
+			// ã€Œä¸€åŒ¹ã ã‘æ®‹ã™ã€ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚¢ã‚¤ãƒ†ãƒ 
+			final JMenuItem oneMenu = new JMenuItem("ä¸€åŒ¹ã ã‘æ®‹ã™");
 			oneMenu.addActionListener(new ActionListener() {
 				public void actionPerformed(final ActionEvent event) {
 					getMascot().getManager().remainOne();
 				}
 			});
 
-			// uIE‚ğŒ³‚É–ß‚·vƒƒjƒ…[ƒAƒCƒeƒ€
-			final JMenuItem restoreMenu = new JMenuItem("IE‚ğŒ³‚É–ß‚·");
+			// ã€ŒIEã‚’å…ƒã«æˆ»ã™ã€ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚¢ã‚¤ãƒ†ãƒ 
+			final JMenuItem restoreMenu = new JMenuItem("IEã‚’å…ƒã«æˆ»ã™");
 			restoreMenu.addActionListener(new ActionListener() {
 				public void actionPerformed(final ActionEvent event) {
 					NativeFactory.getInstance().getEnvironment().restoreIE();
 				}
 			});
 
-			// u‘S•”‚Î‚¢‚Î‚¢vƒƒjƒ…[ƒAƒCƒeƒ€
-			final JMenuItem closeMenu = new JMenuItem("‘S•”‚Î‚¢‚Î‚¢");
+			// ã€Œå…¨éƒ¨ã°ã„ã°ã„ã€ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚¢ã‚¤ãƒ†ãƒ 
+			final JMenuItem closeMenu = new JMenuItem("å…¨éƒ¨ã°ã„ã°ã„");
 			closeMenu.addActionListener(new ActionListener() {
 				public void actionPerformed(final ActionEvent e) {
 					Main.getInstance().exit();
@@ -162,19 +162,19 @@ public class MascotEventHandler implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO ©“®¶¬‚³‚ê‚½ƒƒ\ƒbƒhEƒXƒ^ƒu
+		// TODO è‡ªå‹•ç”Ÿæˆã•ã‚ŒãŸãƒ¡ã‚½ãƒƒãƒ‰ãƒ»ã‚¹ã‚¿ãƒ–
 
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO ©“®¶¬‚³‚ê‚½ƒƒ\ƒbƒhEƒXƒ^ƒu
+		// TODO è‡ªå‹•ç”Ÿæˆã•ã‚ŒãŸãƒ¡ã‚½ãƒƒãƒ‰ãƒ»ã‚¹ã‚¿ãƒ–
 
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO ©“®¶¬‚³‚ê‚½ƒƒ\ƒbƒhEƒXƒ^ƒu
+		// TODO è‡ªå‹•ç”Ÿæˆã•ã‚ŒãŸãƒ¡ã‚½ãƒƒãƒ‰ãƒ»ã‚¹ã‚¿ãƒ–
 
 	}
 

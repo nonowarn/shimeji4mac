@@ -33,16 +33,16 @@ public class NativeFactoryImpl extends NativeFactory {
 
     JRootPane rootPane = transcluentWindow.asJWindow().getRootPane();
 
-    // ƒEƒBƒ“ƒhƒE‚Ì‰e‚ª‚¸‚ê‚é‚Ì‚ÅA‰e‚ğ•`‰æ‚µ‚È‚¢‚æ‚¤‚É‚·‚é
+    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å½±ãŒãšã‚Œã‚‹ã®ã§ã€å½±ã‚’æç”»ã—ãªã„ã‚ˆã†ã«ã™ã‚‹
     rootPane.putClientProperty("Window.shadow", Boolean.FALSE);
 
-    // Às‚Ì warning ‚ğÁ‚·
+    // å®Ÿè¡Œæ™‚ã® warning ã‚’æ¶ˆã™
     rootPane.putClientProperty("apple.awt.draggableWindowBackground", Boolean.TRUE);
 
     return new TranslucentWindow() {
-			// ƒpƒtƒH[ƒ}ƒ“ƒX‚Ì‚½‚ß‚Éƒ‰ƒbƒv‚µ‚½ƒNƒ‰ƒX‚ğg‚¤
-			// updateImage() ‚ªƒ{ƒgƒ‹ƒlƒbƒN‚É‚È‚Á‚Ä‚¢‚½‚Ì‚ÅA
-			// image ‚ª•Ï‚í‚Á‚½‚¾‚¯ŒÄ‚Ô‚æ‚¤‚É‚·‚é
+			// ãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹ã®ãŸã‚ã«ãƒ©ãƒƒãƒ—ã—ãŸã‚¯ãƒ©ã‚¹ã‚’ä½¿ã†
+			// updateImage() ãŒãƒœãƒˆãƒ«ãƒãƒƒã‚¯ã«ãªã£ã¦ã„ãŸã®ã§ã€
+			// image ãŒå¤‰ã‚ã£ãŸæ™‚ã ã‘å‘¼ã¶ã‚ˆã†ã«ã™ã‚‹
 
 			private boolean imageChanged = false;
 			private NativeImage oldImage = null;

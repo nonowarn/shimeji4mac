@@ -27,15 +27,15 @@ import com.group_finity.mascot.mac.jna.CFNumberRef;
 import com.group_finity.mascot.mac.jna.CFArrayRef;
 
 /**
- * Java ‚Å‚Íæ“¾‚ª“ï‚µ‚¢ŠÂ‹«î•ñ‚ğAppleScript‚ğg—p‚µ‚Äæ“¾‚·‚é.
+ * Java ã§ã¯å–å¾—ãŒé›£ã—ã„ç’°å¢ƒæƒ…å ±ã‚’AppleScriptã‚’ä½¿ç”¨ã—ã¦å–å¾—ã™ã‚‹.
  */
 class MacEnvironment extends Environment {
 
   /**
-		Mac ‚Å‚ÍAƒAƒNƒeƒBƒu‚ÈƒEƒBƒ“ƒhƒE‚ğæ‚ê‚é‚Ì‚ÅA
-		‚»‚ê‚É‚µ‚ß‚¶‚ª”½‰‚·‚é‚æ‚¤‚É‚·‚éB
+		Mac ã§ã¯ã€ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’å–ã‚Œã‚‹ã®ã§ã€
+		ãã‚Œã«ã—ã‚ã˜ãŒåå¿œã™ã‚‹ã‚ˆã†ã«ã™ã‚‹ã€‚
 
-		‚È‚Ì‚ÅA‚±‚ÌƒNƒ‰ƒX“à‚Å‚ÍAactiveIE ‚É frontmostWindow ‚Æ‚¢‚¤•Ê–¼‚ğ‚Â‚¯‚é
+		ãªã®ã§ã€ã“ã®ã‚¯ãƒ©ã‚¹å†…ã§ã¯ã€activeIE ã« frontmostWindow ã¨ã„ã†åˆ¥åã‚’ã¤ã‘ã‚‹
    */
 	private static Area activeIE = new Area();
   private static Area frontmostWindow = activeIE;
@@ -47,8 +47,8 @@ class MacEnvironment extends Environment {
 
 	private static Carbon carbon = Carbon.INSTANCE;
 
-	// Mac ‚Å‚ÍAManagementFactory.getRuntimeMXBean().getName()‚Å
-	// PID@ƒ}ƒVƒ“–¼ ‚Ì•¶š—ñ‚ª•Ô‚Á‚Ä‚­‚é
+	// Mac ã§ã¯ã€ManagementFactory.getRuntimeMXBean().getName()ã§
+	// PID@ãƒã‚·ãƒ³å ã®æ–‡å­—åˆ—ãŒè¿”ã£ã¦ãã‚‹
 	private static long myPID =
 		Long.parseLong(ManagementFactory.getRuntimeMXBean().getName().split("@")[0]);
 
@@ -74,7 +74,7 @@ class MacEnvironment extends Environment {
 
 		PointerByReference windowp = new PointerByReference();
 
-		// XXX: ‚±‚±ˆÈŠO‚Å‚àƒGƒ‰[ƒ`ƒFƒbƒN‚Í•K—v?
+		// XXX: ã“ã“ä»¥å¤–ã§ã‚‚ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯ã¯å¿…è¦?
 		if (carbon.AXUIElementCopyAttributeValue(
 					application, kAXFocusedWindow, windowp) == carbon.kAXErrorSuccess) {
 			AXUIElementRef window = new AXUIElementRef();
@@ -209,24 +209,24 @@ class MacEnvironment extends Environment {
 	}
 
 	/**
-		 min < max ‚Ì‚Æ‚«A
-		 min <= x <= max ‚È‚ç‚Î x ‚ğ•Ô‚·
-		 x < min ‚È‚ç‚Î min ‚ğ•Ô‚·
-		 x > max ‚È‚ç‚Î max ‚ğ•Ô‚·
+		 min < max ã®ã¨ãã€
+		 min <= x <= max ãªã‚‰ã° x ã‚’è¿”ã™
+		 x < min ãªã‚‰ã° min ã‚’è¿”ã™
+		 x > max ãªã‚‰ã° max ã‚’è¿”ã™
 	 */
 	private static double betweenOrLimit(double x, double min, double max) {
 		return Math.min(Math.max(x, min), max);
 	}
 
 	/**
-		‰æ–Ê“à‚ÅƒEƒBƒ“ƒhƒE‚ğˆÚ“®‚µ‚Ä‚à‰Ÿ‚µ•Ô‚³‚ê‚È‚¢”ÍˆÍ‚ğ Rectangle ‚Å•Ô‚·B
-		Mac ‚Å‚ÍAƒEƒBƒ“ƒhƒE‚ğŠ®‘S‚É‰æ–ÊŠO‚ÉˆÚ“®‚³‚¹‚æ‚¤‚Æ‚·‚é‚ÆA
-		ƒEƒBƒ“ƒhƒE‚ª‰æ–Ê“à‚É‰Ÿ‚µ•Ô‚³‚ê‚Ä‚µ‚Ü‚¤B
+		ç”»é¢å†…ã§ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ç§»å‹•ã—ã¦ã‚‚æŠ¼ã—è¿”ã•ã‚Œãªã„ç¯„å›²ã‚’ Rectangle ã§è¿”ã™ã€‚
+		Mac ã§ã¯ã€ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’å®Œå…¨ã«ç”»é¢å¤–ã«ç§»å‹•ã•ã›ã‚ˆã†ã¨ã™ã‚‹ã¨ã€
+		ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒç”»é¢å†…ã«æŠ¼ã—è¿”ã•ã‚Œã¦ã—ã¾ã†ã€‚
 	 */
 	private static Rectangle getWindowVisibleArea() {
 		final int menuBarHeight = 22;
 		int x = 1, y = menuBarHeight,
-			width = getScreenWidth() - 2, // 0-origin ‚È‚Ì‚Å
+			width = getScreenWidth() - 2, // 0-origin ãªã®ã§
 			height = getScreenHeight() - menuBarHeight;
 
 		refreshDockState();
@@ -241,7 +241,7 @@ class MacEnvironment extends Environment {
 			x += tilesize;
 			width -= tilesize;
 		}	else /* if ("null".equals(orientation)) */ {
-			// Dock ‚Ì•ûŒü‚ª‚í‚©‚ç‚È‚¢‚Ì‚ÅA‚Ç‚¿‚ç‚É‚ ‚Á‚Ä‚à‚¢‚¢‚æ‚¤‚É‚·‚é
+			// Dock ã®æ–¹å‘ãŒã‚ã‹ã‚‰ãªã„ã®ã§ã€ã©ã¡ã‚‰ã«ã‚ã£ã¦ã‚‚ã„ã„ã‚ˆã†ã«ã™ã‚‹
 			x += tilesize;
 			width -= 2 * tilesize;
 		}
@@ -255,7 +255,7 @@ class MacEnvironment extends Environment {
 			carbon.CFPreferencesCopyValue(
 				kOrientation, kDock, carbon.kCurrentUser, carbon.kAnyHost);
 
-		// CFPreferencesCopyValue ‚ª null ‚ğ•Ô‚·ŠÂ‹«‚ª‚ ‚é
+		// CFPreferencesCopyValue ãŒ null ã‚’è¿”ã™ç’°å¢ƒãŒã‚ã‚‹
 		if (orientationRef == null) {
 			return "null";
 		}
@@ -272,19 +272,19 @@ class MacEnvironment extends Environment {
 
 	private static int getDockTileSize() {
 		/**
-			 Dock ‚Ì‚‚³‚ğŠÄ‹‚·‚éŒø—¦“I‚È•û–@‚ªŒ©“–‚½‚ç‚È‚¢‚½‚ßA
-			 ‚Ğ‚Æ‚Ü‚¸ Dock ‚ÌÅ‘åƒTƒCƒY‚æ‚è‘å‚«‚¢’è”‚ğ•Ô‚µ‚Ä‚¨‚­B
+			 Dock ã®é«˜ã•ã‚’ç›£è¦–ã™ã‚‹åŠ¹ç‡çš„ãªæ–¹æ³•ãŒè¦‹å½“ãŸã‚‰ãªã„ãŸã‚ã€
+			 ã²ã¨ã¾ãš Dock ã®æœ€å¤§ã‚µã‚¤ã‚ºã‚ˆã‚Šå¤§ãã„å®šæ•°ã‚’è¿”ã—ã¦ãŠãã€‚
 
-			 CFPreferencesCopyValue ‚Å“¾‚ç‚ê‚é’l‚ÍA
-			 AppleScript ‚Å“¾‚ç‚ê‚é’l‚Æ‚ÍˆÙ‚È‚Á‚Ä‚¢‚ÄA
-			 AppleScript ‚Ì‚Ù‚¤‚ª³‚µ‚¢’lB
+			 CFPreferencesCopyValue ã§å¾—ã‚‰ã‚Œã‚‹å€¤ã¯ã€
+			 AppleScript ã§å¾—ã‚‰ã‚Œã‚‹å€¤ã¨ã¯ç•°ãªã£ã¦ã„ã¦ã€
+			 AppleScript ã®ã»ã†ãŒæ­£ã—ã„å€¤ã€‚
 
-			 pid æ“¾‚µ‚Ä Accessibility API ‚ğg‚¤‚Æ³‚µ‚¢’l‚Íæ‚ê‚é‚ªA
-			 killall Dock ‚³‚ê‚é‚Æ SEGV ‚µ‚Ä‚µ‚Ü‚¤B
-			 SEGV ‚µ‚È‚¢‚½‚ß‚É‚Í–ˆ‰ñ pid ‚ğæ‚è’¼‚·•K—v‚ª‚ ‚é‚ªA
-			 ƒvƒƒZƒX‚ÌƒŠƒXƒg‚ğ‚½‚®‚Á‚Ä‚³‚ª‚·ˆÈŠO‚Ì•û–@‚ªŒ©“–‚½‚ç‚È‚¢B
-			 ŒÄ‚Î‚ê‚é•p“x‚ğl‚¦‚é‚Æ AppleScript ‚Íg‚¢‚½‚­‚È‚¢B
-			 ‚±‚ÌƒgƒŒ[ƒhƒIƒt‚Í‚ ‚Æ‚Ål‚¦‚é‚±‚Æ‚É‚·‚éB
+			 pid å–å¾—ã—ã¦ Accessibility API ã‚’ä½¿ã†ã¨æ­£ã—ã„å€¤ã¯å–ã‚Œã‚‹ãŒã€
+			 killall Dock ã•ã‚Œã‚‹ã¨ SEGV ã—ã¦ã—ã¾ã†ã€‚
+			 SEGV ã—ãªã„ãŸã‚ã«ã¯æ¯å› pid ã‚’å–ã‚Šç›´ã™å¿…è¦ãŒã‚ã‚‹ãŒã€
+			 ãƒ—ãƒ­ã‚»ã‚¹ã®ãƒªã‚¹ãƒˆã‚’ãŸãã£ã¦ã•ãŒã™ä»¥å¤–ã®æ–¹æ³•ãŒè¦‹å½“ãŸã‚‰ãªã„ã€‚
+			 å‘¼ã°ã‚Œã‚‹é »åº¦ã‚’è€ƒãˆã‚‹ã¨ AppleScript ã¯ä½¿ã„ãŸããªã„ã€‚
+			 ã“ã®ãƒˆãƒ¬ãƒ¼ãƒ‰ã‚ªãƒ•ã¯ã‚ã¨ã§è€ƒãˆã‚‹ã“ã¨ã«ã™ã‚‹ã€‚
 		 */
 		return 100;
 	}
@@ -316,7 +316,7 @@ class MacEnvironment extends Environment {
     frontmostWindow.setVisible(
       (frontmostWindowRect != null)
       && frontmostWindowRect.intersects(windowVisibleArea)
-			&& !frontmostWindowRect.contains(windowVisibleArea) // ƒfƒXƒNƒgƒbƒv‚ğœŠO
+			&& !frontmostWindowRect.contains(windowVisibleArea) // ãƒ‡ã‚¹ã‚¯ãƒˆãƒƒãƒ—ã‚’é™¤å¤–
 			);
     frontmostWindow.set(
       frontmostWindowRect == null ? new Rectangle(-1, -1, 0, 0) : frontmostWindowRect);
@@ -337,29 +337,29 @@ class MacEnvironment extends Environment {
 	@Override
 	public void moveActiveIE(final Point point) {
 		/**
-			‘Oq‚Ì‚Æ‚¨‚èAŠ®‘S‚É‰æ–ÊŠO‚ÖˆÚ“®‚µ‚æ‚¤‚Æ‚·‚é‚Æ‰Ÿ‚µ•Ô‚³‚ê‚é‚½‚ßA
-			‚»‚Ì‚æ‚¤‚ÈˆÊ’u‚Ìw’è‚É‘Î‚µ‚Ä‚Í‰Â”\‚È‚©‚¬‚è‚ÌˆÚ“®‚ÉØ‚è‘Ö‚¦‚éB
+			å‰è¿°ã®ã¨ãŠã‚Šã€å®Œå…¨ã«ç”»é¢å¤–ã¸ç§»å‹•ã—ã‚ˆã†ã¨ã™ã‚‹ã¨æŠ¼ã—è¿”ã•ã‚Œã‚‹ãŸã‚ã€
+			ãã®ã‚ˆã†ãªä½ç½®ã®æŒ‡å®šã«å¯¾ã—ã¦ã¯å¯èƒ½ãªã‹ãã‚Šã®ç§»å‹•ã«åˆ‡ã‚Šæ›¿ãˆã‚‹ã€‚
 		 */
 		final Rectangle
 			visibleRect = getWindowVisibleArea(),
 			windowRect  = getFrontmostAppRect();
 
 		final double
-			minX = visibleRect.getMinX() - windowRect.getWidth(), // ¶•ûŒü‚ÌÜ‚è•Ô‚µÀ•W
-			maxX = visibleRect.getMaxX(),													// ‰E•ûŒü‚ÌÜ‚è•Ô‚µÀ•W
-			minY = visibleRect.getMinY(),													// ã•ûŒü‚ÌÜ‚è•Ô‚µÀ•W
-																														// (ƒƒjƒ…[ƒo[‚æ‚è
-																														//  ã‚Ö‚ÍˆÚ“®‚Å‚«‚È‚¢)
-			maxY = visibleRect.getMaxY();													// ‰º•ûŒü‚ÌÜ‚è•Ô‚µÀ•W
+			minX = visibleRect.getMinX() - windowRect.getWidth(), // å·¦æ–¹å‘ã®æŠ˜ã‚Šè¿”ã—åº§æ¨™
+			maxX = visibleRect.getMaxX(),													// å³æ–¹å‘ã®æŠ˜ã‚Šè¿”ã—åº§æ¨™
+			minY = visibleRect.getMinY(),													// ä¸Šæ–¹å‘ã®æŠ˜ã‚Šè¿”ã—åº§æ¨™
+																														// (ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒãƒ¼ã‚ˆã‚Š
+																														//  ä¸Šã¸ã¯ç§»å‹•ã§ããªã„)
+			maxY = visibleRect.getMaxY();													// ä¸‹æ–¹å‘ã®æŠ˜ã‚Šè¿”ã—åº§æ¨™
 
 		double
 			pX   = point.getX(),
 			pY   = point.getY();
 
-		// X•ûŒü‚ÌÜ‚è•Ô‚µ
+		// Xæ–¹å‘ã®æŠ˜ã‚Šè¿”ã—
 		pX = betweenOrLimit(pX, minX, maxX);
 
-		// Y•ûŒü‚ÌÜ‚è•Ô‚µ
+		// Yæ–¹å‘ã®æŠ˜ã‚Šè¿”ã—
 		pY = betweenOrLimit(pY, minY, maxY);
 
 		point.setLocation(pX, pY);

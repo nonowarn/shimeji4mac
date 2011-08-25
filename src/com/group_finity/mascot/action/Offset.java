@@ -7,7 +7,7 @@ import com.group_finity.mascot.exception.VariableException;
 import com.group_finity.mascot.script.VariableMap;
 
 /**
- * ­‚µ‚¸‚ê‚éƒAƒNƒVƒ‡ƒ“.
+ * å°‘ã—ãšã‚Œã‚‹ã‚¢ã‚¯ã‚·ãƒ§ãƒ³.
  * @author Yuki Yamada
  */
 public class Offset extends InstantAction {

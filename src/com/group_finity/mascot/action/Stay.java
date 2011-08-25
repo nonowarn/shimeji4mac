@@ -10,7 +10,7 @@ import com.group_finity.mascot.exception.VariableException;
 import com.group_finity.mascot.script.VariableMap;
 
 /**
- * ˆÚ“®‚µ‚È‚¢ƒAƒNƒVƒ‡ƒ“.
+ * ç§»å‹•ã—ãªã„ã‚¢ã‚¯ã‚·ãƒ§ãƒ³.
  * @author Yuki Yamada
  */
 public class Stay extends BorderedAction {
@@ -28,12 +28,12 @@ public class Stay extends BorderedAction {
 		super.tick();
 
 		if ((getBorder() != null) && !getBorder().isOn(getMascot().getAnchor())) {
-			// ’n–Ê‚©‚ç—£‚ê‚Ä‚µ‚Ü‚Á‚½
-			log.log(Level.INFO, "˜g‚ğŒ©¸‚Á‚½({0},{1})", new Object[] { getMascot(), this });
+			// åœ°é¢ã‹ã‚‰é›¢ã‚Œã¦ã—ã¾ã£ãŸ
+			log.log(Level.INFO, "æ ã‚’è¦‹å¤±ã£ãŸ({0},{1})", new Object[] { getMascot(), this });
 			throw new LostGroundException();
 		}
 
-		// ƒAƒjƒ[ƒVƒ‡ƒ“‚³‚¹‚é
+		// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã•ã›ã‚‹
 		getAnimation().next(getMascot(), getTime());
 
 	}

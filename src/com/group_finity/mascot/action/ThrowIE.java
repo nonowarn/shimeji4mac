@@ -11,22 +11,22 @@ import com.group_finity.mascot.exception.VariableException;
 import com.group_finity.mascot.script.VariableMap;
 
 /**
- * IE を投げるアクション.
+ * IE 繧呈兜縺偵ｋ繧｢繧ｯ繧ｷ繝ｧ繝ｳ.
  * @author Yuki Yamada
  */
 public class ThrowIE extends Animate {
 
 	private static final Logger log = Logger.getLogger(ThrowIE.class.getName());
 
-	public static final String PARAMETER_INITIALVX = "初速X";
+	public static final String PARAMETER_INITIALVX = "蛻晞盜";
 
 	private static final int DEFAULT_INITIALVX = 32;
 
-	public static final String PARAMETER_INITIALVY = "初速Y";
+	public static final String PARAMETER_INITIALVY = "蛻晞欹";
 
 	private static final int DEFAULT_INITIALVY = -10;
 
-	public static final String PARAMETER_GRAVITY = "重力";
+	public static final String PARAMETER_GRAVITY = "驥榊鴨";
 
 	private static final double DEFAULT_GRAVITY = 0.5;
 

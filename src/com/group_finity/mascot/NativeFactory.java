@@ -8,8 +8,8 @@ import com.group_finity.mascot.image.TranslucentWindow;
 import com.sun.jna.Platform;
 
 /**
- * ƒlƒCƒeƒBƒuŠÂ‹«‚Ö‚ÌƒAƒNƒZƒX‚ğ’ñ‹Ÿ‚·‚é.
- * {@link #getInstance()} ‚ÍÀsŠÂ‹«‚É‚æ‚Á‚Ä Windows —p‚ ‚é‚¢‚Í”Ä—p‚ÌƒTƒuƒNƒ‰ƒX‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ•Ô‚·.
+ * ãƒã‚¤ãƒ†ã‚£ãƒ–ç’°å¢ƒã¸ã®ã‚¢ã‚¯ã‚»ã‚¹ã‚’æä¾›ã™ã‚‹.
+ * {@link #getInstance()} ã¯å®Ÿè¡Œç’°å¢ƒã«ã‚ˆã£ã¦ Windows ç”¨ã‚ã‚‹ã„ã¯æ±ç”¨ã®ã‚µãƒ–ã‚¯ãƒ©ã‚¹ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’è¿”ã™.
  * @author Yuki
  */
 public abstract class NativeFactory {
@@ -17,7 +17,7 @@ public abstract class NativeFactory {
 	private static final NativeFactory instance;
 
 	/**
-	 * ƒTƒuƒNƒ‰ƒX‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğì¬‚µ‚Ä‚¨‚­.
+	 * ã‚µãƒ–ã‚¯ãƒ©ã‚¹ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ä½œæˆã—ã¦ãŠã.
 	 */
 	static {
 		final String basePackage = NativeFactory.class.getName().substring(0, NativeFactory.class.getName().lastIndexOf('.'));
@@ -39,7 +39,7 @@ public abstract class NativeFactory {
 	}
 
 	/**
-	 * ÀsŠÂ‹«‚É‰‚¶‚½ƒTƒuƒNƒ‰ƒX‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾‚·‚é.
+	 * å®Ÿè¡Œç’°å¢ƒã«å¿œã˜ãŸã‚µãƒ–ã‚¯ãƒ©ã‚¹ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—ã™ã‚‹.
 	 * @return
 	 */
 	public static NativeFactory getInstance() {
@@ -47,21 +47,21 @@ public abstract class NativeFactory {
 	}
 
 	/**
-	 * ŠÂ‹«ƒIƒuƒWƒFƒNƒg‚ğæ“¾‚·‚é.
-	 * @return ŠÂ‹«ƒIƒuƒWƒFƒNƒg.
+	 * ç’°å¢ƒã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—ã™ã‚‹.
+	 * @return ç’°å¢ƒã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ.
 	 */
 	public abstract Environment getEnvironment();
 
 	/**
-	 * w’è‚³‚ê‚½ BufferedImage ‚É‘Î‰‚·‚éƒlƒCƒeƒBƒu‚È‰æ‘œ‚ğæ“¾‚·‚é.
-	 * ‚±‚Ì‰æ‘œ‚Í {@link TranslucentWindow} ‚Ìƒ}ƒXƒLƒ“ƒO‚Ég—p‚Å‚«‚é.
+	 * æŒ‡å®šã•ã‚ŒãŸ BufferedImage ã«å¯¾å¿œã™ã‚‹ãƒã‚¤ãƒ†ã‚£ãƒ–ãªç”»åƒã‚’å–å¾—ã™ã‚‹.
+	 * ã“ã®ç”»åƒã¯ {@link TranslucentWindow} ã®ãƒã‚¹ã‚­ãƒ³ã‚°ã«ä½¿ç”¨ã§ãã‚‹.
 	 * @param src
 	 * @return
 	 */
 	public abstract NativeImage newNativeImage(BufferedImage src);
 
 	/**
-	 * ”¼“§–¾•\¦‚ª‰Â”\‚ÈƒEƒBƒ“ƒhƒE‚ğì¬‚·‚é.
+	 * åŠé€æ˜è¡¨ç¤ºãŒå¯èƒ½ãªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ä½œæˆã™ã‚‹.
 	 * @return
 	 */
 	public abstract TranslucentWindow newTransparentWindow();

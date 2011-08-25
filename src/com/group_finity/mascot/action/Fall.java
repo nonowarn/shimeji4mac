@@ -12,29 +12,29 @@ import com.group_finity.mascot.exception.VariableException;
 import com.group_finity.mascot.script.VariableMap;
 
 /**
- * —Ž‚¿‚éƒAƒNƒVƒ‡ƒ“.
+ * è½ã¡ã‚‹ã‚¢ã‚¯ã‚·ãƒ§ãƒ³.
  */
 public class Fall extends ActionBase {
 
 	private static final Logger log = Logger.getLogger(Fall.class.getName());
 
-	public static final String PARAMETER_INITIALVX = "‰‘¬X";
+	public static final String PARAMETER_INITIALVX = "åˆé€ŸX";
 
 	private static final int DEFAULT_INITIALVX = 0;
 
-	private static final String PARAMETER_INITIALVY = "‰‘¬Y";
+	private static final String PARAMETER_INITIALVY = "åˆé€ŸY";
 
 	private static final int DEFAULT_INITIALVY = 0;
 
-	public static final String PARAMETER_REGISTANCEX = "‹ó‹C’ïRX";
+	public static final String PARAMETER_REGISTANCEX = "ç©ºæ°—æŠµæŠ—X";
 
 	private static final double DEFAULT_REGISTANCEX = 0.05;
 
-	public static final String PARAMETER_REGISTANCEY = "‹ó‹C’ïRY";
+	public static final String PARAMETER_REGISTANCEY = "ç©ºæ°—æŠµæŠ—Y";
 
 	private static final double DEFAULT_REGISTANCEY = 0.1;
 
-	public static final String PARAMETER_GRAVITY = "d—Í";
+	public static final String PARAMETER_GRAVITY = "é‡åŠ›";
 
 	private static final double DEFAULT_GRAVITY = 2;
 
@@ -85,7 +85,7 @@ public class Fall extends ActionBase {
 		this.setModX(this.getModX() + (this.getVelocityX() % 1));
 		this.setModY(this.getModY() + (this.getVelocityY() % 1));
 
-		// ˆÚ“®—Ê
+		// ç§»å‹•é‡
 		int dx = (int) this.getVelocityX() + (int) this.getModX();
 		int dy = (int) this.getVelocityY() + (int) this.getModY();
 
@@ -103,10 +103,10 @@ public class Fall extends ActionBase {
 			int x = start.x+dx*i/dev;
 			int y = start.y+dy*i/dev;
 
-			// ƒ}ƒXƒRƒbƒg‚ðˆÚ“®‚·‚é
+			// ãƒžã‚¹ã‚³ãƒƒãƒˆã‚’ç§»å‹•ã™ã‚‹
 			getMascot().setAnchor(new Point(x,y));
 			if ( dy>0 ) {
-				// HACK IE‚ÌƒEƒBƒ“ƒhƒE‚È‚Ç‚ª“®‚©‚³‚ê‚Ä‚¢‚é‚±‚Æ‚ª‚ ‚é‚Ì‚Å‘½‚ß‚Éƒ`ƒFƒbƒN
+				// HACK IEã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãªã©ãŒå‹•ã‹ã•ã‚Œã¦ã„ã‚‹ã“ã¨ãŒã‚ã‚‹ã®ã§å¤šã‚ã«ãƒã‚§ãƒƒã‚¯
 				for( int j = -80; j<=0; ++j ) {
 					getMascot().setAnchor(new Point(x,y+j));
 					if ( getEnvironment().getFloor(true).isOn(getMascot().getAnchor()) ) {
@@ -119,7 +119,7 @@ public class Fall extends ActionBase {
 			}
 		}
 
-		// ƒAƒjƒ[ƒVƒ‡ƒ“‚³‚¹‚é
+		// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã•ã›ã‚‹
 		getAnimation().next(getMascot(), getTime());
 
 	}

@@ -32,13 +32,13 @@ import com.group_finity.mascot.exception.CantBeAliveException;
 import com.group_finity.mascot.exception.ConfigurationException;
 
 /**
- * ƒvƒƒOƒ‰ƒ€‚ÌƒGƒ“ƒgƒŠƒ|ƒCƒ“ƒg.
+ * ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®ã‚¨ãƒ³ãƒˆãƒªãƒã‚¤ãƒ³ãƒˆ.
  */
 public class Main {
 
 	private static final Logger log = Logger.getLogger(Main.class.getName());
 
-	static final String BEHAVIOR_GATHER = "ƒ}ƒEƒX‚Ìü‚è‚ÉW‚Ü‚é";
+	static final String BEHAVIOR_GATHER = "ãƒã‚¦ã‚¹ã®å‘¨ã‚Šã«é›†ã¾ã‚‹";
 
 	static {
 		try {
@@ -67,110 +67,110 @@ public class Main {
 
 	public void run() {
 
-		// İ’è‚ğ“Ç‚İ‚Ş
+		// è¨­å®šã‚’èª­ã¿è¾¼ã‚€
 		loadConfiguration();
 
-		// ƒgƒŒƒCƒAƒCƒRƒ“‚ğì¬‚·‚é
+		// ãƒˆãƒ¬ã‚¤ã‚¢ã‚¤ã‚³ãƒ³ã‚’ä½œæˆã™ã‚‹
 		createTrayIcon();
 
-		// ‚µ‚ß‚¶‚ğˆê•Cì¬‚·‚é
+		// ã—ã‚ã˜ã‚’ä¸€åŒ¹ä½œæˆã™ã‚‹
 		createMascot();
 
 		getManager().start();
 	}
 
 	/**
-	 * İ’èƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş.
+	 * è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€.
 	 */
 	private void loadConfiguration() {
 
 		try {
-			log.log(Level.INFO, "İ’èƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚İ({0})", "/“®ì.xml");
+			log.log(Level.INFO, "è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã¿({0})", "/å‹•ä½œ.xml");
 
 			final Document actions = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
-					Main.class.getResourceAsStream("/“®ì.xml"));
+					Main.class.getResourceAsStream("/å‹•ä½œ.xml"));
 
-			log.log(Level.INFO, "İ’èƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚İ({0})", "/s“®.xml");
+			log.log(Level.INFO, "è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã¿({0})", "/è¡Œå‹•.xml");
 
 			this.getConfiguration().load(new Entry(actions.getDocumentElement()));
 
 			final Document behaviors = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
-					Main.class.getResourceAsStream("/s“®.xml"));
+					Main.class.getResourceAsStream("/è¡Œå‹•.xml"));
 
 			this.getConfiguration().load(new Entry(behaviors.getDocumentElement()));
 
 			this.getConfiguration().validate();
 
 		} catch (final IOException e) {
-			log.log(Level.SEVERE, "İ’èƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ‚É¸”s", e);
+			log.log(Level.SEVERE, "è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿ã«å¤±æ•—", e);
 			exit();
 		} catch (final SAXException e) {
-			log.log(Level.SEVERE, "İ’èƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ‚É¸”s", e);
+			log.log(Level.SEVERE, "è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿ã«å¤±æ•—", e);
 			exit();
 		} catch (final ParserConfigurationException e) {
-			log.log(Level.SEVERE, "İ’èƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ‚É¸”s", e);
+			log.log(Level.SEVERE, "è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿ã«å¤±æ•—", e);
 			exit();
 		} catch (final ConfigurationException e) {
-			log.log(Level.SEVERE, "İ’èƒtƒ@ƒCƒ‹‚Ì‹Lq‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·", e);
+			log.log(Level.SEVERE, "è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã®è¨˜è¿°ã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™", e);
 			exit();
 		}
 	}
 
 	/**
-	 * ƒgƒŒƒCƒAƒCƒRƒ“‚ğì¬‚·‚é.
+	 * ãƒˆãƒ¬ã‚¤ã‚¢ã‚¤ã‚³ãƒ³ã‚’ä½œæˆã™ã‚‹.
 	 * @throws AWTException
 	 * @throws IOException
 	 */
 	private void createTrayIcon() {
 
-		log.log(Level.INFO, "ƒgƒŒƒCƒAƒCƒRƒ“‚ğì¬");
+		log.log(Level.INFO, "ãƒˆãƒ¬ã‚¤ã‚¢ã‚¤ã‚³ãƒ³ã‚’ä½œæˆ");
 
 		if ( SystemTray.getSystemTray()==null ) {
 			return;
 		}
 
-		// u‘‚â‚·vƒƒjƒ…[ƒAƒCƒeƒ€
-		final MenuItem increaseMenu = new MenuItem("‘‚â‚·");
+		// ã€Œå¢—ã‚„ã™ã€ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚¢ã‚¤ãƒ†ãƒ 
+		final MenuItem increaseMenu = new MenuItem("å¢—ã‚„ã™");
 		increaseMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent event) {
 				createMascot();
 			}
 		});
 
-		// u‚ ‚Â‚Ü‚êIvƒƒjƒ…[ƒAƒCƒeƒ€
-		final MenuItem gatherMenu = new MenuItem("‚ ‚Â‚Ü‚êI");
+		// ã€Œã‚ã¤ã¾ã‚Œï¼ã€ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚¢ã‚¤ãƒ†ãƒ 
+		final MenuItem gatherMenu = new MenuItem("ã‚ã¤ã¾ã‚Œï¼");
 		gatherMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent event) {
 				gatherAll();
 			}
 		});
 
-		// uˆê•C‚¾‚¯c‚·vƒƒjƒ…[ƒAƒCƒeƒ€
-		final MenuItem oneMenu = new MenuItem("ˆê•C‚¾‚¯c‚·");
+		// ã€Œä¸€åŒ¹ã ã‘æ®‹ã™ã€ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚¢ã‚¤ãƒ†ãƒ 
+		final MenuItem oneMenu = new MenuItem("ä¸€åŒ¹ã ã‘æ®‹ã™");
 		oneMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent event) {
 				remainOne();
 			}
 		});
 
-		// uIE‚ğŒ³‚É–ß‚·vƒƒjƒ…[ƒAƒCƒeƒ€
+		// ã€ŒIEã‚’å…ƒã«æˆ»ã™ã€ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚¢ã‚¤ãƒ†ãƒ 
 		final MenuItem restoreMenu =
-			new MenuItem(Platform.isMac() ? "ƒEƒBƒ“ƒhƒE‚ğŒ³‚É–ß‚·" : "IE‚ğŒ³‚É–ß‚·");
+			new MenuItem(Platform.isMac() ? "ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’å…ƒã«æˆ»ã™" : "IEã‚’å…ƒã«æˆ»ã™");
 		restoreMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent event) {
 				restoreIE();
 			}
 		});
 
-		// u‚Î‚¢‚Î‚¢vƒƒjƒ…[ƒAƒCƒeƒ€
-		final MenuItem closeMenu = new MenuItem("‚Î‚¢‚Î‚¢");
+		// ã€Œã°ã„ã°ã„ã€ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚¢ã‚¤ãƒ†ãƒ 
+		final MenuItem closeMenu = new MenuItem("ã°ã„ã°ã„");
 		closeMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent e) {
 				exit();
 			}
 		});
 
-		// ƒ|ƒbƒvƒAƒbƒvƒƒjƒ…[‚ğì¬
+		// ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’ä½œæˆ
 		final PopupMenu trayPopup = new PopupMenu();
 		trayPopup.add(increaseMenu);
 		trayPopup.add(gatherMenu);
@@ -180,12 +180,12 @@ public class Main {
 		trayPopup.add(closeMenu);
 
 		try {
-			// ƒgƒŒƒCƒAƒCƒRƒ“‚ğì¬
-			final TrayIcon icon = new TrayIcon(ImageIO.read(Main.class.getResource("/icon.png")), "‚µ‚ß‚¶", trayPopup);
+			// ãƒˆãƒ¬ã‚¤ã‚¢ã‚¤ã‚³ãƒ³ã‚’ä½œæˆ
+			final TrayIcon icon = new TrayIcon(ImageIO.read(Main.class.getResource("/icon.png")), "ã—ã‚ã˜", trayPopup);
 
-      // ƒAƒCƒRƒ“‚ª¶ƒNƒŠƒbƒN‚³‚ê‚½‚Æ‚«‚àu‘‚¦‚év
-			// ‚½‚¾‚µ Mac ‚Å‚Í¶ƒNƒŠƒbƒN‚Åƒƒjƒ…[‚ªŠJ‚¢‚Ä‚µ‚Ü‚¤‚½‚ßA
-			// ‰EƒNƒŠƒbƒN‚Å‘B‚³‚¹‚é
+      // ã‚¢ã‚¤ã‚³ãƒ³ãŒå·¦ã‚¯ãƒªãƒƒã‚¯ã•ã‚ŒãŸã¨ãã‚‚ã€Œå¢—ãˆã‚‹ã€
+			// ãŸã ã— Mac ã§ã¯å·¦ã‚¯ãƒªãƒƒã‚¯ã§ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãŒé–‹ã„ã¦ã—ã¾ã†ãŸã‚ã€
+			// å³ã‚¯ãƒªãƒƒã‚¯ã§å¢—æ®–ã•ã›ã‚‹
 			icon.addMouseListener(new MouseAdapter() {
         @Override
 				public void mouseClicked(final MouseEvent e) {
@@ -196,15 +196,15 @@ public class Main {
 				}
 			});
 
-			// ƒgƒŒƒCƒAƒCƒRƒ“‚ğ•\¦
+			// ãƒˆãƒ¬ã‚¤ã‚¢ã‚¤ã‚³ãƒ³ã‚’è¡¨ç¤º
 			SystemTray.getSystemTray().add(icon);
 
 		} catch (final IOException e) {
-			log.log(Level.SEVERE, "ƒgƒŒƒCƒAƒCƒRƒ“‚Ìì¬‚É¸”s", e);
+			log.log(Level.SEVERE, "ãƒˆãƒ¬ã‚¤ã‚¢ã‚¤ã‚³ãƒ³ã®ä½œæˆã«å¤±æ•—", e);
 			exit();
 
 		} catch (final AWTException e) {
-			log.log(Level.SEVERE, "ƒgƒŒƒCƒAƒCƒRƒ“‚Ìì¬‚É¸”s", e);
+			log.log(Level.SEVERE, "ãƒˆãƒ¬ã‚¤ã‚¢ã‚¤ã‚³ãƒ³ã®ä½œæˆã«å¤±æ•—", e);
 			MascotEventHandler.setShowSystemTrayMenu(true);
 			getManager().setExitOnLastRemoved(true);
 		}
@@ -212,18 +212,18 @@ public class Main {
 	}
 
 	/**
-	 * ‚µ‚ß‚¶‚ğˆê•Cì¬‚·‚é.
+	 * ã—ã‚ã˜ã‚’ä¸€åŒ¹ä½œæˆã™ã‚‹.
 	 */
 	public void createMascot() {
 
-		log.log(Level.INFO, "ƒ}ƒXƒRƒbƒg‚ğì¬");
+		log.log(Level.INFO, "ãƒã‚¹ã‚³ãƒƒãƒˆã‚’ä½œæˆ");
 
-		// ƒ}ƒXƒRƒbƒg‚ğ1ŒÂì¬
+		// ãƒã‚¹ã‚³ãƒƒãƒˆã‚’1å€‹ä½œæˆ
 		final Mascot mascot = new Mascot();
 
-		// ”ÍˆÍŠO‚©‚çŠJn
+		// ç¯„å›²å¤–ã‹ã‚‰é–‹å§‹
 		mascot.setAnchor(new Point(-1000, -1000));
-		// ƒ‰ƒ“ƒ_ƒ€‚ÈŒü‚«‚Å
+		// ãƒ©ãƒ³ãƒ€ãƒ ãªå‘ãã§
 		mascot.setLookRight(Math.random() < 0.5);
 
 		try {
@@ -232,10 +232,10 @@ public class Main {
 			this.getManager().add(mascot);
 
 		} catch (final BehaviorInstantiationException e) {
-			log.log(Level.SEVERE, "Å‰‚Ìs“®‚Ì‰Šú‰»‚É¸”s‚µ‚Ü‚µ‚½", e);
+			log.log(Level.SEVERE, "æœ€åˆã®è¡Œå‹•ã®åˆæœŸåŒ–ã«å¤±æ•—ã—ã¾ã—ãŸ", e);
 			mascot.dispose();
 		} catch (final CantBeAliveException e) {
-			log.log(Level.SEVERE, "¶‚«‘±‚¯‚é‚±‚Æ‚ªo—ˆ‚È‚¢ó‹µ", e);
+			log.log(Level.SEVERE, "ç”Ÿãç¶šã‘ã‚‹ã“ã¨ãŒå‡ºæ¥ãªã„çŠ¶æ³", e);
 			mascot.dispose();
 		}
 

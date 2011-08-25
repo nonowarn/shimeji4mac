@@ -10,7 +10,7 @@ import com.group_finity.mascot.exception.VariableException;
 import com.group_finity.mascot.script.VariableMap;
 
 /**
- * 複数のアクションを直列に一つにまとめたアクションの基底クラス.
+ * 隍�謨ｰ縺ｮ繧｢繧ｯ繧ｷ繝ｧ繝ｳ繧堤峩蛻励↓荳縺､縺ｫ縺ｾ縺ｨ繧√◆繧｢繧ｯ繧ｷ繝ｧ繝ｳ縺ｮ蝓ｺ蠎輔け繝ｩ繧ｹ.
  */
 public abstract class ComplexAction extends ActionBase {
 

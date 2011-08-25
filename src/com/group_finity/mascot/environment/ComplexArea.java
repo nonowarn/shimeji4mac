@@ -20,8 +20,8 @@ public class ComplexArea {
 
 	public void set(String name, final Rectangle value) {
 
-		// Š®‘S‚Éˆê’v‚µ‚Ä‚¢‚é‚â‚Â‚ª‚¢‚é‚È‚çœŠO‚·‚×‚«H
-		// ƒ~ƒ‰[ƒŠƒ“ƒO‚µ‚Ä‚¢‚é‚É”­¶‚·‚é‚Á‚Û‚¢
+		// å®Œå…¨ã«ä¸€è‡´ã—ã¦ã„ã‚‹ã‚„ã¤ãŒã„ã‚‹ãªã‚‰é™¤å¤–ã™ã¹ãï¼Ÿ
+		// ãƒŸãƒ©ãƒ¼ãƒªãƒ³ã‚°ã—ã¦ã„ã‚‹æ™‚ã«ç™ºç”Ÿã™ã‚‹ã£ã½ã„
 
 		for (Area area : areas.values()) {
 			if ( area.getLeft()==value.x &&

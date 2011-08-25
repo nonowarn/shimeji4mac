@@ -32,52 +32,52 @@ public class Configuration {
 
 	public void load(final Entry configurationNode) throws IOException, ConfigurationException {
 
-		log.log(Level.INFO, "İ’è“Ç‚İ‚İŠJn");
+		log.log(Level.INFO, "è¨­å®šèª­ã¿è¾¼ã¿é–‹å§‹");
 
-		for (final Entry constant : configurationNode.selectChildren("’è”")) {
+		for (final Entry constant : configurationNode.selectChildren("å®šæ•°")) {
 
-			log.log(Level.INFO, "’è”...");
+			log.log(Level.INFO, "å®šæ•°...");
 
-			constants.put( constant.getAttribute("–¼‘O"), constant.getAttribute("’l") );
+			constants.put( constant.getAttribute("åå‰"), constant.getAttribute("å€¤") );
 		}
 
-		for (final Entry list : configurationNode.selectChildren("“®ìƒŠƒXƒg")) {
+		for (final Entry list : configurationNode.selectChildren("å‹•ä½œãƒªã‚¹ãƒˆ")) {
 
-			log.log(Level.INFO, "“®ìƒŠƒXƒg...");
+			log.log(Level.INFO, "å‹•ä½œãƒªã‚¹ãƒˆ...");
 
-			for (final Entry node : list.selectChildren("“®ì")) {
+			for (final Entry node : list.selectChildren("å‹•ä½œ")) {
 
 				final ActionBuilder action = new ActionBuilder(this, node);
 
 				if ( this.getActionBuilders().containsKey(action.getName())) {
-					throw new ConfigurationException("“®ì‚Ì–¼‘O‚ªd•¡‚µ‚Ä‚¢‚Ü‚·:"+action.getName());
+					throw new ConfigurationException("å‹•ä½œã®åå‰ãŒé‡è¤‡ã—ã¦ã„ã¾ã™:"+action.getName());
 				}
 
 				this.getActionBuilders().put(action.getName(), action);
 			}
 		}
 
-		for (final Entry list : configurationNode.selectChildren("s“®ƒŠƒXƒg")) {
+		for (final Entry list : configurationNode.selectChildren("è¡Œå‹•ãƒªã‚¹ãƒˆ")) {
 
-			log.log(Level.INFO, "s“®ƒŠƒXƒg...");
+			log.log(Level.INFO, "è¡Œå‹•ãƒªã‚¹ãƒˆ...");
 
 			loadBehaviors(list, new ArrayList<String>());
 		}
 
-		log.log(Level.INFO, "İ’è“Ç‚İ‚İŠ®—¹");
+		log.log(Level.INFO, "è¨­å®šèª­ã¿è¾¼ã¿å®Œäº†");
 	}
 
 	private void loadBehaviors(final Entry list, final List<String> conditions) {
 		for (final Entry node : list.getChildren()) {
 
-			if (node.getName().equals("ğŒ")) {
+			if (node.getName().equals("æ¡ä»¶")) {
 
 				final List<String> newConditions = new ArrayList<String>(conditions);
-				newConditions.add(node.getAttribute("ğŒ"));
+				newConditions.add(node.getAttribute("æ¡ä»¶"));
 
 				loadBehaviors(node, newConditions);
 
-			} else if (node.getName().equals("s“®")) {
+			} else if (node.getName().equals("è¡Œå‹•")) {
 				final BehaviorBuilder behavior = new BehaviorBuilder(this, node, conditions);
 				this.getBehaviorBuilders().put(behavior.getName(), behavior);
 			}
@@ -88,7 +88,7 @@ public class Configuration {
 
 		final ActionBuilder factory = this.actionBuilders.get(name);
 		if (factory == null) {
-			throw new ActionInstantiationException("‘Î‰‚·‚é“®ì‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ: " + name);
+			throw new ActionInstantiationException("å¯¾å¿œã™ã‚‹å‹•ä½œãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“: " + name);
 		}
 
 		return factory.buildAction(params);
@@ -109,7 +109,7 @@ public class Configuration {
 		final VariableMap context = new VariableMap();
 		context.put("mascot", mascot);
 
-		// TODO ‚±‚±ˆÈŠO‚Å•K—v‚Èê‡‚ÍHª–{“I‚É‚Â‚­‚è‚ğŒ©’¼‚·‚×‚«
+		// TODO ã“ã“ä»¥å¤–ã§å¿…è¦ãªå ´åˆã¯ï¼Ÿæ ¹æœ¬çš„ã«ã¤ãã‚Šã‚’è¦‹ç›´ã™ã¹ã
 		for( Map.Entry<String, String> e : constants.entrySet() ) {
 			context.put(e.getKey(), e.getValue());
 		}
@@ -123,7 +123,7 @@ public class Configuration {
 					totalFrequency += behaviorFactory.getFrequency();
 				}
 			} catch (final VariableException e) {
-				log.log(Level.WARNING, "s“®•p“x‚Ì•]‰¿’†‚ÉƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½", e);
+				log.log(Level.WARNING, "è¡Œå‹•é »åº¦ã®è©•ä¾¡ä¸­ã«ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸ", e);
 			}
 		}
 
@@ -140,7 +140,7 @@ public class Configuration {
 						totalFrequency += behaviorFactory.getFrequency();
 					}
 				} catch (final VariableException e) {
-					log.log(Level.WARNING, "s“®•p“x‚Ì•]‰¿’†‚ÉƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½", e);
+					log.log(Level.WARNING, "è¡Œå‹•é »åº¦ã®è©•ä¾¡ä¸­ã«ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸ", e);
 				}
 			}
 		}
@@ -151,7 +151,7 @@ public class Configuration {
 							- mascot.getEnvironment()
 					.getScreen().getLeft()))
 					+ mascot.getEnvironment().getScreen().getLeft(), mascot.getEnvironment().getScreen().getTop() - 256));
-			return buildBehavior("—‰º‚·‚é");
+			return buildBehavior("è½ä¸‹ã™ã‚‹");
 		}
 
 		double random = Math.random() * totalFrequency;

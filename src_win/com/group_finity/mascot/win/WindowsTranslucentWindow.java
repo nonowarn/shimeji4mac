@@ -16,10 +16,10 @@ import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 
 /**
- * ƒ¿’l‚Â‚«‰æ‘œƒEƒBƒ“ƒhƒE.
- * {@link #setImage(WindowsNativeImage)} ‚Åİ’è‚µ‚½ {@link WindowsNativeImage} ‚ğƒfƒXƒNƒgƒbƒv‚É•\¦‚Å‚«‚é.
+ * Î±å€¤ã¤ãç”»åƒã‚¦ã‚£ãƒ³ãƒ‰ã‚¦.
+ * {@link #setImage(WindowsNativeImage)} ã§è¨­å®šã—ãŸ {@link WindowsNativeImage} ã‚’ãƒ‡ã‚¹ã‚¯ãƒˆãƒƒãƒ—ã«è¡¨ç¤ºã§ãã‚‹.
  *
- * {@link #setAlpha(int)} ‚Å•\¦‚·‚é‚Æ‚«‚Ì”Z“x‚àw’è‚Å‚«‚é.
+ * {@link #setAlpha(int)} ã§è¡¨ç¤ºã™ã‚‹ã¨ãã®æ¿ƒåº¦ã‚‚æŒ‡å®šã§ãã‚‹.
  */
 class WindowsTranslucentWindow extends JWindow implements TranslucentWindow {
 
@@ -31,9 +31,9 @@ class WindowsTranslucentWindow extends JWindow implements TranslucentWindow {
 	}
 
 	/**
-	 * ƒ¿’l‚Â‚«‰æ‘œ‚ğ•`‰æ‚·‚é.
-	 * @param imageHandle ƒrƒbƒgƒ}ƒbƒv‚Ìƒnƒ“ƒhƒ‹.
-	 * @param alpha •\¦”Z“x. 0 = ‚Ü‚Á‚½‚­•\¦‚µ‚È‚¢A255 = Š®‘S‚É•\¦‚·‚é.
+	 * Î±å€¤ã¤ãç”»åƒã‚’æç”»ã™ã‚‹.
+	 * @param imageHandle ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã®ãƒãƒ³ãƒ‰ãƒ«.
+	 * @param alpha è¡¨ç¤ºæ¿ƒåº¦. 0 = ã¾ã£ãŸãè¡¨ç¤ºã—ãªã„ã€255 = å®Œå…¨ã«è¡¨ç¤ºã™ã‚‹.
 	 */
 	private void paint(final Pointer imageHandle, final int alpha) {
 
@@ -46,22 +46,22 @@ class WindowsTranslucentWindow extends JWindow implements TranslucentWindow {
 				User32.INSTANCE.SetWindowLongW(hWnd, User32.GWL_EXSTYLE, exStyle | User32.WS_EX_LAYERED);
 			}
 
-			// ‰æ‘œ‚Ì“]‘—Œ³DC‚ğì¬
+			// ç”»åƒã®è»¢é€å…ƒDCã‚’ä½œæˆ
 			final Pointer clientDC= User32.INSTANCE.GetDC(hWnd);
 			final Pointer memDC = Gdi32.INSTANCE.CreateCompatibleDC(clientDC);
 			final Pointer oldBmp = Gdi32.INSTANCE.SelectObject(memDC, imageHandle );
 
 			User32.INSTANCE.ReleaseDC(hWnd, clientDC);
 
-			// “]‘—æ—Ìˆæ
+			// è»¢é€å…ˆé ˜åŸŸ
 			final RECT windowRect = new RECT();
 			User32.INSTANCE.GetWindowRect(hWnd, windowRect);
 
-			// “]‘—
+			// è»¢é€
 			final BLENDFUNCTION bf = new BLENDFUNCTION();
 			bf.BlendOp = BLENDFUNCTION.AC_SRC_OVER;
 			bf.BlendFlags = 0;
-			bf.SourceConstantAlpha = (byte)alpha; // ”Z“x‚ğİ’è
+			bf.SourceConstantAlpha = (byte)alpha; // æ¿ƒåº¦ã‚’è¨­å®š
 			bf.AlphaFormat = BLENDFUNCTION.AC_SRC_ALPHA;
 
 			final POINT lt = new POINT();
@@ -76,7 +76,7 @@ class WindowsTranslucentWindow extends JWindow implements TranslucentWindow {
 					lt, size,
 					memDC, zero, 0, bf, User32.ULW_ALPHA );
 
-			// ƒrƒbƒgƒ}ƒbƒv‚ÍŒ³‚É–ß‚µ‚Ä‚¨‚­
+			// ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã¯å…ƒã«æˆ»ã—ã¦ãŠã
 			Gdi32.INSTANCE.SelectObject(memDC, oldBmp);
 
 			Gdi32.INSTANCE.DeleteDC(memDC);
@@ -85,12 +85,12 @@ class WindowsTranslucentWindow extends JWindow implements TranslucentWindow {
 	}
 
 	/**
-	 * •\¦‚·‚é‰æ‘œ.
+	 * è¡¨ç¤ºã™ã‚‹ç”»åƒ.
 	 */
 	private WindowsNativeImage image;
 
 	/**
-	 * •\¦”Z“x. 0 = ‚Ü‚Á‚½‚­•\¦‚µ‚È‚¢A255 = Š®‘S‚É•\¦‚·‚é.
+	 * è¡¨ç¤ºæ¿ƒåº¦. 0 = ã¾ã£ãŸãè¡¨ç¤ºã—ãªã„ã€255 = å®Œå…¨ã«è¡¨ç¤ºã™ã‚‹.
 	 */
 	private int alpha = 255;
 
@@ -102,7 +102,7 @@ class WindowsTranslucentWindow extends JWindow implements TranslucentWindow {
 	@Override
 	public void paint(final Graphics g) {
 		if (getImage() != null) {
-			// JNI ‚ğg—p‚µ‚Äƒ¿’l‚Â‚«‰æ‘œ‚ğ•`‰æ‚·‚é.
+			// JNI ã‚’ä½¿ç”¨ã—ã¦Î±å€¤ã¤ãç”»åƒã‚’æç”»ã™ã‚‹.
 			paint(getImage().getHandle(), getAlpha());
 		}
 	}

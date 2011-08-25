@@ -23,10 +23,10 @@ public interface Gdi32 extends StdCallLibrary {
 	int DeleteObject(Pointer hObject);
 
 	Pointer CreateRectRgn(
-			  int nLeftRect,   // ¶ã‹÷‚Ì x À•W
-			  int nTopRect,    // ¶ã‹÷‚Ì y À•W
-			  int nRightRect,  // ‰E‰º‹÷‚Ì x À•W
-			  int nBottomRect  // ‰E‰º‹÷‚Ì y À•W
+			  int nLeftRect,   // å·¦ä¸Šéš…ã® x åº§æ¨™
+			  int nTopRect,    // å·¦ä¸Šéš…ã® y åº§æ¨™
+			  int nRightRect,  // å³ä¸‹éš…ã® x åº§æ¨™
+			  int nBottomRect  // å³ä¸‹éš…ã® y åº§æ¨™
 			);
 	int GetRgnBox( Pointer hrgn, RECT lprc );
 }

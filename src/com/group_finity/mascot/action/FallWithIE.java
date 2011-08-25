@@ -12,7 +12,7 @@ import com.group_finity.mascot.exception.VariableException;
 import com.group_finity.mascot.script.VariableMap;
 
 /**
- * IE‚ğ‚Á‚½‚Ü‚Ü—‚¿‚éƒAƒNƒVƒ‡ƒ“.
+ * IEã‚’æŒã£ãŸã¾ã¾è½ã¡ã‚‹ã‚¢ã‚¯ã‚·ãƒ§ãƒ³.
  * 
  * @author Yuki Yamada
  */
@@ -20,11 +20,11 @@ public class FallWithIE extends Fall {
 
 	private static final Logger log = Logger.getLogger(FallWithIE.class.getName());
 
-	public static final String PARAMETER_IEOFFSETX = "IE‚Ì’[X";
+	public static final String PARAMETER_IEOFFSETX = "IEã®ç«¯X";
 
 	private static final int DEFAULT_IEOFFSETX = 0;
 
-	public static final String PARAMETER_IEOFFSETY = "IE‚Ì’[Y";
+	public static final String PARAMETER_IEOFFSETY = "IEã®ç«¯Y";
 
 	private static final int DEFAULT_IEOFFSETY = 0;
 
@@ -37,31 +37,31 @@ public class FallWithIE extends Fall {
 
 		final Area activeIE = getEnvironment().getActiveIE();
 		if (!activeIE.isVisible()) {
-			log.log(Level.INFO, "IE‚ª”ñ•\¦‚É‚È‚Á‚½({0},{1})", new Object[]{ getMascot(), this } ); 
+			log.log(Level.INFO, "IEãŒéè¡¨ç¤ºã«ãªã£ãŸ({0},{1})", new Object[]{ getMascot(), this } ); 
 			throw new LostGroundException();
 		}
 
 		final int offsetX = getIEOffsetX();
 		final int offsetY = getIEOffsetY();
 
-		// IE ‚ğ‚¿‚á‚ñ‚Æ‚Ä‚Ä‚¢‚é‚©ƒ`ƒFƒbƒN
+		// IE ã‚’ã¡ã‚ƒã‚“ã¨æŒã¦ã¦ã„ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 		if (getMascot().isLookRight()) {
 			if ((getMascot().getAnchor().x - offsetX != activeIE.getLeft())
 					|| (getMascot().getAnchor().y + offsetY != activeIE.getBottom())) {
-				log.log(Level.INFO, "IE‚©‚ç—£‚ê‚½({0},{1})", new Object[]{ getMascot(), this } ); 
+				log.log(Level.INFO, "IEã‹ã‚‰é›¢ã‚ŒãŸ({0},{1})", new Object[]{ getMascot(), this } ); 
 				throw new LostGroundException();
 			}
 		} else {
 			if ((getMascot().getAnchor().x + offsetX != activeIE.getRight())
 					|| (getMascot().getAnchor().y + offsetY != activeIE.getBottom())) {
-				log.log(Level.INFO, "IE‚©‚ç—£‚ê‚½({0},{1})", new Object[]{ getMascot(), this } ); 
+				log.log(Level.INFO, "IEã‹ã‚‰é›¢ã‚ŒãŸ({0},{1})", new Object[]{ getMascot(), this } ); 
 				throw new LostGroundException();
 			}
 		}
 
 		super.tick();
 
-		// IE ‚ğˆÚ“®
+		// IE ã‚’ç§»å‹•
 		if (activeIE.isVisible()) {
 			if (getMascot().isLookRight()) {
 				getEnvironment().moveActiveIE(new Point(getMascot().getAnchor().x - offsetX, getMascot().getAnchor().y

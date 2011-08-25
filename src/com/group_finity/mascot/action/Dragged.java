@@ -12,7 +12,7 @@ import com.group_finity.mascot.exception.VariableException;
 import com.group_finity.mascot.script.VariableMap;
 
 /**
- * ƒhƒ‰ƒbƒO‚³‚ê‚Ä‚éƒAƒNƒVƒ‡ƒ“.
+ * ãƒ‰ãƒ©ãƒƒã‚°ã•ã‚Œã¦ã‚‹ã‚¢ã‚¯ã‚·ãƒ§ãƒ³.
  */
 public class Dragged extends ActionBase {
 
@@ -65,13 +65,13 @@ public class Dragged extends ActionBase {
 		this.setFootDx((this.getFootDx() + ((newX - this.getFootX()) * 0.1)) * 0.8);
 		this.setFootX(this.getFootX() + this.getFootDx());
 
-		// ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌğŒ‚É‘«‚ÌˆÊ’u‚ªŠÜ‚Ü‚ê‚é‰Â”\«‚ª‚ ‚é‚Ì‚Å•Ï”‚É“ü‚ê‚Ä‚¨‚­
+		// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®æ¡ä»¶ã«è¶³ã®ä½ç½®ãŒå«ã¾ã‚Œã‚‹å¯èƒ½æ€§ãŒã‚ã‚‹ã®ã§å¤‰æ•°ã«å…¥ã‚Œã¦ãŠã
 		putVariable(VARIABLE_FOOTX, this.getFootX());
 
-		// ƒAƒjƒ[ƒVƒ‡ƒ“‚³‚¹‚é
+		// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã•ã›ã‚‹
 		getAnimation().next(getMascot(), getTime());
 
-		// ƒ}ƒXƒRƒbƒg‚ÌˆÊ’u‚ğƒ}ƒEƒXƒJ[ƒ\ƒ‹‚É‡‚í‚¹‚é
+		// ãƒã‚¹ã‚³ãƒƒãƒˆã®ä½ç½®ã‚’ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ã«åˆã‚ã›ã‚‹
 		getMascot().setAnchor(new Point(cursor.getX(), cursor.getY() + 120));
 	}
 

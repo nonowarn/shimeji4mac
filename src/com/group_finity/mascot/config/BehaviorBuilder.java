@@ -38,54 +38,54 @@ public class BehaviorBuilder {
 
 	public BehaviorBuilder(final Configuration configuration, final Entry behaviorNode, final List<String> conditions) {
 		this.configuration = configuration;
-		this.name = behaviorNode.getAttribute("–¼‘O");
-		this.actionName = behaviorNode.getAttribute("“®ì") == null ? getName() : behaviorNode.getAttribute("“®ì");
-		this.frequency = Integer.parseInt(behaviorNode.getAttribute("•p“x"));
+		this.name = behaviorNode.getAttribute("åå‰");
+		this.actionName = behaviorNode.getAttribute("å‹•ä½œ") == null ? getName() : behaviorNode.getAttribute("å‹•ä½œ");
+		this.frequency = Integer.parseInt(behaviorNode.getAttribute("é »åº¦"));
 		this.conditions = new ArrayList<String>(conditions);
-		this.getConditions().add(behaviorNode.getAttribute("ğŒ"));
+		this.getConditions().add(behaviorNode.getAttribute("æ¡ä»¶"));
 
-		log.log(Level.INFO, "s“®“Ç‚İ‚İŠJn({0})", this);
+		log.log(Level.INFO, "è¡Œå‹•èª­ã¿è¾¼ã¿é–‹å§‹({0})", this);
 
 		this.getParams().putAll(behaviorNode.getAttributes());
-		this.getParams().remove("–¼‘O");
-		this.getParams().remove("“®ì");
-		this.getParams().remove("•p“x");
-		this.getParams().remove("ğŒ");
+		this.getParams().remove("åå‰");
+		this.getParams().remove("å‹•ä½œ");
+		this.getParams().remove("é »åº¦");
+		this.getParams().remove("æ¡ä»¶");
 
 		boolean nextAdditive = true;
 
-		for (final Entry nextList : behaviorNode.selectChildren("Ÿ‚Ìs“®ƒŠƒXƒg")) {
+		for (final Entry nextList : behaviorNode.selectChildren("æ¬¡ã®è¡Œå‹•ãƒªã‚¹ãƒˆ")) {
 
-			log.log(Level.INFO, "Ÿ‚Ìs“®ƒŠƒXƒg...");
+			log.log(Level.INFO, "æ¬¡ã®è¡Œå‹•ãƒªã‚¹ãƒˆ...");
 
-			nextAdditive = Boolean.parseBoolean(nextList.getAttribute("’Ç‰Á"));
+			nextAdditive = Boolean.parseBoolean(nextList.getAttribute("è¿½åŠ "));
 
 			loadBehaviors(nextList, new ArrayList<String>());
 		}
 
 		this.nextAdditive = nextAdditive;
 
-		log.log(Level.INFO, "s“®“Ç‚İ‚İŠ®—¹({0})", this);
+		log.log(Level.INFO, "è¡Œå‹•èª­ã¿è¾¼ã¿å®Œäº†({0})", this);
 
 	}
 
 	@Override
 	public String toString() {
-		return "s“®(" + getName() + "," + getFrequency() + "," + getActionName() + ")";
+		return "è¡Œå‹•(" + getName() + "," + getFrequency() + "," + getActionName() + ")";
 	}
 
 	private void loadBehaviors(final Entry list, final List<String> conditions) {
 
 		for (final Entry node : list.getChildren()) {
 
-			if (node.getName().equals("ğŒ")) {
+			if (node.getName().equals("æ¡ä»¶")) {
 
 				final List<String> newConditions = new ArrayList<String>(conditions);
-				newConditions.add(node.getAttribute("ğŒ"));
+				newConditions.add(node.getAttribute("æ¡ä»¶"));
 
 				loadBehaviors(node, newConditions);
 
-			} else if (node.getName().equals("s“®QÆ")) {
+			} else if (node.getName().equals("è¡Œå‹•å‚ç…§")) {
 				final BehaviorBuilder behavior = new BehaviorBuilder(getConfiguration(), node, conditions);
 				getNextBehaviorBuilders().add(behavior);
 			}
@@ -95,7 +95,7 @@ public class BehaviorBuilder {
 	public void validate() throws ConfigurationException {
 
 		if ( !getConfiguration().getActionBuilders().containsKey(getActionName()) ) {
-			throw new ConfigurationException("‘Î‰‚·‚é“®ì‚ª‘¶İ‚µ‚Ü‚¹‚ñ("+this+")");
+			throw new ConfigurationException("å¯¾å¿œã™ã‚‹å‹•ä½œãŒå­˜åœ¨ã—ã¾ã›ã‚“("+this+")");
 		}
 	}
 
@@ -106,7 +106,7 @@ public class BehaviorBuilder {
 						getConfiguration().buildAction(getActionName(),
 								getParams()), getConfiguration() );
 		} catch (final ActionInstantiationException e) {
-			throw new BehaviorInstantiationException("‘Î‰‚·‚é“®ì‚Ì‰Šú‰»‚É¸”s‚µ‚Ü‚µ‚½("+this+")", e);
+			throw new BehaviorInstantiationException("å¯¾å¿œã™ã‚‹å‹•ä½œã®åˆæœŸåŒ–ã«å¤±æ•—ã—ã¾ã—ãŸ("+this+")", e);
 		}
 	}
 

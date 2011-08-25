@@ -65,18 +65,18 @@ public abstract class Environment {
 	}
 
 	/**
-	 * ‰æ–Ê‚Ì—Ìˆæ‚ğæ“¾‚·‚é. ‚±‚Ì—Ìˆæ‚ÍƒfƒBƒXƒvƒŒƒC‚Ì¶ã‚©‚ç‰E‰º‚Ü‚Å‚·‚×‚Ä‚ğŠÜ‚Ş.
+	 * ç”»é¢ã®é ˜åŸŸã‚’å–å¾—ã™ã‚‹. ã“ã®é ˜åŸŸã¯ãƒ‡ã‚£ã‚¹ãƒ—ãƒ¬ã‚¤ã®å·¦ä¸Šã‹ã‚‰å³ä¸‹ã¾ã§ã™ã¹ã¦ã‚’å«ã‚€.
 	 *
-	 * @return ‰æ–Ê‚Ì—Ìˆæ.
+	 * @return ç”»é¢ã®é ˜åŸŸ.
 	 */
 	private static Rectangle getScreenRect() {
 		return screenRect;
 	}
 
 	/**
-	 * ƒJ[ƒ\ƒ‹‚ÌÀ•W‚ğæ“¾‚·‚é.
+	 * ã‚«ãƒ¼ã‚½ãƒ«ã®åº§æ¨™ã‚’å–å¾—ã™ã‚‹.
 	 *
-	 * @return ƒJ[ƒ\ƒ‹‚ÌÀ•W.
+	 * @return ã‚«ãƒ¼ã‚½ãƒ«ã®åº§æ¨™.
 	 */
 	private static Point getCursorPos() {
 		return MouseInfo.getPointerInfo().getLocation();

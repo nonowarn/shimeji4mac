@@ -6,13 +6,13 @@ import com.group_finity.mascot.exception.VariableException;
 import com.group_finity.mascot.script.VariableMap;
 
 /**
- * 複数のアクションを直列に一つにまとめたアクション.
+ * 隍�謨ｰ縺ｮ繧｢繧ｯ繧ｷ繝ｧ繝ｳ繧堤峩蛻励↓荳縺､縺ｫ縺ｾ縺ｨ繧√◆繧｢繧ｯ繧ｷ繝ｧ繝ｳ.
  */
 public class Sequence extends ComplexAction {
 
 	private static final Logger log = Logger.getLogger(Sequence.class.getName());
 
-	public static final String PARAMETER_LOOP = "繰り返し";
+	public static final String PARAMETER_LOOP = "郢ｰ繧願ｿ斐＠";
 
 	private static final boolean DEFAULT_LOOP = false;
 

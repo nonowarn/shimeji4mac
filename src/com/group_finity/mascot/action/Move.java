@@ -11,18 +11,18 @@ import com.group_finity.mascot.exception.VariableException;
 import com.group_finity.mascot.script.VariableMap;
 
 /**
- * ˆÚ“®‚·‚éƒAƒNƒVƒ‡ƒ“.
+ * ç§»å‹•ã™ã‚‹ã‚¢ã‚¯ã‚·ãƒ§ãƒ³.
  * @author Yuki Yamada
  */
 public class Move extends BorderedAction {
 
 	private static final Logger log = Logger.getLogger(Move.class.getName());
 
-	private static final String PARAMETER_TARGETX = "–Ú“I’nX";
+	private static final String PARAMETER_TARGETX = "ç›®çš„åœ°X";
 
 	private static final int DEFAULT_TARGETX = Integer.MAX_VALUE;
 
-	private static final String PARAMETER_TARGETY = "–Ú“I’nY";
+	private static final String PARAMETER_TARGETY = "ç›®çš„åœ°Y";
 
 	private static final int DEFAULT_TARGETY = Integer.MAX_VALUE;
 
@@ -40,14 +40,14 @@ public class Move extends BorderedAction {
 		boolean noMoveY = false;
 
 		if (targetX != Integer.MIN_VALUE) {
-			// X •ûŒü‚É“®‚­•K—v‚ª‚ ‚é‚©H
+			// X æ–¹å‘ã«å‹•ãå¿…è¦ãŒã‚ã‚‹ã‹ï¼Ÿ
 			if (getMascot().getAnchor().x == targetX) {
 				noMoveX = true;
 			}
 		}
 
 		if (targetY != Integer.MIN_VALUE) {
-			// Y •ûŒü‚É“®‚­•K—v‚ª‚ ‚é‚©H
+			// Y æ–¹å‘ã«å‹•ãå¿…è¦ãŒã‚ã‚‹ã‹ï¼Ÿ
 			if (getMascot().getAnchor().y == targetY) {
 				noMoveY = true;
 			}
@@ -62,8 +62,8 @@ public class Move extends BorderedAction {
 		super.tick();
 
 		if ((getBorder() != null) && !getBorder().isOn(getMascot().getAnchor())) {
-			// •Ç‚©‚ç—£‚ê‚Ä‚µ‚Ü‚Á‚½
-			log.log(Level.INFO, "˜g‚ğŒ©¸‚Á‚½({0},{1})", new Object[] { getMascot(), this });
+			// å£ã‹ã‚‰é›¢ã‚Œã¦ã—ã¾ã£ãŸ
+			log.log(Level.INFO, "æ ã‚’è¦‹å¤±ã£ãŸ({0},{1})", new Object[] { getMascot(), this });
 			throw new LostGroundException();
 		}
 
@@ -81,18 +81,18 @@ public class Move extends BorderedAction {
 			down = getMascot().getAnchor().y < targetY;
 		}
 
-		// ƒAƒjƒ[ƒVƒ‡ƒ“‚³‚¹‚é
+		// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã•ã›ã‚‹
 		getAnimation().next(getMascot(), getTime());
 
 		if (targetX != DEFAULT_TARGETX) {
-			// s‚«‰ß‚¬‚½•ª–ß‚·
+			// è¡ŒãéããŸåˆ†æˆ»ã™
 			if ((getMascot().isLookRight() && (getMascot().getAnchor().x >= targetX))
 					|| (!getMascot().isLookRight() && (getMascot().getAnchor().x <= targetX))) {
 				getMascot().setAnchor(new Point(targetX, getMascot().getAnchor().y));
 			}
 		}
 		if (targetY != DEFAULT_TARGETY) {
-			// s‚«‰ß‚¬‚½•ª–ß‚·
+			// è¡ŒãéããŸåˆ†æˆ»ã™
 			if ((down && (getMascot().getAnchor().y >= targetY)) ||
 					(!down && (getMascot().getAnchor().y <= targetY))) {
 				getMascot().setAnchor(new Point(getMascot().getAnchor().x, targetY));

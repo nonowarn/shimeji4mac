@@ -40,47 +40,47 @@ public class ActionBuilder implements IActionBuilder {
 	private final List<IActionBuilder> actionRefs = new ArrayList<IActionBuilder>();
 
 	public ActionBuilder(final Configuration configuration, final Entry actionNode) throws IOException {
-		this.name = actionNode.getAttribute("–¼‘O");
-		this.type = actionNode.getAttribute("í—Ş");
-		this.className = actionNode.getAttribute("ƒNƒ‰ƒX");
+		this.name = actionNode.getAttribute("åå‰");
+		this.type = actionNode.getAttribute("ç¨®é¡");
+		this.className = actionNode.getAttribute("ã‚¯ãƒ©ã‚¹");
 
-		log.log(Level.INFO, "“®ì“Ç‚İ‚İŠJn({0})", this);
+		log.log(Level.INFO, "å‹•ä½œèª­ã¿è¾¼ã¿é–‹å§‹({0})", this);
 
 		this.getParams().putAll(actionNode.getAttributes());
-		for (final Entry node : actionNode.selectChildren("ƒAƒjƒ[ƒVƒ‡ƒ“")) {
+		for (final Entry node : actionNode.selectChildren("ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³")) {
 			this.getAnimationBuilders().add(new AnimationBuilder(node));
 		}
 
 		for (final Entry node : actionNode.getChildren()) {
-			if (node.getName().equals("“®ìQÆ")) {
+			if (node.getName().equals("å‹•ä½œå‚ç…§")) {
 				this.getActionRefs().add(new ActionRef(configuration, node));
-			} else if (node.getName().equals("“®ì")) {
+			} else if (node.getName().equals("å‹•ä½œ")) {
 				this.getActionRefs().add(new ActionBuilder(configuration, node));
 			}
 		}
 
-		log.log(Level.INFO, "“®ì“Ç‚İ‚İŠ®—¹");
+		log.log(Level.INFO, "å‹•ä½œèª­ã¿è¾¼ã¿å®Œäº†");
 	}
 
 	@Override
 	public String toString() {
-		return "“®ì(" + getName() + "," + getType() + "," + getClassName() + ")";
+		return "å‹•ä½œ(" + getName() + "," + getType() + "," + getClassName() + ")";
 	}
 
 	@SuppressWarnings("unchecked")
 	public Action buildAction(final Map<String, String> params) throws ActionInstantiationException {
 
 		try {
-			// •Ï”ƒ}ƒbƒv‚ğ¶¬
+			// å¤‰æ•°ãƒãƒƒãƒ—ã‚’ç”Ÿæˆ
 			final VariableMap variables = createVariables(params);
 
-			// ƒAƒjƒ[ƒVƒ‡ƒ“‚ğ¶¬
+			// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ç”Ÿæˆ
 			final List<Animation> animations = createAnimations();
 
-			// qƒAƒNƒVƒ‡ƒ“‚ğ¶¬
+			// å­ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚’ç”Ÿæˆ
 			final List<Action> actions = createActions();
 
-			if (this.type.equals("‘g‚İ‚İ")) {
+			if (this.type.equals("çµ„ã¿è¾¼ã¿")) {
 				try {
 					final Class<? extends Action> cls = (Class<? extends Action>) Class.forName(this.getClassName());
 					try {
@@ -88,41 +88,41 @@ public class ActionBuilder implements IActionBuilder {
 						try {
 							return cls.getConstructor(List.class, VariableMap.class).newInstance(animations, variables);
 						} catch (final Exception e) {
-							// NOTE ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ª–³‚©‚Á‚½‚Æv‚í‚ê‚é‚Ì‚ÅŸ‚Ö
+							// NOTE ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãŒç„¡ã‹ã£ãŸã¨æ€ã‚ã‚Œã‚‹ã®ã§æ¬¡ã¸
 						}
 
 						return cls.getConstructor(VariableMap.class).newInstance(variables);
 					} catch (final Exception e) {
-						// NOTE ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ª–³‚©‚Á‚½‚Æv‚í‚ê‚é‚Ì‚ÅŸ‚Ö
+						// NOTE ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãŒç„¡ã‹ã£ãŸã¨æ€ã‚ã‚Œã‚‹ã®ã§æ¬¡ã¸
 					}
 
 					return cls.newInstance();
 				} catch (final InstantiationException e) {
-					throw new ActionInstantiationException("“®ìƒNƒ‰ƒX‚Ì‰Šú‰»‚É¸”s(" + this + ")", e);
+					throw new ActionInstantiationException("å‹•ä½œã‚¯ãƒ©ã‚¹ã®åˆæœŸåŒ–ã«å¤±æ•—(" + this + ")", e);
 				} catch (final IllegalAccessException e) {
-					throw new ActionInstantiationException("“®ìƒNƒ‰ƒX‚ÉƒAƒNƒZƒX‚Å‚«‚Ü‚¹‚ñ(" + this + ")", e);
+					throw new ActionInstantiationException("å‹•ä½œã‚¯ãƒ©ã‚¹ã«ã‚¢ã‚¯ã‚»ã‚¹ã§ãã¾ã›ã‚“(" + this + ")", e);
 				} catch (final ClassNotFoundException e) {
-					throw new ActionInstantiationException("“®ìƒNƒ‰ƒX‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ(" + this + ")", e);
+					throw new ActionInstantiationException("å‹•ä½œã‚¯ãƒ©ã‚¹ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“(" + this + ")", e);
 				}
 
-			} else if (this.type.equals("ˆÚ“®")) {
+			} else if (this.type.equals("ç§»å‹•")) {
 				return new Move(animations, variables);
-			} else if (this.type.equals("Ã~")) {
+			} else if (this.type.equals("é™æ­¢")) {
 				return new Stay(animations, variables);
-			} else if (this.type.equals("ŒÅ’è")) {
+			} else if (this.type.equals("å›ºå®š")) {
 				return new Animate(animations, variables);
-			} else if (this.type.equals("•¡‡")) {
+			} else if (this.type.equals("è¤‡åˆ")) {
 				return new Sequence(variables, actions.toArray(new Action[0]));
-			} else if (this.type.equals("‘I‘ğ")) {
+			} else if (this.type.equals("é¸æŠ")) {
 				return new Select(variables, actions.toArray(new Action[0]));
 			} else {
-				throw new ActionInstantiationException("“®ì‚Ìí—Ş‚ª•s–¾(" + this + ")");
+				throw new ActionInstantiationException("å‹•ä½œã®ç¨®é¡ãŒä¸æ˜(" + this + ")");
 			}
 
 		} catch (final AnimationInstantiationException e) {
-			throw new ActionInstantiationException("ƒAƒjƒ[ƒVƒ‡ƒ“‚Ìì¬‚É¸”s‚µ‚Ü‚µ‚½(" + this + ")", e);
+			throw new ActionInstantiationException("ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ä½œæˆã«å¤±æ•—ã—ã¾ã—ãŸ(" + this + ")", e);
 		} catch (final VariableException e) {
-			throw new ActionInstantiationException("ƒpƒ‰ƒ[ƒ^‚Ì•]‰¿‚É¸”s‚µ‚Ü‚µ‚½(" + this + ")", e);
+			throw new ActionInstantiationException("ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®è©•ä¾¡ã«å¤±æ•—ã—ã¾ã—ãŸ(" + this + ")", e);
 		}
 	}
 

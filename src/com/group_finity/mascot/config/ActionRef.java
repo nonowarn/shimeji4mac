@@ -22,15 +22,15 @@ public class ActionRef implements IActionBuilder {
 	public ActionRef(final Configuration configuration, final Entry refNode) {
 		this.configuration = configuration;
 
-		this.name = refNode.getAttribute("–¼‘O");
+		this.name = refNode.getAttribute("åå‰");
 		this.getParams().putAll(refNode.getAttributes());
 
-		log.log(Level.INFO, "“®ìQÆ“Ç‚İ‚İ({0})", this);
+		log.log(Level.INFO, "å‹•ä½œå‚ç…§èª­ã¿è¾¼ã¿({0})", this);
 	}
 
 	@Override
 	public String toString() {
-		return "“®ìQÆ(" + getName() + ")";
+		return "å‹•ä½œå‚ç…§(" + getName() + ")";
 	}
 
 	private String getName() {
@@ -48,7 +48,7 @@ public class ActionRef implements IActionBuilder {
 	@Override
 	public void validate() throws ConfigurationException {
 		if (!getConfiguration().getActionBuilders().containsKey(getName())) {
-			throw new ConfigurationException("‘Î‰‚·‚é“®ì‚ª‘¶İ‚µ‚Ü‚¹‚ñ(" + this + ")");
+			throw new ConfigurationException("å¯¾å¿œã™ã‚‹å‹•ä½œãŒå­˜åœ¨ã—ã¾ã›ã‚“(" + this + ")");
 		}
 	}
 

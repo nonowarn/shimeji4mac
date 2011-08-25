@@ -28,7 +28,7 @@ public class Script extends Variable {
 		try {
 			this.compiled = ((Compilable) engine).compile(this.source);
 		} catch (final ScriptException e) {
-			throw new VariableException("スクリプトのコンパイルでエラーが発生しました: "+this.source, e);
+			throw new VariableException("繧ｹ繧ｯ繝ｪ繝励ヨ縺ｮ繧ｳ繝ｳ繝代う繝ｫ縺ｧ繧ｨ繝ｩ繝ｼ縺檎匱逕溘＠縺ｾ縺励◆: "+this.source, e);
 		}
 	}
 
@@ -59,7 +59,7 @@ public class Script extends Variable {
 		try {
 			setValue(getCompiled().eval(variables));
 		} catch (final ScriptException e) {
-			throw new VariableException("スクリプトの評価でエラーが発生しました: "+this.source, e);
+			throw new VariableException("繧ｹ繧ｯ繝ｪ繝励ヨ縺ｮ隧穂ｾ｡縺ｧ繧ｨ繝ｩ繝ｼ縺檎匱逕溘＠縺ｾ縺励◆: "+this.source, e);
 		}
 
 		return getValue();

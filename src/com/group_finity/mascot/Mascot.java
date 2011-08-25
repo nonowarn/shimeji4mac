@@ -14,16 +14,16 @@ import com.group_finity.mascot.image.MascotImage;
 import com.group_finity.mascot.image.TranslucentWindow;
 
 /**
- * ƒ}ƒXƒRƒbƒgƒIƒuƒWƒFƒNƒg.
+ * ãƒã‚¹ã‚³ãƒƒãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ.
  *
- * ƒ}ƒXƒRƒbƒg‚Í’·Šú“I‚Å•¡G‚ÈU‚é•‘‚¢‚ğ‚ ‚ç‚í‚· {@link Behavior} ‚ÆA
- * ’ZŠú“I‚Å’P’²‚È“®‚«‚ğ•\‚· {@link Action} ‚Å“®‚­.
+ * ãƒã‚¹ã‚³ãƒƒãƒˆã¯é•·æœŸçš„ã§è¤‡é›‘ãªæŒ¯ã‚‹èˆã„ã‚’ã‚ã‚‰ã‚ã™ {@link Behavior} ã¨ã€
+ * çŸ­æœŸçš„ã§å˜èª¿ãªå‹•ãã‚’è¡¨ã™ {@link Action} ã§å‹•ã.
  *
- * ƒ}ƒXƒRƒbƒg‚Í“à•”“I‚Éƒ^ƒCƒ}‚ğ‚Á‚Ä‚¢‚ÄAˆê’èŠÔŠu‚²‚Æ‚É {@link Action} ‚ğŒÄ‚Ño‚·.
- * {@link Action} ‚Í {@link #animate(Point, MascotImage, boolean)} ƒƒ\ƒbƒh‚È‚Ç‚ğŒÄ‚Ô‚±‚Æ‚Å
- * ƒ}ƒXƒRƒbƒg‚ğƒAƒjƒ[ƒVƒ‡ƒ“‚³‚¹‚é.
+ * ãƒã‚¹ã‚³ãƒƒãƒˆã¯å†…éƒ¨çš„ã«ã‚¿ã‚¤ãƒã‚’æŒã£ã¦ã„ã¦ã€ä¸€å®šé–“éš”ã”ã¨ã« {@link Action} ã‚’å‘¼ã³å‡ºã™.
+ * {@link Action} ã¯ {@link #animate(Point, MascotImage, boolean)} ãƒ¡ã‚½ãƒƒãƒ‰ãªã©ã‚’å‘¼ã¶ã“ã¨ã§
+ * ãƒã‚¹ã‚³ãƒƒãƒˆã‚’ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã•ã›ã‚‹.
  *
- * {@link Action} ‚ªI—¹‚µ‚½‚èA‚»‚Ì‘¼‚Ì“Á’è‚Ìƒ^ƒCƒ~ƒ“ƒO‚Å {@link Behavior} ‚ªŒÄ‚Ño‚³‚êAŸ‚Ì {@link Action} ‚ÉˆÚ‚é.
+ * {@link Action} ãŒçµ‚äº†ã—ãŸã‚Šã€ãã®ä»–ã®ç‰¹å®šã®ã‚¿ã‚¤ãƒŸãƒ³ã‚°ã§ {@link Behavior} ãŒå‘¼ã³å‡ºã•ã‚Œã€æ¬¡ã® {@link Action} ã«ç§»ã‚‹.
  *
  */
 public class Mascot {
@@ -33,80 +33,80 @@ public class Mascot {
 	private static final Logger log = Logger.getLogger(Mascot.class.getName());
 
 	/**
-	 * ÅŒã‚É¶¬‚µ‚½ƒ}ƒXƒRƒbƒg‚ÌID.
+	 * æœ€å¾Œã«ç”Ÿæˆã—ãŸãƒã‚¹ã‚³ãƒƒãƒˆã®ID.
 	 */
 	private static AtomicInteger lastId = new AtomicInteger();
 
 	/**
-	 * ƒ}ƒXƒRƒbƒg‚ÌID.
-	 * ƒfƒoƒbƒO—p‚ÌƒƒO‚ğŒ©‚â‚·‚­‚·‚é‚½‚ß‚¾‚¯‚É‘¶İ‚·‚é.
+	 * ãƒã‚¹ã‚³ãƒƒãƒˆã®ID.
+	 * ãƒ‡ãƒãƒƒã‚°ç”¨ã®ãƒ­ã‚°ã‚’è¦‹ã‚„ã™ãã™ã‚‹ãŸã‚ã ã‘ã«å­˜åœ¨ã™ã‚‹.
 	 */
 	private final int id;
 
 	/**
-	 * ƒ}ƒXƒRƒbƒg‚ğ•\¦‚·‚éƒEƒBƒ“ƒhƒE.
+	 * ãƒã‚¹ã‚³ãƒƒãƒˆã‚’è¡¨ç¤ºã™ã‚‹ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦.
 	 */
 	private final TranslucentWindow window = NativeFactory.getInstance().newTransparentWindow();
 
 	/**
-	 * ƒ}ƒXƒRƒbƒg‚ğŠÇ—‚µ‚Ä‚¢‚éƒ}ƒl[ƒWƒƒ.
+	 * ãƒã‚¹ã‚³ãƒƒãƒˆã‚’ç®¡ç†ã—ã¦ã„ã‚‹ãƒãƒãƒ¼ã‚¸ãƒ£.
 	 */
 	private Manager manager = null;
 
 	/**
-	 * ƒ}ƒXƒRƒbƒg‚ÌÚ’nÀ•W.
-	 * ‚½‚Æ‚¦‚Î‘«Œ³‚âA‚Ô‚ç‰º‚ª‚Á‚Ä‚¢‚é‚Æ‚«‚Ìè‚Ì•”•ª‚È‚Ç.
-	 * ‚±‚±‚ª‰æ‘œ‚ğ•\¦‚·‚é‚Æ‚«‚Ì’†S‚É‚È‚é.
+	 * ãƒã‚¹ã‚³ãƒƒãƒˆã®æ¥åœ°åº§æ¨™.
+	 * ãŸã¨ãˆã°è¶³å…ƒã‚„ã€ã¶ã‚‰ä¸‹ãŒã£ã¦ã„ã‚‹ã¨ãã®æ‰‹ã®éƒ¨åˆ†ãªã©.
+	 * ã“ã“ãŒç”»åƒã‚’è¡¨ç¤ºã™ã‚‹ã¨ãã®ä¸­å¿ƒã«ãªã‚‹.
 	 */
 	private Point anchor = new Point(0, 0);
 
 	/**
-	 * •\¦‚·‚é‰æ‘œ.
+	 * è¡¨ç¤ºã™ã‚‹ç”»åƒ.
 	 */
 	private MascotImage image = null;
 
 	/**
-	 * ‰EŒü‚«‚©‚Ç‚¤‚©.
-	 * ƒIƒŠƒWƒiƒ‹‰æ‘œ‚Í¶Œü‚«‚Æ‚µ‚Äˆµ‚í‚ê‚é‚Ì‚ÅAtrue‚ğİ’è‚·‚é‚Æ”½“]‚µ‚Ä•`‰æ‚³‚ê‚é.
+	 * å³å‘ãã‹ã©ã†ã‹.
+	 * ã‚ªãƒªã‚¸ãƒŠãƒ«ç”»åƒã¯å·¦å‘ãã¨ã—ã¦æ‰±ã‚ã‚Œã‚‹ã®ã§ã€trueã‚’è¨­å®šã™ã‚‹ã¨åè»¢ã—ã¦æç”»ã•ã‚Œã‚‹.
 	 */
 	private boolean lookRight = false;
 
 	/**
-	 * ’·Šú“I‚ÈU‚é•‘‚¢‚ğ‚ ‚ç‚í‚·ƒIƒuƒWƒFƒNƒg.
+	 * é•·æœŸçš„ãªæŒ¯ã‚‹èˆã„ã‚’ã‚ã‚‰ã‚ã™ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ.
 	 */
 	private Behavior behavior = null;
 
 	/**
-	 * ƒ^ƒCƒ}[‚Ì1ƒ`ƒbƒN‚²‚Æ‚É‘‰Á‚·‚é.
+	 * ã‚¿ã‚¤ãƒãƒ¼ã®1ãƒãƒƒã‚¯ã”ã¨ã«å¢—åŠ ã™ã‚‹æ™‚åˆ».
 	 */
 	private int time = 0;
 
 	/**
-	 * ƒAƒjƒ[ƒVƒ‡ƒ“Às’†‚©‚Ç‚¤‚©.
+	 * ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å®Ÿè¡Œä¸­ã‹ã©ã†ã‹.
 	 */
 	private boolean animating = true;
 
 	/**
-	 * ƒ}ƒXƒRƒbƒg‚Ì•\¦ŠÂ‹«.
+	 * ãƒã‚¹ã‚³ãƒƒãƒˆã®è¡¨ç¤ºç’°å¢ƒ.
 	 */
 	private MascotEnvironment environment = new MascotEnvironment(this);
 
 	public Mascot() {
 		this.id = lastId.incrementAndGet();
 
-		log.log(Level.INFO, "ƒ}ƒXƒRƒbƒg¶¬({0})", this);
+		log.log(Level.INFO, "ãƒã‚¹ã‚³ãƒƒãƒˆç”Ÿæˆ({0})", this);
 
-		// í‚ÉÅ‘P–Ê‚É•\¦
+		// å¸¸ã«æœ€å–„é¢ã«è¡¨ç¤º
 		getWindow().asJWindow().setAlwaysOnTop(true);
 
-		// ƒ}ƒEƒXƒnƒ“ƒhƒ‰‚ğ“o˜^
+		// ãƒã‚¦ã‚¹ãƒãƒ³ãƒ‰ãƒ©ã‚’ç™»éŒ²
 		getWindow().asJWindow().addMouseListener(new MascotEventHandler(this));
 
 	}
 
 	@Override
 	public String toString() {
-		return "ƒ}ƒXƒRƒbƒg" + this.id;
+		return "ãƒã‚¹ã‚³ãƒƒãƒˆ" + this.id;
 	}
 
 	void tick() {
@@ -116,7 +116,7 @@ public class Mascot {
 				try {
 					getBehavior().next();
 				} catch (final CantBeAliveException e) {
-					log.log(Level.SEVERE, "¶‚«‘±‚¯‚é‚±‚Æ‚ªo—ˆ‚È‚¢ó‹µ", e);
+					log.log(Level.SEVERE, "ç”Ÿãç¶šã‘ã‚‹ã“ã¨ãŒå‡ºæ¥ãªã„çŠ¶æ³", e);
 					dispose();
 				}
 
@@ -128,21 +128,21 @@ public class Mascot {
 	public void apply() {
 		if (isAnimating()) {
 
-			// •\¦‚Å‚«‚é‰æ‘œ‚ª–³‚¯‚ê‚Î‰½‚ào—ˆ‚È‚¢
+			// è¡¨ç¤ºã§ãã‚‹ç”»åƒãŒç„¡ã‘ã‚Œã°ä½•ã‚‚å‡ºæ¥ãªã„
 			if (getImage() != null) {
 
-				// ƒEƒBƒ“ƒhƒE‚Ì—Ìˆæ‚ğİ’è
+				// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®é ˜åŸŸã‚’è¨­å®š
 				getWindow().asJWindow().setBounds(getBounds());
 
-				// ‰æ‘œ‚ğİ’è
+				// ç”»åƒã‚’è¨­å®š
 				getWindow().setImage(getImage().getImage());
 
-				// •\¦
+				// è¡¨ç¤º
 				if (!getWindow().asJWindow().isVisible()) {
 					getWindow().asJWindow().setVisible(true);
 				}
 
-				// Ä•`‰æ
+				// å†æç”»
 				getWindow().updateImage();
 			} else {
 				if (getWindow().asJWindow().isVisible()) {
@@ -153,7 +153,7 @@ public class Mascot {
 	}
 
 	public void dispose() {
-		log.log(Level.INFO, "ƒ}ƒXƒRƒbƒg”jŠü({0})", this);
+		log.log(Level.INFO, "ãƒã‚¹ã‚³ãƒƒãƒˆç ´æ£„({0})", this);
 
 		getWindow().asJWindow().dispose();
 		if (getManager() != null) {
@@ -195,7 +195,7 @@ public class Mascot {
 
 	public Rectangle getBounds() {
 
-		// Ú’nÀ•W‚Æ‰æ‘œ‚Ì’†SÀ•W‚©‚çƒEƒBƒ“ƒhƒE‚Ì—Ìˆæ‚ğ‹‚ß‚é.
+		// æ¥åœ°åº§æ¨™ã¨ç”»åƒã®ä¸­å¿ƒåº§æ¨™ã‹ã‚‰ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®é ˜åŸŸã‚’æ±‚ã‚ã‚‹.
 		final int top = getAnchor().y - getImage().getCenter().y;
 		final int left = getAnchor().x - getImage().getCenter().x;
 

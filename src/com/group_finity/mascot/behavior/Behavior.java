@@ -7,32 +7,32 @@ import com.group_finity.mascot.exception.CantBeAliveException;
 
 
 /**
- * ƒ}ƒXƒRƒbƒg‚Ì’·Šú“I‚ÈU‚é•‘‚¢‚ğ‚ ‚ç‚í‚·ƒIƒuƒWƒFƒNƒg.
+ * ãƒã‚¹ã‚³ãƒƒãƒˆã®é•·æœŸçš„ãªæŒ¯ã‚‹èˆã„ã‚’ã‚ã‚‰ã‚ã™ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ.
  * 
- * {@link Mascot#setBehavior(Behavior)} ‚Åg—p‚·‚é.
+ * {@link Mascot#setBehavior(Behavior)} ã§ä½¿ç”¨ã™ã‚‹.
  */
 public interface Behavior {
 
 	/**
-	 * s“®‚ğŠJn‚·‚é‚ÉŒÄ‚Ño‚·.
-	 * @param mascot ŠÖ˜A•t‚¯‚éƒ}ƒXƒRƒbƒg.
+	 * è¡Œå‹•ã‚’é–‹å§‹ã™ã‚‹æ™‚ã«å‘¼ã³å‡ºã™.
+	 * @param mascot é–¢é€£ä»˜ã‘ã‚‹ãƒã‚¹ã‚³ãƒƒãƒˆ.
 	 */
 	public void init(Mascot mascot) throws CantBeAliveException;
 
 	/**
-	 * ƒ}ƒXƒRƒbƒg‚ğŸ‚ÌƒRƒ}‚Éi‚ß‚é.
+	 * ãƒã‚¹ã‚³ãƒƒãƒˆã‚’æ¬¡ã®ã‚³ãƒã«é€²ã‚ã‚‹.
 	 */
 	public void next() throws CantBeAliveException;
 	
 	/**
-	 * ƒ}ƒEƒXƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½.
-	 * @param mascot ƒ}ƒEƒXƒNƒŠƒbƒN‚³‚ê‚½ƒ}ƒXƒRƒbƒg.
+	 * ãƒã‚¦ã‚¹ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸ.
+	 * @param mascot ãƒã‚¦ã‚¹ã‚¯ãƒªãƒƒã‚¯ã•ã‚ŒãŸãƒã‚¹ã‚³ãƒƒãƒˆ.
 	 */
 	public void mousePressed(MouseEvent e) throws CantBeAliveException;
 
 	/**
-	 * ƒ}ƒEƒX‚ª•ú‚³‚ê‚½.
-	 * @param mascot ƒ}ƒEƒX‚ª•ú‚³‚ê‚½ƒ}ƒXƒRƒbƒg.
+	 * ãƒã‚¦ã‚¹ãŒæ”¾ã•ã‚ŒãŸ.
+	 * @param mascot ãƒã‚¦ã‚¹ãŒæ”¾ã•ã‚ŒãŸãƒã‚¹ã‚³ãƒƒãƒˆ.
 	 */
 	public void mouseReleased(MouseEvent e) throws CantBeAliveException;
 }

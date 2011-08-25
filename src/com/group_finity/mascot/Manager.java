@@ -14,9 +14,9 @@ import com.group_finity.mascot.exception.CantBeAliveException;
 
 /**
  *
- * ƒ}ƒXƒRƒbƒg‚ÌƒŠƒXƒg‚ğŠÇ—‚µAƒ^ƒCƒ~ƒ“ƒO‚ğæ‚éƒIƒuƒWƒFƒNƒg.
- * Šeƒ}ƒXƒRƒbƒg‚ª”ñ“¯Šú‚É“®‚­‚Æ‚¢‚ë‚¢‚ë¢‚é(ƒEƒBƒ“ƒhƒE‚ğ“Š‚°‚é‚È‚Ç)‚Ì‚ÅA‚±‚ÌƒNƒ‰ƒX‚ª‘S‘Ì‚Ìƒ^ƒCƒ~ƒ“ƒO‚ğ‡‚í‚¹‚é.
- * {@link #tick()} ƒƒ\ƒbƒh‚ªA‚Ü‚¸ÅV‚ÌŠÂ‹«î•ñ‚ğæ“¾‚µA‚»‚ê‚©‚ç‘S‚Ä‚Ìƒ}ƒXƒRƒbƒg‚ğ“®‚©‚·B
+ * ãƒã‚¹ã‚³ãƒƒãƒˆã®ãƒªã‚¹ãƒˆã‚’ç®¡ç†ã—ã€ã‚¿ã‚¤ãƒŸãƒ³ã‚°ã‚’å–ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ.
+ * å„ãƒã‚¹ã‚³ãƒƒãƒˆãŒéåŒæœŸã«å‹•ãã¨ã„ã‚ã„ã‚å›°ã‚‹(ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’æŠ•ã’ã‚‹æ™‚ãªã©)ã®ã§ã€ã“ã®ã‚¯ãƒ©ã‚¹ãŒå…¨ä½“ã®ã‚¿ã‚¤ãƒŸãƒ³ã‚°ã‚’åˆã‚ã›ã‚‹.
+ * {@link #tick()} ãƒ¡ã‚½ãƒƒãƒ‰ãŒã€ã¾ãšæœ€æ–°ã®ç’°å¢ƒæƒ…å ±ã‚’å–å¾—ã—ã€ãã‚Œã‹ã‚‰å…¨ã¦ã®ãƒã‚¹ã‚³ãƒƒãƒˆã‚’å‹•ã‹ã™ã€‚
  *
  * @author Yuki Yamada
  */
@@ -25,43 +25,43 @@ public class Manager {
 	private static final Logger log = Logger.getLogger(Manager.class.getName());
 
 	/**
-	 * ƒ^ƒCƒ}‚ÌÀsŠÔŠu.
+	 * ã‚¿ã‚¤ãƒã®å®Ÿè¡Œé–“éš”.
 	 */
 	public static final int TICK_INTERVAL = 40;
 
 	/**
-	 * ƒ}ƒXƒRƒbƒg‚Ìˆê——.
+	 * ãƒã‚¹ã‚³ãƒƒãƒˆã®ä¸€è¦§.
 	 */
 	private final List<Mascot> mascots = new ArrayList<Mascot>();
 
 	/**
-	 * ’Ç‰Á‚³‚ê‚é—\’è‚Ìƒ}ƒXƒRƒbƒg‚ÌƒŠƒXƒg.
-	 * {@link ConcurrentModificationException} ‚ğ–h‚®‚½‚ßAƒ}ƒXƒRƒbƒg‚Ì’Ç‰Á‚Í {@link #tick()} ‚²‚Æ‚É‚¢‚Á‚¹‚¢‚É”½‰f‚³‚ê‚é.
+	 * è¿½åŠ ã•ã‚Œã‚‹äºˆå®šã®ãƒã‚¹ã‚³ãƒƒãƒˆã®ãƒªã‚¹ãƒˆ.
+	 * {@link ConcurrentModificationException} ã‚’é˜²ããŸã‚ã€ãƒã‚¹ã‚³ãƒƒãƒˆã®è¿½åŠ ã¯ {@link #tick()} ã”ã¨ã«ã„ã£ã›ã„ã«åæ˜ ã•ã‚Œã‚‹.
 	 */
 	private final Set<Mascot> added = new LinkedHashSet<Mascot>();
 
 	/**
-	 * ’Ç‰Á‚³‚ê‚é—\’è‚Ìƒ}ƒXƒRƒbƒg‚ÌƒŠƒXƒg.
-	 * {@link ConcurrentModificationException} ‚ğ–h‚®‚½‚ßAƒ}ƒXƒRƒbƒg‚Ìíœ‚Í {@link #tick()} ‚²‚Æ‚É‚¢‚Á‚¹‚¢‚É”½‰f‚³‚ê‚é.
+	 * è¿½åŠ ã•ã‚Œã‚‹äºˆå®šã®ãƒã‚¹ã‚³ãƒƒãƒˆã®ãƒªã‚¹ãƒˆ.
+	 * {@link ConcurrentModificationException} ã‚’é˜²ããŸã‚ã€ãƒã‚¹ã‚³ãƒƒãƒˆã®å‰Šé™¤ã¯ {@link #tick()} ã”ã¨ã«ã„ã£ã›ã„ã«åæ˜ ã•ã‚Œã‚‹.
 	 */
 	private final Set<Mascot> removed = new LinkedHashSet<Mascot>();
 
 	/**
-	 * ÅŒã‚Ìƒ}ƒXƒRƒbƒg‚ğíœ‚µ‚½‚ÉƒvƒƒOƒ‰ƒ€‚ğI—¹‚·‚×‚«‚©‚Ç‚¤‚©.
-	 * ƒgƒŒƒCƒAƒCƒRƒ“‚Ìì¬‚É¸”s‚µ‚½‚È‚Ç‚ÍAƒ}ƒXƒRƒbƒg‚ª‚¢‚È‚­‚È‚Á‚½‚çƒvƒƒOƒ‰ƒ€‚ğI—¹‚µ‚È‚¢‚ÆAƒvƒƒZƒX‚ª‚¸‚Á‚Æc‚Á‚Ä‚µ‚Ü‚¤.
+	 * æœ€å¾Œã®ãƒã‚¹ã‚³ãƒƒãƒˆã‚’å‰Šé™¤ã—ãŸæ™‚ã«ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’çµ‚äº†ã™ã¹ãã‹ã©ã†ã‹.
+	 * ãƒˆãƒ¬ã‚¤ã‚¢ã‚¤ã‚³ãƒ³ã®ä½œæˆã«å¤±æ•—ã—ãŸæ™‚ãªã©ã¯ã€ãƒã‚¹ã‚³ãƒƒãƒˆãŒã„ãªããªã£ãŸã‚‰ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’çµ‚äº†ã—ãªã„ã¨ã€ãƒ—ãƒ­ã‚»ã‚¹ãŒãšã£ã¨æ®‹ã£ã¦ã—ã¾ã†.
 	 */
 	private boolean exitOnLastRemoved;
 
 	/**
-	 * {@link #tick()}‚ğƒ‹[ƒv‚·‚éƒXƒŒƒbƒh.
+	 * {@link #tick()}ã‚’ãƒ«ãƒ¼ãƒ—ã™ã‚‹ã‚¹ãƒ¬ãƒƒãƒ‰.
 	 */
 	private transient Thread thread;
 
 	public Manager() {
 
-		// ‚±‚ê‚Í Windows ã‚Å“®‚­ Java ‚ÌƒoƒO‚ğC³‚·‚é‚½‚ß‚Ìˆ’u
-		// ’Z‚¢’·‚³‚Ì Thread.sleep ‚ğ•p”É‚ÉŒÄ‚Ô‚Æ Windows ‚ÌŒv‚ª‹¶‚¤
-		// ’·‚¢ Thread.sleep ‚ğŒÄ‚ñ‚Å‚¢‚é‚Æ‚±‚Ì–â‘è‚ğ‰ñ”ğ‚Å‚«‚é.
+		// ã“ã‚Œã¯ Windows ä¸Šã§å‹•ã Java ã®ãƒã‚°ã‚’ä¿®æ­£ã™ã‚‹ãŸã‚ã®å‡¦ç½®
+		// çŸ­ã„é•·ã•ã® Thread.sleep ã‚’é »ç¹ã«å‘¼ã¶ã¨ Windows ã®æ™‚è¨ˆãŒç‹‚ã†
+		// é•·ã„ Thread.sleep ã‚’å‘¼ã‚“ã§ã„ã‚‹ã¨ã“ã®å•é¡Œã‚’å›é¿ã§ãã‚‹.
 		new Thread() {
 			{
 				this.setDaemon(true);
@@ -81,12 +81,12 @@ public class Manager {
 	}
 
 	/**
-	 * ƒXƒŒƒbƒh‚ğŠJn‚·‚é.
+	 * ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’é–‹å§‹ã™ã‚‹.
 	 */
 	public void start() {
 
 		if ( thread!=null && thread.isAlive() ) {
-			// ‚à‚¤ƒXƒŒƒbƒh‚ª“®‚¢‚Ä‚¢‚é
+			// ã‚‚ã†ã‚¹ãƒ¬ãƒƒãƒ‰ãŒå‹•ã„ã¦ã„ã‚‹
 			return;
 		}
 
@@ -94,13 +94,13 @@ public class Manager {
 			@Override
 			public void run() {
 
-				// ‘O‰ñ‚ÌŠÔ
+				// å‰å›ã®æ™‚é–“
 				long prev = System.nanoTime() / 1000000;
 				try {
 					for (;;) {
 						for (;;) {
-							// Œ»İ‚ÌŠÔ
-							// TICK_INTERVAL Œo‚Â‚Ü‚Åƒ‹[ƒv.
+							// ç¾åœ¨ã®æ™‚é–“
+							// TICK_INTERVAL çµŒã¤ã¾ã§ãƒ«ãƒ¼ãƒ—.
 							final long cur = System.nanoTime() / 1000000;
 							if (cur - prev >= TICK_INTERVAL) {
 								if (cur > prev + TICK_INTERVAL * 2) {
@@ -113,7 +113,7 @@ public class Manager {
 							Thread.sleep(1, 0);
 						}
 
-						// ƒ}ƒXƒRƒbƒg‚½‚¿‚ğ“®‚©‚·.
+						// ãƒã‚¹ã‚³ãƒƒãƒˆãŸã¡ã‚’å‹•ã‹ã™.
 						tick();
 					}
 				} catch (final InterruptedException e) {
@@ -127,11 +127,11 @@ public class Manager {
 	}
 
 	/**
-	 * ƒXƒŒƒbƒh‚ğ’â~‚·‚é.
+	 * ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’åœæ­¢ã™ã‚‹.
 	 */
 	public void stop() {
 		if ( thread==null || !thread.isAlive() ) {
-			// ‚à‚¤“®‚¢‚Ä‚¢‚È‚¢
+			// ã‚‚ã†å‹•ã„ã¦ã„ãªã„
 			return;
 		}
 
@@ -145,48 +145,48 @@ public class Manager {
 	}
 
 	/**
-	 * ƒ}ƒXƒRƒbƒg‚ğˆêƒtƒŒ[ƒ€i‚ß‚é.
+	 * ãƒã‚¹ã‚³ãƒƒãƒˆã‚’ä¸€ãƒ•ãƒ¬ãƒ¼ãƒ é€²ã‚ã‚‹.
 	 */
 	private void tick() {
 
-		// ‚Ü‚¸ŠÂ‹«î•ñ‚ğXV
+		// ã¾ãšç’°å¢ƒæƒ…å ±ã‚’æ›´æ–°
 		NativeFactory.getInstance().getEnvironment().tick();
 
 		synchronized (this.getMascots()) {
 
-			// ’Ç‰Á‚·‚×‚«ƒ}ƒXƒRƒbƒg‚ğ’Ç‰Á
+			// è¿½åŠ ã™ã¹ããƒã‚¹ã‚³ãƒƒãƒˆã‚’è¿½åŠ 
 			for (final Mascot mascot : this.getAdded()) {
 				this.getMascots().add(mascot);
 			}
 			this.getAdded().clear();
 
-			// íœ‚·‚×‚«ƒ}ƒXƒRƒbƒg‚ğíœ
+			// å‰Šé™¤ã™ã¹ããƒã‚¹ã‚³ãƒƒãƒˆã‚’å‰Šé™¤
 			for (final Mascot mascot : this.getRemoved()) {
 				this.getMascots().remove(mascot);
 			}
 			this.getRemoved().clear();
 
-			// ƒ}ƒXƒRƒbƒg‚ÌŠÔ‚ği‚ß‚é
+			// ãƒã‚¹ã‚³ãƒƒãƒˆã®æ™‚é–“ã‚’é€²ã‚ã‚‹
 			for (final Mascot mascot : this.getMascots()) {
 				mascot.tick();
 			}
 
-			// ƒ}ƒXƒRƒbƒg‚ÌŠG‚âˆÊ’u‚ğÅV‚É‚·‚é.
+			// ãƒã‚¹ã‚³ãƒƒãƒˆã®çµµã‚„ä½ç½®ã‚’æœ€æ–°ã«ã™ã‚‹.
 			for (final Mascot mascot : this.getMascots()) {
 				mascot.apply();
 			}
 		}
 
 		if (isExitOnLastRemoved() && this.getMascots().size() == 0) {
-			// exitOnLastRemoved ‚ª true ‚Åƒ}ƒXƒRƒbƒg‚ªˆê•C‚à‚¢‚È‚­‚È‚Á‚½‚Ì‚ÅI—¹.
+			// exitOnLastRemoved ãŒ true ã§ãƒã‚¹ã‚³ãƒƒãƒˆãŒä¸€åŒ¹ã‚‚ã„ãªããªã£ãŸã®ã§çµ‚äº†.
 			Main.getInstance().exit();
 		}
 	}
 
 	/**
-	 * ƒ}ƒXƒRƒbƒg‚ğ’Ç‰Á‚·‚é.
-	 * ’Ç‰Á‚ÍŸ‚Ì {@link #tick()} ‚Ìƒ^ƒCƒ~ƒ“ƒO‚Ås‚í‚ê‚é.
-	 * @param mascot ’Ç‰Á‚·‚éƒ}ƒXƒRƒbƒg.
+	 * ãƒã‚¹ã‚³ãƒƒãƒˆã‚’è¿½åŠ ã™ã‚‹.
+	 * è¿½åŠ ã¯æ¬¡ã® {@link #tick()} ã®ã‚¿ã‚¤ãƒŸãƒ³ã‚°ã§è¡Œã‚ã‚Œã‚‹.
+	 * @param mascot è¿½åŠ ã™ã‚‹ãƒã‚¹ã‚³ãƒƒãƒˆ.
 	 */
 	public void add(final Mascot mascot) {
 		synchronized (this.getAdded()) {
@@ -197,9 +197,9 @@ public class Manager {
 	}
 
 	/**
-	 * ƒ}ƒXƒRƒbƒg‚ğíœ‚·‚é.
-	 * íœ‚ÍŸ‚Ì {@link #tick()} ‚Ìƒ^ƒCƒ~ƒ“ƒO‚Ås‚í‚ê‚é.
-	 * @param mascot íœ‚·‚éƒ}ƒXƒRƒbƒg.
+	 * ãƒã‚¹ã‚³ãƒƒãƒˆã‚’å‰Šé™¤ã™ã‚‹.
+	 * å‰Šé™¤ã¯æ¬¡ã® {@link #tick()} ã®ã‚¿ã‚¤ãƒŸãƒ³ã‚°ã§è¡Œã‚ã‚Œã‚‹.
+	 * @param mascot å‰Šé™¤ã™ã‚‹ãƒã‚¹ã‚³ãƒƒãƒˆ.
 	 */
 	public void remove(final Mascot mascot) {
 		synchronized (this.getAdded()) {
@@ -210,7 +210,7 @@ public class Manager {
 	}
 
 	/**
-	 * ‘S‚Ä‚Ìƒ}ƒXƒRƒbƒg‚Ìs“®‚ğİ’è‚·‚é.
+	 * å…¨ã¦ã®ãƒã‚¹ã‚³ãƒƒãƒˆã®è¡Œå‹•ã‚’è¨­å®šã™ã‚‹.
 	 * @param configuration
 	 * @param name
 	 */
@@ -220,10 +220,10 @@ public class Manager {
 				try {
 					mascot.setBehavior(configuration.buildBehavior(name));
 				} catch (final BehaviorInstantiationException e) {
-					log.log(Level.SEVERE, "Ÿ‚Ìs“®‚Ì‰Šú‰»‚É¸”s‚µ‚Ü‚µ‚½", e);
+					log.log(Level.SEVERE, "æ¬¡ã®è¡Œå‹•ã®åˆæœŸåŒ–ã«å¤±æ•—ã—ã¾ã—ãŸ", e);
 					mascot.dispose();
 				} catch (final CantBeAliveException e) {
-					log.log(Level.SEVERE, "¶‚«‘±‚¯‚é‚±‚Æ‚ªo—ˆ‚È‚¢ó‹µ", e);
+					log.log(Level.SEVERE, "ç”Ÿãç¶šã‘ã‚‹ã“ã¨ãŒå‡ºæ¥ãªã„çŠ¶æ³", e);
 					mascot.dispose();
 				}
 			}
@@ -231,7 +231,7 @@ public class Manager {
 	}
 
 	/**
-	 * ˆê•C‚¾‚¯c‚µ‚Ä‘¼‚ğ‘S‚Äíœ‚·‚é.
+	 * ä¸€åŒ¹ã ã‘æ®‹ã—ã¦ä»–ã‚’å…¨ã¦å‰Šé™¤ã™ã‚‹.
 	 */
 	public void remainOne() {
 		synchronized (this.getMascots()) {
@@ -242,7 +242,7 @@ public class Manager {
 	}
 
 	/**
-	 * ‘S‚Äíœ‚·‚é.
+	 * å…¨ã¦å‰Šé™¤ã™ã‚‹.
 	 */
 	public void disposeAll() {
 		synchronized (this.getMascots()) {
@@ -253,8 +253,8 @@ public class Manager {
 	}
 
 	/**
-	 * ƒ}ƒXƒRƒbƒg‚ÌŒ»İ”‚ğæ“¾‚·‚é.
-	 * @return ƒ}ƒXƒRƒbƒg‚ÌŒ»İ”.
+	 * ãƒã‚¹ã‚³ãƒƒãƒˆã®ç¾åœ¨æ•°ã‚’å–å¾—ã™ã‚‹.
+	 * @return ãƒã‚¹ã‚³ãƒƒãƒˆã®ç¾åœ¨æ•°.
 	 */
 	public int getCount() {
 		synchronized (this.getMascots()) {

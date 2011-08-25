@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="Windows-31J" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <project name="Shimeji" basedir="." default="zip">
 
 	<property name="version" value="2_2_0" />
@@ -10,7 +10,7 @@
 
 	<target name="compile" depends="clean">
 		<mkdir dir="target/classes" />
-		<javac destdir="target/classes" target="6" debug="yes" optimize="yes" encoding="Windows-31J">
+		<javac destdir="target/classes" target="6" debug="yes" optimize="yes" encoding="UTF-8">
 			<src path="src"/>
 			<src path="src_win"/>
 			<src path="src_mac"/>
@@ -57,8 +57,8 @@
 	<target name="zip_package">
 
 		<mkdir dir="target/${edition}/conf" />
-		<copy tofile="target/${edition}/conf/s“®.xml"
-			file="conf/${edition}s“®.xml" />
+		<copy tofile="target/${edition}/conf/è¡Œå‹•.xml"
+			file="conf/${edition}è¡Œå‹•.xml" />
 
 		<zip destfile="target/Shimeji_${version}_${edition}.zip" encoding="Windows-31J">
 			<fileset dir="target">
@@ -70,12 +70,12 @@
 			</fileset>
 			<fileset dir=".">
 				<include name="Shimeji.exe"/>
-				<include name="‚µ‚ß‚¶ ƒz[ƒ€ƒy[ƒW.url"/>
-				<include name="ƒ‰ƒCƒZƒ“ƒX.txt"/>
-				<include name="“Ç‚ñ‚Å‚Ë.txt"/>
+				<include name="ã—ã‚ã˜ ãƒ›ãƒ¼ãƒ ãƒšãƒ¼ã‚¸.url"/>
+				<include name="ãƒ©ã‚¤ã‚»ãƒ³ã‚¹.txt"/>
+				<include name="èª­ã‚“ã§ã­.txt"/>
 				<include name="img/**/*" />
 				<include name="conf/**/*" />
-				<exclude name="conf/*s“®.xml" />
+				<exclude name="conf/*è¡Œå‹•.xml" />
 				<include name="lib/*" />
 			</fileset>
 		</zip>
@@ -84,8 +84,8 @@
 	<target name="jar_package">
 
 		<mkdir dir="target/${edition}/conf" />
-		<copy tofile="target/${edition}/conf/s“®.xml"
-			file="conf/${edition}s“®.xml" />
+		<copy tofile="target/${edition}/conf/è¡Œå‹•.xml"
+			file="conf/${edition}è¡Œå‹•.xml" />
 
 		<jar destfile="target/Shimeji_${version}_${edition}.jar">
 			<fileset dir="target">
@@ -97,12 +97,12 @@
 			</fileset>
 			<fileset dir=".">
 				<include name="Shimeji.exe"/>
-				<include name="‚µ‚ß‚¶ ƒz[ƒ€ƒy[ƒW.url"/>
-				<include name="ƒ‰ƒCƒZƒ“ƒX.txt"/>
-				<include name="“Ç‚ñ‚Å‚Ë.txt"/>
+				<include name="ã—ã‚ã˜ ãƒ›ãƒ¼ãƒ ãƒšãƒ¼ã‚¸.url"/>
+				<include name="ãƒ©ã‚¤ã‚»ãƒ³ã‚¹.txt"/>
+				<include name="èª­ã‚“ã§ã­.txt"/>
 				<include name="img/**/*" />
 				<include name="conf/**/*" />
-				<exclude name="conf/*s“®.xml" />
+				<exclude name="conf/*è¡Œå‹•.xml" />
 				<include name="lib/*" />
 			</fileset>
 		</jar>

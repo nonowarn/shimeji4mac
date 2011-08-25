@@ -10,7 +10,7 @@ import com.group_finity.mascot.exception.VariableException;
 import com.group_finity.mascot.script.VariableMap;
 
 /**
- * ƒhƒ‰ƒbƒO‚É’ïR‚·‚éƒAƒNƒVƒ‡ƒ“.
+ * ãƒ‰ãƒ©ãƒƒã‚°ã«æŠµæŠ—ã™ã‚‹ã‚¢ã‚¯ã‚·ãƒ§ãƒ³.
  */
 public class Regist extends ActionBase {
 
@@ -31,16 +31,16 @@ public class Regist extends ActionBase {
 	@Override
 	protected void tick() throws LostGroundException, VariableException {
 
-		// ƒAƒjƒ[ƒVƒ‡ƒ“‚³‚¹‚é
+		// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã•ã›ã‚‹
 		final Animation animation = getAnimation();
 		animation.next(getMascot(), getTime());
 
 		if (getTime() + 1 >= getAnimation().getDuration()) {
-			// ŠúŠÔ‚ª‰ß‚¬‚½‚Ì‚ÅI—¹.
+			// æœŸé–“ãŒéããŸã®ã§çµ‚äº†.
 
 			getMascot().setLookRight(Math.random() < 0.5);
 
-			log.log(Level.INFO, "ƒ}ƒEƒX‚©‚ç“¦‚°‚½({0},{1})", new Object[] { getMascot(), this });
+			log.log(Level.INFO, "ãƒã‚¦ã‚¹ã‹ã‚‰é€ƒã’ãŸ({0},{1})", new Object[] { getMascot(), this });
 			throw new LostGroundException();
 		}
 

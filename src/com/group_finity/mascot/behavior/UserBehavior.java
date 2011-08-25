@@ -17,16 +17,16 @@ import com.group_finity.mascot.exception.LostGroundException;
 import com.group_finity.mascot.exception.VariableException;
 
 /**
- * ƒTƒ“ƒvƒ‹—p‚Ì’Pƒ‚ÈU‚é•‘‚¢.
+ * ã‚µãƒ³ãƒ—ãƒ«ç”¨ã®å˜ç´”ãªæŒ¯ã‚‹èˆã„.
  */
 public class UserBehavior implements Behavior {
 	private static final Logger log = Logger.getLogger(UserBehavior.class.getName());
 
-	public static final String BEHAVIORNAME_FALL = "—‰º‚·‚é";
+	public static final String BEHAVIORNAME_FALL = "è½ä¸‹ã™ã‚‹";
 
-	public static final String BEHAVIORNAME_THROWN = "“Š‚°‚ç‚ê‚é";
+	public static final String BEHAVIORNAME_THROWN = "æŠ•ã’ã‚‰ã‚Œã‚‹";
 
-	public static final String BEHAVIORNAME_DRAGGED = "ƒhƒ‰ƒbƒO‚³‚ê‚é";
+	public static final String BEHAVIORNAME_DRAGGED = "ãƒ‰ãƒ©ãƒƒã‚°ã•ã‚Œã‚‹";
 
 	private final String name;
 
@@ -44,7 +44,7 @@ public class UserBehavior implements Behavior {
 
 	@Override
 	public String toString() {
-		return "s“®(" + getName() + ")";
+		return "è¡Œå‹•(" + getName() + ")";
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class UserBehavior implements Behavior {
 
 		this.setMascot(mascot);
 
-		log.log(Level.INFO, "s“®ŠJn({0},{1})", new Object[] { this.getMascot(), this });
+		log.log(Level.INFO, "è¡Œå‹•é–‹å§‹({0},{1})", new Object[] { this.getMascot(), this });
 
 		try {
 			getAction().init(mascot);
@@ -60,11 +60,11 @@ public class UserBehavior implements Behavior {
 				try {
 					mascot.setBehavior(this.getConfiguration().buildBehavior(getName(), mascot));
 				} catch (final BehaviorInstantiationException e) {
-					throw new CantBeAliveException("Ÿ‚Ìs“®‚Ì‰Šú‰»‚É¸”s‚µ‚Ü‚µ‚½", e);
+					throw new CantBeAliveException("æ¬¡ã®è¡Œå‹•ã®åˆæœŸåŒ–ã«å¤±æ•—ã—ã¾ã—ãŸ", e);
 				}
 			}
 		} catch (final VariableException e) {
-			throw new CantBeAliveException("•Ï”‚Ì•]‰¿‚ÅƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½", e);
+			throw new CantBeAliveException("å¤‰æ•°ã®è©•ä¾¡ã§ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸ", e);
 		}
 
 	}
@@ -82,36 +82,36 @@ public class UserBehavior implements Behavior {
 	}
 
 	/**
-	 * ƒ}ƒEƒX‚ª‰Ÿ‚³‚ê‚½.
-	 * ¶ƒ{ƒ^ƒ“‚¾‚Á‚½‚çƒhƒ‰ƒbƒOŠJn.
+	 * ãƒã‚¦ã‚¹ãŒæŠ¼ã•ã‚ŒãŸ.
+	 * å·¦ãƒœã‚¿ãƒ³ã ã£ãŸã‚‰ãƒ‰ãƒ©ãƒƒã‚°é–‹å§‹.
 	 * @throws CantBeAliveException 
 	 */
 	public synchronized void mousePressed(final MouseEvent event) throws CantBeAliveException {
 
 		if (SwingUtilities.isLeftMouseButton(event)) {
-			// ƒhƒ‰ƒbƒOŠJn‚Ì‚¨’m‚ç‚¹
+			// ãƒ‰ãƒ©ãƒƒã‚°é–‹å§‹ã®ãŠçŸ¥ã‚‰ã›
 			try {
 				getMascot().setBehavior(this.getConfiguration().buildBehavior(BEHAVIORNAME_DRAGGED));
 			} catch (final BehaviorInstantiationException e) {
-				throw new CantBeAliveException("ƒhƒ‰ƒbƒOs“®‚Ì‰Šú‰»‚É¸”s‚µ‚Ü‚µ‚½", e);
+				throw new CantBeAliveException("ãƒ‰ãƒ©ãƒƒã‚°è¡Œå‹•ã®åˆæœŸåŒ–ã«å¤±æ•—ã—ã¾ã—ãŸ", e);
 			}
 		}
 
 	}
 
 	/**
-	 * ƒ}ƒEƒX‚ª—£‚ê‚½.
-	 * ¶ƒ{ƒ^ƒ“‚¾‚Á‚½‚çƒhƒ‰ƒbƒOI—¹.
+	 * ãƒã‚¦ã‚¹ãŒé›¢ã‚ŒãŸ.
+	 * å·¦ãƒœã‚¿ãƒ³ã ã£ãŸã‚‰ãƒ‰ãƒ©ãƒƒã‚°çµ‚äº†.
 	 * @throws CantBeAliveException 
 	 */
 	public synchronized void mouseReleased(final MouseEvent event) throws CantBeAliveException {
 
 		if (SwingUtilities.isLeftMouseButton(event)) {
-			// ƒhƒ‰ƒbƒOI—¹‚Ì‚¨’m‚ç‚¹
+			// ãƒ‰ãƒ©ãƒƒã‚°çµ‚äº†ã®ãŠçŸ¥ã‚‰ã›
 			try {
 				getMascot().setBehavior(this.getConfiguration().buildBehavior(BEHAVIORNAME_THROWN));
 			} catch (final BehaviorInstantiationException e) {
-				throw new CantBeAliveException("ƒhƒƒbƒvs“®‚Ì‰Šú‰»‚É¸”s‚µ‚Ü‚µ‚½", e);
+				throw new CantBeAliveException("ãƒ‰ãƒ­ãƒƒãƒ—è¡Œå‹•ã®åˆæœŸåŒ–ã«å¤±æ•—ã—ã¾ã—ãŸ", e);
 			}
 		}
 
@@ -127,13 +127,13 @@ public class UserBehavior implements Behavior {
 
 			if (getAction().hasNext()) {
 
-				// ‰æ–ÊŠO‚Éo‚Ä‚µ‚Ü‚Á‚½‚ç
+				// ç”»é¢å¤–ã«å‡ºã¦ã—ã¾ã£ãŸã‚‰
 				if ((getMascot().getBounds().getX() + getMascot().getBounds().getWidth() <= getEnvironment().getScreen()
 						.getLeft())
 						|| (getEnvironment().getScreen().getRight() <= getMascot().getBounds().getX())
 						|| (getEnvironment().getScreen().getBottom() <= getMascot().getBounds().getY())) {
 
-					log.log(Level.INFO, "‰æ–Ê‚ÌŠO‚Éo‚½({0},{1})", new Object[] { getMascot(), this });
+					log.log(Level.INFO, "ç”»é¢ã®å¤–ã«å‡ºãŸ({0},{1})", new Object[] { getMascot(), this });
 
 					getMascot().setAnchor(
 							new Point((int) (Math.random() * (getEnvironment().getScreen().getRight() - getEnvironment()
@@ -143,29 +143,29 @@ public class UserBehavior implements Behavior {
 					try {
 						getMascot().setBehavior(this.getConfiguration().buildBehavior(BEHAVIORNAME_FALL));
 					} catch (final BehaviorInstantiationException e) {
-						throw new CantBeAliveException("—‚¿‚és“®‚Ì‰Šú‰»‚É¸”s‚µ‚Ü‚µ‚½", e);
+						throw new CantBeAliveException("è½ã¡ã‚‹è¡Œå‹•ã®åˆæœŸåŒ–ã«å¤±æ•—ã—ã¾ã—ãŸ", e);
 					}
 				}
 
 			} else {
-				log.log(Level.INFO, "s“®Š®—¹({0},{1})", new Object[] { getMascot(), this });
+				log.log(Level.INFO, "è¡Œå‹•å®Œäº†({0},{1})", new Object[] { getMascot(), this });
 
 				try {
 					getMascot().setBehavior(this.getConfiguration().buildBehavior(getName(), getMascot()));
 				} catch (final BehaviorInstantiationException e) {
-					throw new CantBeAliveException("Ÿ‚Ìs“®‚Ì‰Šú‰»‚É¸”s‚µ‚Ü‚µ‚½", e);
+					throw new CantBeAliveException("æ¬¡ã®è¡Œå‹•ã®åˆæœŸåŒ–ã«å¤±æ•—ã—ã¾ã—ãŸ", e);
 				}
 			}
 		} catch (final LostGroundException e) {
-			log.log(Level.INFO, "’n–Ê‚©‚ç—£‚ê‚½({0},{1})", new Object[] { getMascot(), this });
+			log.log(Level.INFO, "åœ°é¢ã‹ã‚‰é›¢ã‚ŒãŸ({0},{1})", new Object[] { getMascot(), this });
 
 			try {
 				getMascot().setBehavior(this.getConfiguration().buildBehavior(BEHAVIORNAME_FALL));
 			} catch (final BehaviorInstantiationException ex) {
-				throw new CantBeAliveException("—‚¿‚és“®‚Ì‰Šú‰»‚É¸”s‚µ‚Ü‚µ‚½", ex);
+				throw new CantBeAliveException("è½ã¡ã‚‹è¡Œå‹•ã®åˆæœŸåŒ–ã«å¤±æ•—ã—ã¾ã—ãŸ", ex);
 			}
 		} catch (final VariableException e) {
-			throw new CantBeAliveException("•Ï”‚Ì•]‰¿‚ÅƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½", e);
+			throw new CantBeAliveException("å¤‰æ•°ã®è©•ä¾¡ã§ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸ", e);
 		}
 
 	}

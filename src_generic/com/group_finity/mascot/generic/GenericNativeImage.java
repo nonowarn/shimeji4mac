@@ -11,16 +11,16 @@ import javax.swing.ImageIcon;
 import com.group_finity.mascot.image.NativeImage;
 
 /**
- * {@link GenericTranslucentWindow} ‚Ég—p‰Â”\‚Èƒ¿’l‚Â‚«‰æ‘œ.
+ * {@link GenericTranslucentWindow} ã«ä½¿ç”¨å¯èƒ½ãªÎ±å€¤ã¤ãç”»åƒ.
  * 
- * {@link GenericTranslucentWindow} ‚Ég—p‚Å‚«‚é‚Ì‚Í Windows ƒrƒbƒgƒ}ƒbƒv‚¾‚¯‚È‚Ì‚ÅA
- * Šù‘¶‚Ì {@link BufferedImage} ‚©‚ç Windows ƒrƒbƒgƒ}ƒbƒv‚ÉƒsƒNƒZƒ‹‚ğƒRƒs[‚·‚é.
+ * {@link GenericTranslucentWindow} ã«ä½¿ç”¨ã§ãã‚‹ã®ã¯ Windows ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã ã‘ãªã®ã§ã€
+ * æ—¢å­˜ã® {@link BufferedImage} ã‹ã‚‰ Windows ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã«ãƒ”ã‚¯ã‚»ãƒ«ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹.
  * 
  */
 class GenericNativeImage implements NativeImage{
 
 	/**
-	 * Java ƒCƒ[ƒWƒIƒuƒWƒFƒNƒg.
+	 * Java ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ.
 	 */
 	private final BufferedImage managedImage;
 	

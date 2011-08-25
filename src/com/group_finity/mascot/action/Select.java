@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 import com.group_finity.mascot.script.VariableMap;
 
 /**
- * 複数のアクションから条件に一致する一つだけを実行するアクション.
+ * 隍�謨ｰ縺ｮ繧｢繧ｯ繧ｷ繝ｧ繝ｳ縺九ｉ譚｡莉ｶ縺ｫ荳閾ｴ縺吶ｋ荳縺､縺縺代ｒ螳溯｡後☆繧九い繧ｯ繧ｷ繝ｧ繝ｳ.
  * @author Yuki Yamada
  */
 public class Select extends ComplexAction {
