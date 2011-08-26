@@ -54,6 +54,31 @@
                 overwrite="true" />
         </target>
 
+        <!--
+           Ant の zip とか copy とかつかうと
+           パーミッション消えるので exec でがんばる
+          -->
+        <target name="zip_app" depends="app">
+          <mkdir dir="Shimeji" />
+          <exec executable="cp">
+            <arg value="-a" />
+	    <arg value="Shimeji.app"/>
+	    <arg value="Shimeji.jar"/>
+	    <arg value="ライセンス.txt"/>
+	    <arg value="読んでね.txt"/>
+	    <arg value="img" />
+	    <arg value="conf" />
+	    <arg value="lib" />
+            <arg value="Shimeji" />
+          </exec>
+          <exec executable="zip">
+            <arg value="-r" />
+            <arg value="Shimeji" />
+            <arg value="Shimeji" />
+          </exec>
+          <delete dir="Shimeji" />
+        </target>
+
 	<target name="zip_package">
 
 		<mkdir dir="target/${edition}/conf" />

@@ -13,7 +13,6 @@ Type `ant app` in the project root.
 TODO
 ----
 
-* Automation of building zip file. I'm poor enough not to be able to create it saving permissions of files...
 * Frindly message when launched Shimeji.app is located outside of project directory
 * Proper dock frame detection
 * Use AXMakeProcessTrusted() instead of activation of assistive devices
