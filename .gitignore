@@ -1,4 +1,5 @@
 target/
 *.class
 *.jar
+*.zip
 .DS_Store
