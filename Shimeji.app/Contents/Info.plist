@@ -16,12 +16,12 @@
 	<dict>
 		<key>ClassPath</key>
 		<array>
-			<string>$JAVAROOT</string>
+			<string>$JAVAROOT/Shimeji.jar</string>
 		</array>
 		<key>JVMVersion</key>
 		<string>1.6</string>
 		<key>MainClass</key>
-		<string>com.group_finity.mascot.mac.Main</string>
+		<string>com.group_finity.mascot.Main</string>
 		<key>Properties</key>
 		<dict>
 			<key>apple.laf.useScreenMenuBar</key>
@@ -30,7 +30,7 @@
                         <string>true</string>
 		</dict>
 		<key>WorkingDirectory</key>
-		<string>$APP_PACKAGE</string>
+		<string>$JAVAROOT</string>
 	</dict>
         <key>LSUIElement</key>
         <true />

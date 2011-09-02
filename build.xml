@@ -16,7 +16,7 @@
 			<src path="src_mac"/>
 			<src path="src_generic"/>
 			<classpath>
-				<fileset dir="lib" />
+			  <fileset dir="Shimeji.app/Contents/Resources/Java/lib" />
 			</classpath>
 		</javac>
 	</target>
@@ -46,11 +46,8 @@
 	</target>
 
         <target name="app" depends="compile,jar">
-          <copy file="target/classes/com/group_finity/mascot/mac/Main.class"
-                tofile="Shimeji.app/Contents/Resources/Java/com/group_finity/mascot/mac/Main.class"
-                overwrite="true" />
           <copy file="target/Shimeji.jar"
-                tofile="Shimeji.jar"
+                tofile="Shimeji.app/Contents/Resources/Java/Shimeji.jar"
                 overwrite="true" />
         </target>
 
