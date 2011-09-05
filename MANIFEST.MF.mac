@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: com.group_finity.mascot.Main
+Main-Class: com.group_finity.mascot.mac.Main
 Class-Path: ./ ../../../../img/ ../../../../conf/ ./lib/jna.jar ./lib/platform.jar
