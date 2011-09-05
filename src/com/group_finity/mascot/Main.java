@@ -155,7 +155,7 @@ public class Main {
 
 		// 「IEを元に戻す」メニューアイテム
 		final MenuItem restoreMenu =
-			new MenuItem(Platform.isMac() ? "ウィンドウを元に戻す" : "IEを元に戻す");
+			new MenuItem("IEを元に戻す");
 		restoreMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent event) {
 				restoreIE();
@@ -189,8 +189,7 @@ public class Main {
 			icon.addMouseListener(new MouseAdapter() {
         @Override
 				public void mouseClicked(final MouseEvent e) {
-					if (!Platform.isMac() && SwingUtilities.isLeftMouseButton(e)
-							|| Platform.isMac() && SwingUtilities.isRightMouseButton(e)) {
+					if (SwingUtilities.isLeftMouseButton(e)) {
 						createMascot();
 					}
 				}
