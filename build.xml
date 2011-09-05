@@ -25,6 +25,10 @@
 		<jar destfile="target/Shimeji.jar" basedir="target/classes" manifest="MANIFEST.MF" />
 	</target>
 
+	<target name="jar_mac" depends="compile">
+		<jar destfile="target/Shimeji.jar" basedir="target/classes" manifest="MANIFEST.MF.mac" />
+	</target>
+
 	<target name="zip" depends="jar">
 		<zip destfile="target/src.zip">
 			<fileset dir=".">
@@ -45,7 +49,7 @@
 		</ant>
 	</target>
 
-        <target name="app" depends="compile,jar">
+        <target name="app" depends="compile,jar_mac">
           <copy file="target/Shimeji.jar"
                 tofile="Shimeji.app/Contents/Resources/Java/Shimeji.jar"
                 overwrite="true" />
