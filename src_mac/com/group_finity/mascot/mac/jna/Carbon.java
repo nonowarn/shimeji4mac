@@ -20,6 +20,9 @@ public interface Carbon extends Library {
 	long GetFrontProcess(ProcessSerialNumber psn);
 	long GetProcessPID(final ProcessSerialNumber psn, LongByReference pidp);
 
+	boolean AXAPIEnabled();
+	boolean AXIsProcessTrusted();
+
 	long AXUIElementCopyAttributeValue(
 		AXUIElementRef element, CFStringRef attr, PointerByReference value);
 	int AXUIElementSetAttributeValue(
@@ -44,6 +47,13 @@ public interface Carbon extends Library {
 	void CFRelease(CFTypeRef any);
 	void CFShow(CFTypeRef any);
 
+	int AuthorizationCreate(
+		Pointer rights, Pointer envirionment, int flags, PointerByReference authorization);
+	int AuthorizationCopyRights(
+		AuthorizationRef authRef,	Pointer rights,	Pointer environment, int flags, Pointer authorizedRights);
+	int AuthorizationExecuteWithPrivileges(
+		AuthorizationRef authRef, String tool, int flags, Pointer arguments, Pointer pipes);
+
 	NativeLibrary nl = NativeLibrary.getProcess();
 	Pointer kCurrentUser = nl.getGlobalVariableAddress("kCFPreferencesCurrentUser").getPointer(0);
 	Pointer kAnyHost = nl.getGlobalVariableAddress("kCFPreferencesAnyHost").getPointer(0);
@@ -54,4 +64,16 @@ public interface Carbon extends Library {
 		kAXValueCGSizeType = 2;
 	static final long
   	kCFNumberInt32Type = 3;
+
+	static final int  kAuthorizationFlagDefaults = 0,
+		kAuthorizationFlagInteractionAllowed = (1 << 0),
+		kAuthorizationFlagExtendRights = (1 << 1),
+		kAuthorizationFlagPartialRights = (1 << 2),
+		kAuthorizationFlagDestroyRights = (1 << 3),
+		kAuthorizationFlagPreAuthorize = (1 << 4),
+		kAuthorizationFlagNoData = (1 << 20);
+
+	static final Pointer kAuthorizationEmptyEnvironment = null;
+	static final int errAuthorizationSuccess = 0;
+	static final String kAuthorizationRightExecute = "system.privilege.admin";
 }

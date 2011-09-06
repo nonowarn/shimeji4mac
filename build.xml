@@ -29,6 +29,16 @@
 		<jar destfile="target/Shimeji.jar" basedir="target/classes" manifest="MANIFEST.MF.mac" />
 	</target>
 
+        <target name="trusthelper">
+          <exec executable="gcc">
+            <arg value="trusthelper/trusthelper.c" />
+            <arg value="-framework"/>
+            <arg value="Carbon"/>
+            <arg value="-o"/>
+	    <arg value="target/trusthelper"/>
+          </exec>
+        </target>
+
 	<target name="zip" depends="jar">
 		<zip destfile="target/src.zip">
 			<fileset dir=".">
@@ -49,9 +59,12 @@
 		</ant>
 	</target>
 
-        <target name="app" depends="compile,jar_mac">
+        <target name="app" depends="compile,jar_mac,trusthelper">
           <copy file="target/Shimeji.jar"
                 tofile="Shimeji.app/Contents/Resources/Java/Shimeji.jar"
+                overwrite="true" />
+          <copy file="target/trusthelper"
+                tofile="Shimeji.app/Contents/Resources/Java/trusthelper"
                 overwrite="true" />
         </target>
 

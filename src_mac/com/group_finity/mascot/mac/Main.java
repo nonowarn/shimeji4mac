@@ -16,6 +16,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import com.sun.jna.Platform;
+import com.sun.jna.ptr.PointerByReference;
 
 import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
@@ -35,6 +36,11 @@ import com.group_finity.mascot.exception.BehaviorInstantiationException;
 import com.group_finity.mascot.exception.CantBeAliveException;
 import com.group_finity.mascot.exception.ConfigurationException;
 
+import com.group_finity.mascot.mac.jna.Carbon;
+import com.group_finity.mascot.mac.jna.AuthorizationRef;
+import com.group_finity.mascot.mac.jna.AuthorizationItem;
+import com.group_finity.mascot.mac.jna.AuthorizationRights;
+
 /**
  * プログラムのエントリポイント.
  */
@@ -43,6 +49,7 @@ public class Main {
 	private static final Logger log = Logger.getLogger(Main.class.getName());
 
 	static final String BEHAVIOR_GATHER = "マウスの周りに集まる";
+	private static Carbon carbon = Carbon.INSTANCE;
 
 	static {
 		try {
@@ -53,6 +60,10 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
+
+	private AuthorizationRef rootPriv = new AuthorizationRef();
+	private static String trustHelperPath = "./trusthelper";
+	private static String pathToMe = "../../../../Shimeji.app";
 
 	private static Main instance = new Main();
 
@@ -70,6 +81,12 @@ public class Main {
 	}
 
 	public void run() {
+		// Accessibility API が使えるかどうかチェックし、
+		// もし使えないならば権限を取得した後 Helper を呼び出して Trusted にして再起動
+		// 失敗したら Accessibility API なしで実行
+		if (!accessibilityAPIEnabled() && acquirePrivillage()) {
+			relaunchMyselfWithPermission();
+		}
 
 		// 設定を読み込む
 		loadConfiguration();
@@ -81,6 +98,56 @@ public class Main {
 		createMascot();
 
 		getManager().start();
+	}
+
+	/**
+	 * Accessibility API が使えるかどうかチェック
+	 */
+	private boolean accessibilityAPIEnabled() {
+		return carbon.AXAPIEnabled() || carbon.AXIsProcessTrusted();
+	}
+
+	/**
+	 * ユーザにAccessibility APIを使うための権限を求める
+	 * 参考: http://command-q.googlecode.com/svn/trunk/AppController.m
+	 */
+	private boolean acquirePrivillage() {
+		int err;
+		PointerByReference pRootPriv = new PointerByReference();
+		err = carbon.AuthorizationCreate(
+			null,
+			carbon.kAuthorizationEmptyEnvironment,
+			carbon.kAuthorizationFlagDefaults,
+			pRootPriv);
+		rootPriv.setPointer(pRootPriv.getValue());
+
+		if (err != carbon.errAuthorizationSuccess) {
+			return false;
+		}
+
+		AuthorizationItem myItems = new AuthorizationItem(
+			carbon.kAuthorizationRightExecute, 0, null, 0); myItems.write();
+		AuthorizationRights myRights = new AuthorizationRights(1, myItems.getPointer()); myRights.write();
+		int myFlags =
+			carbon.kAuthorizationFlagDefaults           |
+			carbon.kAuthorizationFlagInteractionAllowed |
+			carbon.kAuthorizationFlagPreAuthorize       |
+			carbon.kAuthorizationFlagExtendRights;
+
+		err = carbon.AuthorizationCopyRights(
+			rootPriv, myRights.getPointer(), null, myFlags, null);
+
+		if (err != carbon.errAuthorizationSuccess) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private void relaunchMyselfWithPermission() {
+		carbon.AuthorizationExecuteWithPrivileges(
+			rootPriv, trustHelperPath, carbon.kAuthorizationFlagDefaults, null, null);
+		System.exit(0);
 	}
 
 	/**
