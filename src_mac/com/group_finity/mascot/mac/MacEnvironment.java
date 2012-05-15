@@ -27,7 +27,7 @@ import com.group_finity.mascot.mac.jna.CFNumberRef;
 import com.group_finity.mascot.mac.jna.CFArrayRef;
 
 /**
- * Java では取得が難しい環境情報をAppleScriptを使用して取得する.
+ * Java では取得が難しい環境情報をAccessibility APIを使用して取得する.
  */
 class MacEnvironment extends Environment {
 
