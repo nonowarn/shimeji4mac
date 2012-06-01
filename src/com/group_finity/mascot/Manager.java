@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.group_finity.mascot.ListBuffer;
 import com.group_finity.mascot.config.Configuration;
 import com.group_finity.mascot.exception.BehaviorInstantiationException;
 import com.group_finity.mascot.exception.CantBeAliveException;
@@ -29,10 +30,14 @@ public class Manager {
 	 */
 	public static final int TICK_INTERVAL = 40;
 
+	public static final int BUFFER_SIZE   = 10;
+
 	/**
 	 * マスコットの一覧.
 	 */
 	private final List<Mascot> mascots = new ArrayList<Mascot>();
+
+	private final ListBuffer<Mascot> mascotBuffer = new ListBuffer<Mascot>(mascots);
 
 	/**
 	 * 追加される予定のマスコットのリスト.
@@ -172,7 +177,7 @@ public class Manager {
 			}
 
 			// マスコットの絵や位置を最新にする.
-			for (final Mascot mascot : this.getMascots()) {
+			for (final Mascot mascot : this.getMascotBuffer().buffer(BUFFER_SIZE)) {
 				mascot.apply();
 			}
 		}
@@ -272,6 +277,10 @@ public class Manager {
 
 	private List<Mascot> getMascots() {
 		return this.mascots;
+	}
+
+	private ListBuffer<Mascot> getMascotBuffer() {
+		return this.mascotBuffer;
 	}
 
 	private Set<Mascot> getAdded() {
