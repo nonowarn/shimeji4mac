@@ -62,29 +62,6 @@ public class Manager {
 	 */
 	private transient Thread thread;
 
-	public Manager() {
-
-		// これは Windows 上で動く Java のバグを修正するための処置
-		// 短い長さの Thread.sleep を頻繁に呼ぶと Windows の時計が狂う
-		// 長い Thread.sleep を呼んでいるとこの問題を回避できる.
-		new Thread() {
-			{
-				this.setDaemon(true);
-				this.start();
-			}
-
-			@Override
-			public void run() {
-				while (true) {
-					try {
-						Thread.sleep(Integer.MAX_VALUE);
-					} catch (final InterruptedException ex) {
-					}
-				}
-			}
-		};
-	}
-
 	/**
 	 * スレッドを開始する.
 	 */
