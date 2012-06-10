@@ -28,7 +28,7 @@ public class Manager {
 	/**
 	 * タイマの実行間隔.
 	 */
-	public static final int TICK_INTERVAL = 10;
+	public static final int TICK_INTERVAL = 20;
 
 	public static final int BUFFER_SIZE   = 10;
 
