@@ -19,7 +19,7 @@
 			<string>$JAVAROOT/Shimeji.jar</string>
 		</array>
 		<key>JVMVersion</key>
-		<string>1.6</string>
+		<string>1.7</string>
 		<key>MainClass</key>
 		<string>com.group_finity.mascot.Main</string>
 		<key>Properties</key>
