@@ -60,12 +60,21 @@
           <exec executable="cp">
             <arg value="-a" />
 	    <arg value="Shimeji.app"/>
-	    <arg value="Shimeji.jar"/>
 	    <arg value="img" />
 	    <arg value="conf" />
-	    <arg value="lib" />
             <arg value="Shimeji" />
           </exec>
+
+          <!--
+             cp を使うと日本語ファイル名のテキストファイルがコピー出来ないので、
+             ここだけ copy タスクを使う
+          -->
+          <copy todir="Shimeji">
+            <fileset dir=".">
+              <include name="*.txt" />
+            </fileset>
+          </copy>
+
           <exec executable="zip">
             <arg value="-r" />
             <arg value="Shimeji" />
@@ -73,16 +82,6 @@
           </exec>
           <delete dir="Shimeji" />
         </target>
-
-        <!--
-           cp を使うと日本語ファイル名のテキストファイルがコピー出来ないので、
-           ここだけ copy タスクを使う
-          -->
-        <copy todir="Shimeji">
-          <fileset dir=".">
-            <include name="*.txt" />
-          </fileset>
-        </copy>
 
 	<target name="zip_package">
 
