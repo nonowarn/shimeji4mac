@@ -62,9 +62,6 @@ public class Main {
 
 	public void run() {
 
-        // set mac application configuration
-        setConfiguration();
-
 		// 設定を読み込む
 		loadConfiguration();
 
@@ -77,13 +74,6 @@ public class Main {
 		getManager().start();
 	}
 
-    private void setConfiguration() {
-        if (Platform.isMac()) {
-			final Application application = Application.getApplication();
-			Image dockIcon = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("icon.png"));
-			application.setDockIconImage(dockIcon);
-        }
-    }
 
 	/**
 	 * 設定ファイルを読み込む.
@@ -184,6 +174,14 @@ public class Main {
 		trayPopup.add(restoreMenu);
 		trayPopup.add(new MenuItem("-"));
 		trayPopup.add(closeMenu);
+
+		// set dock menu
+		if (Platform.isMac()) {
+			final Application application = Application.getApplication();
+			Image dockIcon = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("icon.png"));
+			application.setDockIconImage(dockIcon);
+			application.setDockMenu(trayPopup);
+		}
 
 		try {
 			// トレイアイコンを作成
