@@ -1,11 +1,20 @@
 package com.group_finity.mascot;
 
-import java.awt.AWTException;
-import java.awt.MenuItem;
-import java.awt.Point;
-import java.awt.PopupMenu;
-import java.awt.SystemTray;
-import java.awt.TrayIcon;
+import com.apple.eawt.Application;
+import com.group_finity.mascot.config.Configuration;
+import com.group_finity.mascot.config.Entry;
+import com.group_finity.mascot.exception.BehaviorInstantiationException;
+import com.group_finity.mascot.exception.CantBeAliveException;
+import com.group_finity.mascot.exception.ConfigurationException;
+import com.sun.jna.Platform;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -15,21 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
-import com.sun.jna.Platform;
 
-import javax.imageio.ImageIO;
-import javax.swing.SwingUtilities;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
-
-import com.group_finity.mascot.config.Configuration;
-import com.group_finity.mascot.config.Entry;
-import com.group_finity.mascot.exception.BehaviorInstantiationException;
-import com.group_finity.mascot.exception.CantBeAliveException;
-import com.group_finity.mascot.exception.ConfigurationException;
 
 /**
  * プログラムのエントリポイント.
@@ -67,6 +62,9 @@ public class Main {
 
 	public void run() {
 
+        // set mac application configuration
+        setConfiguration();
+
 		// 設定を読み込む
 		loadConfiguration();
 
@@ -78,6 +76,14 @@ public class Main {
 
 		getManager().start();
 	}
+
+    private void setConfiguration() {
+        if (Platform.isMac()) {
+			final Application application = Application.getApplication();
+			Image dockIcon = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("icon.png"));
+			application.setDockIconImage(dockIcon);
+        }
+    }
 
 	/**
 	 * 設定ファイルを読み込む.
