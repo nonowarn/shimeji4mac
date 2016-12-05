@@ -6,7 +6,6 @@ import com.group_finity.mascot.config.Entry;
 import com.group_finity.mascot.exception.BehaviorInstantiationException;
 import com.group_finity.mascot.exception.CantBeAliveException;
 import com.group_finity.mascot.exception.ConfigurationException;
-import com.group_finity.mascot.image.ImagePairLoader;
 import com.sun.jna.Platform;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -20,7 +19,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
@@ -65,7 +63,7 @@ public class Main {
 	public void run() {
 
         // set mac application configuration
-        setMacConfiguration();
+        setConfiguration();
 
 		// 設定を読み込む
 		loadConfiguration();
@@ -79,15 +77,11 @@ public class Main {
 		getManager().start();
 	}
 
-    private void setMacConfiguration() {
+    private void setConfiguration() {
         if (Platform.isMac()) {
-            try {
-                Application app = Application.getApplication();
-                BufferedImage bufferedImage = ImageIO.read(ImagePairLoader.class.getResource("/icon.png"));
-                app.setDockIconImage(bufferedImage);
-            } catch (IOException e) {
-                e.getStackTrace();
-            }
+			final Application application = Application.getApplication();
+			Image dockIcon = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("icon.png"));
+			application.setDockIconImage(dockIcon);
         }
     }
 
