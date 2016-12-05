@@ -1,35 +1,32 @@
 package com.group_finity.mascot;
 
-import java.awt.AWTException;
-import java.awt.MenuItem;
-import java.awt.Point;
-import java.awt.PopupMenu;
-import java.awt.SystemTray;
-import java.awt.TrayIcon;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
-
-import com.sun.jna.Platform;
-
-import javax.imageio.ImageIO;
-import javax.swing.SwingUtilities;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
-
+import com.apple.eawt.Application;
 import com.group_finity.mascot.config.Configuration;
 import com.group_finity.mascot.config.Entry;
 import com.group_finity.mascot.exception.BehaviorInstantiationException;
 import com.group_finity.mascot.exception.CantBeAliveException;
 import com.group_finity.mascot.exception.ConfigurationException;
+import com.group_finity.mascot.image.ImagePairLoader;
+import com.sun.jna.Platform;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
+
+
 
 /**
  * プログラムのエントリポイント.
@@ -67,6 +64,9 @@ public class Main {
 
 	public void run() {
 
+        // set mac application configuration
+        setMacConfiguration();
+
 		// 設定を読み込む
 		loadConfiguration();
 
@@ -78,6 +78,18 @@ public class Main {
 
 		getManager().start();
 	}
+
+    private void setMacConfiguration() {
+        if (Platform.isMac()) {
+            try {
+                Application app = Application.getApplication();
+                BufferedImage bufferedImage = ImageIO.read(ImagePairLoader.class.getResource("/icon.png"));
+                app.setDockIconImage(bufferedImage);
+            } catch (IOException e) {
+                e.getStackTrace();
+            }
+        }
+    }
 
 	/**
 	 * 設定ファイルを読み込む.
