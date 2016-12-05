@@ -1,17 +1,6 @@
 package com.group_finity.mascot.config;
 
-import java.awt.Point;
-import java.io.IOException;
-import java.io.ObjectInputStream.GetField;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import com.group_finity.mascot.Mascot;
-import com.group_finity.mascot.NativeFactory;
 import com.group_finity.mascot.action.Action;
 import com.group_finity.mascot.behavior.Behavior;
 import com.group_finity.mascot.exception.ActionInstantiationException;
@@ -19,6 +8,15 @@ import com.group_finity.mascot.exception.BehaviorInstantiationException;
 import com.group_finity.mascot.exception.ConfigurationException;
 import com.group_finity.mascot.exception.VariableException;
 import com.group_finity.mascot.script.VariableMap;
+
+import java.awt.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Configuration {
 
