@@ -177,10 +177,13 @@ public class Main {
 
 		// set dock menu
 		if (Platform.isMac()) {
+			// ポップアップメニューを作成
+			final PopupMenu dockMenu = new PopupMenu();
+
 			final Application application = Application.getApplication();
 			Image dockIcon = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("icon.png"));
 			application.setDockIconImage(dockIcon);
-			application.setDockMenu(trayPopup);
+			application.setDockMenu(dockMenu);
 		}
 
 		try {
