@@ -190,7 +190,7 @@ public class Main {
 			// トレイアイコンを作成
 			final TrayIcon icon = new TrayIcon(ImageIO.read(Main.class.getResource("/icon.png")), "しめじ", trayPopup);
 
-      // アイコンが左クリックされたときも「増える」
+            // アイコンが左クリックされたときも「増える」
 			// ただし Mac では左クリックでメニューが開いてしまうため、
 			// 右クリックで増殖させる
 			icon.addMouseListener(new MouseAdapter() {
