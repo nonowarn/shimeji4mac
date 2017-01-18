@@ -8,9 +8,15 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.group_finity.mascot.ListBuffer;
 import com.group_finity.mascot.config.Configuration;
 import com.group_finity.mascot.exception.BehaviorInstantiationException;
 import com.group_finity.mascot.exception.CantBeAliveException;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -27,24 +33,28 @@ public class Manager {
 	/**
 	 * タイマの実行間隔.
 	 */
-	public static final int TICK_INTERVAL = 40;
+	public static final int TICK_INTERVAL = 20;
+
+	public static final int BUFFER_SIZE   = 10;
 
 	/**
 	 * マスコットの一覧.
 	 */
 	private final List<Mascot> mascots = new ArrayList<Mascot>();
 
+	private final ListBuffer<Mascot> mascotBuffer = new ListBuffer<Mascot>(mascots);
+
 	/**
 	 * 追加される予定のマスコットのリスト.
 	 * {@link ConcurrentModificationException} を防ぐため、マスコットの追加は {@link #tick()} ごとにいっせいに反映される.
 	 */
-	private final Set<Mascot> added = new LinkedHashSet<Mascot>();
+	private final ConcurrentLinkedQueue<Mascot> added = new ConcurrentLinkedQueue<Mascot>();
 
 	/**
 	 * 追加される予定のマスコットのリスト.
 	 * {@link ConcurrentModificationException} を防ぐため、マスコットの削除は {@link #tick()} ごとにいっせいに反映される.
 	 */
-	private final Set<Mascot> removed = new LinkedHashSet<Mascot>();
+	private final ConcurrentLinkedQueue<Mascot> removed = new ConcurrentLinkedQueue<Mascot>();
 
 	/**
 	 * 最後のマスコットを削除した時にプログラムを終了すべきかどうか.
@@ -57,28 +67,6 @@ public class Manager {
 	 */
 	private transient Thread thread;
 
-	public Manager() {
-
-		// これは Windows 上で動く Java のバグを修正するための処置
-		// 短い長さの Thread.sleep を頻繁に呼ぶと Windows の時計が狂う
-		// 長い Thread.sleep を呼んでいるとこの問題を回避できる.
-		new Thread() {
-			{
-				this.setDaemon(true);
-				this.start();
-			}
-
-			@Override
-			public void run() {
-				while (true) {
-					try {
-						Thread.sleep(Integer.MAX_VALUE);
-					} catch (final InterruptedException ex) {
-					}
-				}
-			}
-		};
-	}
 
 	/**
 	 * スレッドを開始する.
@@ -172,7 +160,7 @@ public class Manager {
 			}
 
 			// マスコットの絵や位置を最新にする.
-			for (final Mascot mascot : this.getMascots()) {
+			for (final Mascot mascot : this.getMascotBuffer().buffer(BUFFER_SIZE)) {
 				mascot.apply();
 			}
 		}
@@ -189,10 +177,12 @@ public class Manager {
 	 * @param mascot 追加するマスコット.
 	 */
 	public void add(final Mascot mascot) {
-		synchronized (this.getAdded()) {
-			this.getAdded().add(mascot);
-			this.getRemoved().remove(mascot);
-		}
+//		synchronized (this.getAdded()) {
+//			this.getAdded().add(mascot);
+//			this.getRemoved().remove(mascot);
+//		}
+        this.getAdded().add(mascot);
+        this.getRemoved().remove(mascot);
 		mascot.setManager(this);
 	}
 
@@ -202,10 +192,12 @@ public class Manager {
 	 * @param mascot 削除するマスコット.
 	 */
 	public void remove(final Mascot mascot) {
-		synchronized (this.getAdded()) {
-			this.getAdded().remove(mascot);
-			this.getRemoved().add(mascot);
-		}
+//		synchronized (this.getAdded()) {
+//			this.getAdded().remove(mascot);
+//			this.getRemoved().add(mascot);
+//		}
+        this.getAdded().remove(mascot);
+        this.getRemoved().add(mascot);
 		mascot.setManager(null);
 	}
 
@@ -215,19 +207,30 @@ public class Manager {
 	 * @param name
 	 */
 	public void setBehaviorAll(final Configuration configuration, final String name) {
-		synchronized (this.getMascots()) {
-			for (final Mascot mascot : this.getMascots()) {
-				try {
-					mascot.setBehavior(configuration.buildBehavior(name));
-				} catch (final BehaviorInstantiationException e) {
-					log.log(Level.SEVERE, "次の行動の初期化に失敗しました", e);
-					mascot.dispose();
-				} catch (final CantBeAliveException e) {
-					log.log(Level.SEVERE, "生き続けることが出来ない状況", e);
-					mascot.dispose();
-				}
-			}
-		}
+//		synchronized (this.getMascots()) {
+//			for (final Mascot mascot : this.getMascots()) {
+//				try {
+//					mascot.setBehavior(configuration.buildBehavior(name));
+//				} catch (final BehaviorInstantiationException e) {
+//					log.log(Level.SEVERE, "次の行動の初期化に失敗しました", e);
+//					mascot.dispose();
+//				} catch (final CantBeAliveException e) {
+//					log.log(Level.SEVERE, "生き続けることが出来ない状況", e);
+//					mascot.dispose();
+//				}
+//			}
+//		}
+        for (final Mascot mascot : this.getMascots()) {
+            try {
+                mascot.setBehavior(configuration.buildBehavior(name));
+            } catch (final BehaviorInstantiationException e) {
+                log.log(Level.SEVERE, "次の行動の初期化に失敗しました", e);
+                mascot.dispose();
+            } catch (final CantBeAliveException e) {
+                log.log(Level.SEVERE, "生き続けることが出来ない状況", e);
+                mascot.dispose();
+            }
+        }
 	}
 
 	/**
@@ -274,11 +277,15 @@ public class Manager {
 		return this.mascots;
 	}
 
-	private Set<Mascot> getAdded() {
+	private ListBuffer<Mascot> getMascotBuffer() {
+		return this.mascotBuffer;
+	}
+
+	private ConcurrentLinkedQueue<Mascot> getAdded() {
 		return this.added;
 	}
 
-	private Set<Mascot> getRemoved() {
+	private ConcurrentLinkedQueue<Mascot> getRemoved() {
 		return this.removed;
 	}
 
