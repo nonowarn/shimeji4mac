@@ -10,7 +10,7 @@
 
 	<target name="compile" depends="clean">
 		<mkdir dir="target/classes" />
-		<javac destdir="target/classes" target="1.7" debug="yes" optimize="yes" encoding="UTF-8">
+		<javac includeantruntime="false" destdir="target/classes" target="1.7" debug="yes" optimize="yes" encoding="UTF-8">
 			<src path="src"/>
 			<src path="src_win"/>
 			<src path="src_mac"/>
