@@ -1,15 +1,15 @@
 package com.group_finity.mascot.action;
 
-import java.awt.Point;
-import java.util.List;
-import java.util.logging.Logger;
-
 import com.group_finity.mascot.Mascot;
 import com.group_finity.mascot.animation.Animation;
 import com.group_finity.mascot.environment.Location;
 import com.group_finity.mascot.exception.LostGroundException;
 import com.group_finity.mascot.exception.VariableException;
 import com.group_finity.mascot.script.VariableMap;
+
+import java.awt.*;
+import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * ドラッグされてるアクション.
@@ -25,6 +25,11 @@ public class Dragged extends ActionBase {
 	private double footDx;
 
 	private int timeToRegist;
+
+    //
+	private double displacementX = 0.0;
+
+    private double displacementY = 0.0;
 
 	public Dragged(final List<Animation> animations, final VariableMap params) {
 		super(animations, params);
@@ -72,7 +77,17 @@ public class Dragged extends ActionBase {
 		getAnimation().next(getMascot(), getTime());
 
 		// マスコットの位置をマウスカーソルに合わせる
-		getMascot().setAnchor(new Point(cursor.getX(), cursor.getY() + 120));
+        //	getMascot().setAnchor(new Point(cursor.getX(), cursor.getY() + 120));
+
+        // if the displacement is 0, that means you need to initialize it or recalculate it
+        // you will keep this value until a drag action finished
+        if (this.displacementX == 0 || this.displacementY == 0) {
+            this.displacementX = cursor.getX() - getMascot().getAnchor().x;
+            this.displacementY = cursor.getY() - getMascot().getAnchor().y;
+        }
+
+        // the anchor should be the cursor's position subtract the distance between cursor and original anchor
+        getMascot().setAnchor(new Point((int)(cursor.getX() - this.displacementX), (int)(cursor.getY() - this.displacementY)));
 	}
 
 	public void setTimeToRegist(final int timeToRegist) {

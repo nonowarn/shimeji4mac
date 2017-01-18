@@ -13,9 +13,11 @@ Type `ant app` in the project root.
 TODO
 ----
 
+* Optimize performance.
+* Make Manager daemon thread sleep time more suitable.
 * Frindly message when launched Shimeji.app is located outside of project directory
 * Proper dock frame detection
-* Use AXMakeProcessTrusted() instead of activation of assistive devices
+* Use AXMakeProcessTrusted() instead of activation of assistive devices (deprecated in OS 10.9)
 
 LICENSE
 -------

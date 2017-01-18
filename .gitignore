@@ -3,3 +3,4 @@ target/
 *.jar
 *.zip
 .DS_Store
+Shimeji/
