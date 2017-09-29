@@ -1,6 +1,5 @@
 package com.group_finity.mascot;
 
-import com.apple.eawt.Application;
 import com.group_finity.mascot.config.Configuration;
 import com.group_finity.mascot.config.Entry;
 import com.group_finity.mascot.exception.BehaviorInstantiationException;
@@ -174,17 +173,6 @@ public class Main {
 		trayPopup.add(restoreMenu);
 		trayPopup.add(new MenuItem("-"));
 		trayPopup.add(closeMenu);
-
-		// set dock menu
-		if (Platform.isMac()) {
-			// ポップアップメニューを作成
-			final PopupMenu dockMenu = new PopupMenu();
-
-			final Application application = Application.getApplication();
-			Image dockIcon = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("icon.png"));
-			application.setDockIconImage(dockIcon);
-			application.setDockMenu(dockMenu);
-		}
 
 		try {
 			// トレイアイコンを作成
